@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  /* Default text styles */
+  font-family: "Inter";
+  font-weight: 500;
+  color: rgba(55, 55, 55, 1);
+  font-size: 0.875rem;
+
+  /* background: #f5f3f0; */
+
+  background: #f9f9ff;
+  min-height: 100vh;
+}
+
+.section {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 2rem;
+}
+
+@layer base {
+  :root {
+    --neutral: 233 196 106;
+    --happy: 42 157 143;
+    --ecstatic: 38 70 83;
+    --sad: 244 162 97;
+    --depressed: 231 111 81;
+    --accent: 74 90 239;
+    --mood: 74 90 239;
+
+    --animation-primary: 0.4s cubic-bezier(0.75, 0, 0.25, 1);
+    --animation-fast: 0.2s cubic-bezier(0.75, 0, 0.25, 1);
+    --animation-smooth: 0.6s cubic-bezier(0.75, 0, 0.25, 1);
+    --animation-navigation: 1.2s cubic-bezier(0.75, 0, 0.25, 1);
+
+    --disabled: 168 168 168;
+    --danger: 255 104 104;
+
+    --background: 249 249 255;
+
+    --lightest: 229 229 243;
+    --lighter: 161 161 161;
+    --light: 89 89 89;
+    --dark: 67 77 97;
+    --darkest: 6 6 6;
+    --white: 255 255 255;
+
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  [data-mood="neutral"] {
+    --mood: 233 196 106;
+  }
+
+  [data-mood="happy"] {
+    --mood: 42 157 143;
+  }
+
+  [data-mood="ecstatic"] {
+    --mood: 38 70 83;
+  }
+
+  [data-mood="sad"] {
+    --mood: 244 162 97;
+  }
+
+  [data-mood="depressed"] {
+    --mood: 231 111 81;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+
+  .dotted-grid {
+    background-image: radial-gradient(rgb(234, 228, 228) 2px, transparent 0);
+    background-size: 40px 40px;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

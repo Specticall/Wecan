@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  email String  @unique
+  name  String
+  password String?
+  
+  lastLogin DateTime @default(now())
+  
+  point Point?
+  mood Mood
+  streak Int?
+
+  
+  diaries Diary[]
+  tasks Task[]
+  
+}
+
+model Point {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+
+  earnedToday Int @default(0)
+  targetToday Int @default(0)
+  
+  earnedOverall Int @default(0)
+  
+  user User @relation(fields: [userId], references: [id])
+  userId String @unique @db.ObjectId
+}
+
+model Task {
+  id String @id @default(auto()) @map("_id") @db.ObjectId 
+  points Int
+  title String
+  description String
+  status TaskStatus @default(ONGOING)
+  
+  user User @relation(fields: [userId], references: [id])
+  userId  String @db.ObjectId
+}
+
+model Diary {
+  id String @id @default(auto()) @map("_id") @db.ObjectId 
+  author User @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+
+  dateCreated DateTime @default(now())
+  content String
+  earnedPoints Int @default(0)
+  targetPoints Int @default(0)
+
+}
+
+enum TaskStatus {
+  COMPLETED
+  ONGOING
+}
+
+enum Mood {
+  ECSTATIC
+  HAPPY
+  NEUTRAL
+  SAD
+  DEPRESSED
+  UNKOWN
+}
+
+model AvailableTask {
+  id String @id @default(auto()) @map("_id") @db.ObjectId 
+  points Int
+  title String
+  description String
+}

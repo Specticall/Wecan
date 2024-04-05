@@ -1,0 +1,50 @@
+.shimmer {
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #ebecf1;
+  background-image: linear-gradient(
+    to right,
+    #ebecf1 0%,
+    #faf6f6 20%,
+    #ebecf1 40%,
+    #ebecf1 100%
+  );
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+@keyframes prideShimmer {
+  from {
+    background-position: top left;
+  }
+  to {
+    background-position: top right;
+  }
+}
+._4-u5 {
+  background-color: #ffffff;
+}
+
+._4-u7 {
+  background-color: #ffffff;
+}
+
+._57d8 {
+  background-color: #ffffff;
+}
+
+._4-u8 {
+  background-color: #ffffff;
+}

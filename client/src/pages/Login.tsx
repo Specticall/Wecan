@@ -13,6 +13,10 @@ import {
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import waveImage from "/assets/wave-login.png";
+import { GoogleLogin } from "@react-oauth/google";
+import { TGoogleLoginResponse } from "@/types/general";
+import axios from "axios";
+import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
 
 type TLoginValues = {
   email: string;
@@ -30,6 +34,17 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<TLoginValues> = (value) => {
     console.log(value);
+  };
+
+  const handleGoogleLogin = async (response: TGoogleLoginResponse) => {
+    try {
+      const res = await axios.get(
+        `${BASE_URL}${BASE_ENDPOINT}/v1/auth/google?credential=${response.credential}`
+      );
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -94,6 +109,12 @@ export default function Login() {
               <Button variant="dark" className="mb-4">
                 Sign Up
               </Button>
+              <GoogleLogin
+                onSuccess={(res) =>
+                  handleGoogleLogin(res as TGoogleLoginResponse)
+                }
+                onError={() => console.log("Something went wrong")}
+              />
               <Button variant="transparent" className="relative">
                 <div className="flex gap-3 items-center justify-center [&>svg]:h-6 ">
                   <Icons icon="googleIcon" />

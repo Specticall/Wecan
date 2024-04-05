@@ -1,33 +1,20 @@
 import { RequestHandler } from "express";
-import { googleAuthURL, oAuth2Client } from "../googleAuth";
-import { google } from "googleapis";
-import { createJWT } from "../utils/helper";
+import { createJWT, verifyGoogleCredential } from "../utils/helper";
 import { Mood, PrismaClient } from "@prisma/client";
+import { TGoogleResponse } from "../utils/types";
 
 const prisma = new PrismaClient();
 
 export const googleLogin: RequestHandler = async (request, response) => {
-  response.redirect(googleAuthURL);
-};
-
-// This endpoint will get hit then the user successfuly logs in.
-export const googleCallback: RequestHandler = async (request, response) => {
   try {
-    // Google will return a code as a URL query parameter.
-    const { code } = request.query;
+    // Credential (JWT Token) is passed from the client side
+    const { credential } = request.query;
 
-    // Using the code above, we can then request a token from google.
-    const { tokens } = await oAuth2Client.getToken(code as string);
+    if (!credential) throw new Error("Credential not provided!");
 
-    oAuth2Client.setCredentials(tokens);
-
-    // Retrieve user info from the given token
-    const oAuth2 = google.oauth2({
-      auth: oAuth2Client,
-      version: "v2",
-    });
-
-    const { data: dataFromGoogle } = await oAuth2.userinfo.get();
+    const dataFromGoogle = (await verifyGoogleCredential(
+      credential as string
+    )) as TGoogleResponse;
 
     if (!dataFromGoogle.email || !dataFromGoogle.name)
       throw new Error(

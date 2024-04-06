@@ -1,11 +1,21 @@
-import { ReactNode, createContext, useContext } from "react";
+import { TUserData } from "@/types/general";
+import { ReactNode, createContext, useContext, useState } from "react";
 
-type TUserContextValues = {};
+type TUserContextValues = {
+  setUserData: React.Dispatch<React.SetStateAction<TUserData | undefined>>;
+  userData: TUserData | undefined;
+};
 
 const UserContext = createContext<TUserContextValues | null>(null);
 
 export function UserProvider({ children }: { children: ReactNode }) {
-  return <UserContext.Provider value={{}}>{children}</UserContext.Provider>;
+  const [userData, setUserData] = useState<TUserData>();
+
+  return (
+    <UserContext.Provider value={{ userData, setUserData }}>
+      {children}
+    </UserContext.Provider>
+  );
 }
 
 export function useUser() {

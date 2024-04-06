@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 const styles = cva("", {
   variants: {
     bar: {
-      light: "bg-white",
+      light: "bg-lightest",
       dark: "bg-dark",
     },
     track: {

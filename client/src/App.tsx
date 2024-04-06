@@ -16,6 +16,7 @@ import Statistics from "./pages/Statistics";
 import HomeLayout from "./pages/LandingLayout";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import ProtectRoute from "./components/service/ProtectRoute";
 
 const router = createBrowserRouter([
   {
@@ -49,7 +50,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/app",
-        element: <AppLayout />,
+        element: (
+          <ProtectRoute>
+            <AppLayout />
+          </ProtectRoute>
+        ),
         children: [
           {
             path: "dashboard",

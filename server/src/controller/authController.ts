@@ -2,29 +2,34 @@ import { RequestHandler } from "express";
 import { createJWT, verifyGoogleCredential } from "../utils/helper";
 import { Mood, PrismaClient } from "@prisma/client";
 import { TGoogleResponse } from "../utils/types";
+import { AppError } from "../utils/AppError";
 
 const prisma = new PrismaClient();
 
-export const googleLogin: RequestHandler = async (request, response) => {
+export const googleLogin: RequestHandler = async (request, response, next) => {
   try {
     // Credential (JWT Token) is passed from the client side
     const { credential } = request.query;
 
-    if (!credential) throw new Error("Credential not provided!");
+    if (!credential) throw new AppError("Credential not provided!", 400);
 
     const dataFromGoogle = (await verifyGoogleCredential(
       credential as string
     )) as TGoogleResponse;
 
     if (!dataFromGoogle.email || !dataFromGoogle.name)
-      throw new Error(
-        "Email or name does not exist on the google response object"
+      throw new AppError(
+        "Email or name does not exist on the google response object",
+        500
       );
 
     // Find the corresponding user data
     let userData = await prisma.user.findUnique({
       where: {
         email: dataFromGoogle.email,
+      },
+      include: {
+        point: true,
       },
     });
 
@@ -51,26 +56,22 @@ export const googleLogin: RequestHandler = async (request, response) => {
         where: {
           email: dataFromGoogle.email,
         },
+        include: {
+          point: true,
+        },
       });
     }
 
-    if (!userData?.id) throw new Error("Database id not found!");
+    if (!userData?.id) throw new AppError("Database id not found!", 404);
 
     const token = createJWT(userData.id);
 
     response.status(200).send({
-      ...userData,
+      userData,
       token,
       status: "success",
     });
   } catch (error) {
-    response.status(500).send({
-      status: 500,
-      errorMessage:
-        error instanceof Error
-          ? error.message
-          : "Oops, Something went very wrong!",
-      error,
-    });
+    next(error);
   }
 };

@@ -1,4 +1,6 @@
 import TitleWatcher, { TitleConfig } from "@/components/service/TitleWatcher";
+import { AuthProvider } from "@/context/AuthContext";
+import { UserProvider } from "@/context/UserContext";
 import { ViewportProvider } from "@/context/ViewportContext";
 import { Outlet } from "react-router-dom";
 
@@ -15,8 +17,12 @@ const titleConfig: TitleConfig = {
 export default function FirstRouterChild() {
   return (
     <ViewportProvider>
-      <TitleWatcher titleConfig={titleConfig} />
-      <Outlet />
+      <UserProvider>
+        <AuthProvider>
+          <TitleWatcher titleConfig={titleConfig} />
+          <Outlet />
+        </AuthProvider>
+      </UserProvider>
     </ViewportProvider>
   );
 }

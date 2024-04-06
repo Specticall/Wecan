@@ -1,4 +1,4 @@
-import { TMood } from "@/types/general";
+import { TMood } from "@/context/MoodContext";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -45,4 +45,16 @@ export async function wait(timeMS: number) {
       resolve();
     }, timeMS);
   });
+}
+
+export function hasLoggedInToday(lastLogin: Date) {
+  const lastLoginDate = new Date(lastLogin);
+  const currentDate = new Date();
+
+  // If the date of login are the exact same then the user has already logged in today.
+  return (
+    lastLoginDate.getFullYear() === currentDate.getFullYear() &&
+    lastLoginDate.getMonth() === currentDate.getMonth() &&
+    lastLoginDate.getDate() === currentDate.getDate()
+  );
 }

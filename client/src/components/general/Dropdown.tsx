@@ -15,17 +15,17 @@ const DropdownContext = createContext<TDropdownContextValues | null>(null);
 export function Dropdown({
   className,
   children,
-  defaultSelectedValue,
+  defaultValue,
   onSelect = () => {},
 }: {
   className?: string;
-  defaultSelectedValue?: string;
+  defaultValue?: string;
   children: ReactNode;
   onSelect?: (selectedValue?: string) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<string | undefined>(
-    defaultSelectedValue
+    defaultValue
   );
 
   const handleClose = () => {

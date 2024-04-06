@@ -5,7 +5,7 @@ import {
   DropdownItem,
   DropdownTrigger,
 } from "@/components/general/Dropdown";
-import { TMood, useMood } from "@/context/MoodContext";
+import { TMood } from "@/context/MoodContext";
 import { getMoodColor } from "@/lib/utils";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -40,14 +40,17 @@ const triggerVariant = {
 
 export default function MoodDropdown({
   triggerColor,
+  onSetMood,
+  defaultValue,
 }: {
   triggerColor?: keyof typeof triggerVariant;
+  onSetMood: (selectedMood: TMood | undefined) => void;
+  defaultValue?: TMood;
 }) {
-  const { setCurrentMood, currentMood } = useMood();
   return (
     <Dropdown
-      defaultSelectedValue={currentMood}
-      onSelect={(selected) => setCurrentMood(selected as TMood | undefined)}
+      defaultValue={defaultValue}
+      onSelect={(selected) => onSetMood(selected as TMood | undefined)}
     >
       <DropdownTrigger
         className={twMerge(

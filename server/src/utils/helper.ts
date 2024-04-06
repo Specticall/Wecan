@@ -19,3 +19,18 @@ export async function verifyGoogleCredential(jtwToken: string) {
 
   return payload;
 }
+
+export function getRandomNumber(lower: number, upper: number): number {
+  return Math.floor(Math.random() * (upper - lower + 1)) + lower;
+}
+
+/**
+ * Checks if the input date is today.
+ */
+export function isToday(inputDate: Date) {
+  return (
+    inputDate.getDate() === new Date().getDate() &&
+    inputDate.getFullYear() === new Date().getFullYear() &&
+    inputDate.getMonth() === new Date().getMonth()
+  );
+}

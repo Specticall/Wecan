@@ -10,7 +10,6 @@ export default function Dashboard() {
 
   if (!userData) return;
 
-  const hasCreatedADiaryToday = false;
   return (
     <ScrollArea className="h-screen">
       <main className="grid grid-cols-[3fr_4fr] grid-rows-[8rem_1fr] items-start">
@@ -19,7 +18,7 @@ export default function Dashboard() {
             Welcome back, {userData.name}!
           </h1>
         </div>
-        {hasCreatedADiaryToday ? <DashboardQuotes /> : <DiaryForm />}
+        {userData.hasCreatedDiaryToday ? <DashboardQuotes /> : <DiaryForm />}
         <div className="px-16 flex flex-col gap-8">
           <EarnedPoints />
           <OnGoingTask />

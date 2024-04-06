@@ -10,8 +10,13 @@ export const handleErrorProduction: ErrorRequestHandler = async () =>
 export const handleErrorDevelopment: ErrorRequestHandler = async (
   error: AppError | Error,
   request,
-  response
+  response,
+  next
 ) => {
+  if (error.message === "invalid token") {
+    error = new AppError("Invalid JWT Token", 401);
+  }
+
   if (error instanceof AppError) {
     response.status(error.statusCode).send({
       status: error.status,

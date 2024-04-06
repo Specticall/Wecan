@@ -6,7 +6,6 @@ export default function EarnedPoints() {
 
   if (!userData) return;
   const { earnedToday, targetToday } = userData.point;
-  console.log(userData.point);
 
   const progressPercent =
     targetToday === 0 ? 0 : (earnedToday * 100) / targetToday;

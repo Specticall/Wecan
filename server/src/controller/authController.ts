@@ -3,6 +3,8 @@ import { createJWT, verifyGoogleCredential } from "../utils/helper";
 import { Mood, PrismaClient } from "@prisma/client";
 import { TGoogleResponse } from "../utils/types";
 import { AppError } from "../utils/AppError";
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { refreshUserData } from "./userController";
 
 const prisma = new PrismaClient();
 
@@ -39,7 +41,8 @@ export const googleLogin: RequestHandler = async (request, response, next) => {
         data: {
           email: dataFromGoogle.email,
           name: dataFromGoogle.name,
-          mood: Mood.UNKOWN,
+          mood: Mood.UNKNOWN,
+          hasCreatedDiaryToday: false,
           lastLogin: new Date(Date.now()),
           point: {
             create: {
@@ -60,17 +63,50 @@ export const googleLogin: RequestHandler = async (request, response, next) => {
           point: true,
         },
       });
+      if (!userData || !userData.point)
+        throw new AppError(
+          "Something went wrong while trying to retrieve the user data",
+          500
+        );
     }
 
-    if (!userData?.id) throw new AppError("Database id not found!", 404);
+    // Updates some fields in respect to the current time
+    const refreshedUserData = await refreshUserData(userData);
 
-    const token = createJWT(userData.id);
+    if (!refreshedUserData?.id)
+      throw new AppError("Database id not found!", 404);
+
+    const token = createJWT(refreshedUserData.id);
 
     response.status(200).send({
-      userData,
+      userData: refreshedUserData,
       token,
       status: "success",
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const protect: RequestHandler = async (request, response, next) => {
+  try {
+    // 1. Retrieve token from the header
+    const { authorization: bearerToken } = request.headers;
+    if (!bearerToken)
+      throw new AppError("Authorization header does not exist", 401);
+
+    // 2. Parse the token from the header string
+    const token = bearerToken.split(" ")[1];
+    if (!token) throw new AppError("JWT was not found in the header", 401);
+
+    // 3. verity the token against the secret string
+    const tokenIsValid = jwt.verify(
+      token,
+      process.env.JWT_STRING
+    ) as JwtPayload;
+    if (!tokenIsValid) throw new AppError("Invalid login token", 401);
+
+    next();
   } catch (error) {
     next(error);
   }

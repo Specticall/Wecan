@@ -4,7 +4,7 @@ import MoodDropdown from "../moodModal/MoodDropdown";
 import { ReactNode } from "react";
 
 export default function CurrentMood({ children }: { children: ReactNode }) {
-  const { currentMood } = useMood();
+  const { setCurrentMood, currentMood } = useMood();
 
   return (
     <article
@@ -15,7 +15,10 @@ export default function CurrentMood({ children }: { children: ReactNode }) {
     >
       <div className="w-14 aspect-square rounded-full bg-white"></div>
       <div className="flex-1">{children}</div>
-      <MoodDropdown />
+      <MoodDropdown
+        onSetMood={(currentMood) => setCurrentMood(currentMood)}
+        defaultValue={currentMood}
+      />
     </article>
   );
 }

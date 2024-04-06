@@ -17,6 +17,7 @@ export type TUserData = {
   password: string | null;
   streak: number;
   token: string;
+  hasCreatedDiaryToday: boolean;
   point: TPoint;
 };
 

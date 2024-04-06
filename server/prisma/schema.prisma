@@ -20,7 +20,8 @@ model User {
   password String?
   
   lastLogin DateTime @default(now())
-  
+  hasCreatedDiaryToday Boolean
+
   point Point?
   mood Mood
   streak Int?
@@ -63,7 +64,7 @@ model Diary {
   content String
   earnedPoints Int @default(0)
   targetPoints Int @default(0)
-
+  mood Mood
 }
 
 enum TaskStatus {
@@ -77,7 +78,7 @@ enum Mood {
   NEUTRAL
   SAD
   DEPRESSED
-  UNKOWN
+  UNKNOWN
 }
 
 model AvailableTask {

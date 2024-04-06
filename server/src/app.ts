@@ -25,10 +25,11 @@ app.use("*", (request, response, next) => {
   next(new AppError("The route you requested does not exist", 404));
 });
 
-app.use(
-  process.env.NODE_ENV === "production"
-    ? handleErrorProduction
-    : handleErrorDevelopment
-);
+app.use(handleErrorDevelopment);
+// app.use(
+//   process.env.NODE_ENV === "production"
+//     ? handleErrorProduction
+//     : handleErrorDevelopment
+// );
 
 export default app;

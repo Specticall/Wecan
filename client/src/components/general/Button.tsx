@@ -21,16 +21,19 @@ const variants = cva("text-sm px-6 py-3 rounded-full font-medium", {
 type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
   variant?: ExtractCVAVariants<typeof variants>;
   className?: string;
+  disabled?: boolean;
 };
 
 export default function Button({
   className = "",
   variant,
+  disabled,
   ...props
 }: ButtonProps) {
   return (
     <button
       {...props}
+      disabled={disabled}
       className={cn(variants({ variant }), className)}
     ></button>
   );

@@ -10,6 +10,7 @@ export class AppError extends Error {
     this.status = statusCode.toString().startsWith("2") ? "success" : "fail";
     this.operational = true;
 
+    Object.setPrototypeOf(this, AppError.prototype);
     Error.captureStackTrace(this, this.constructor);
   }
 }

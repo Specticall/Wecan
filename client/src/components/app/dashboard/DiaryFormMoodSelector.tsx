@@ -13,7 +13,7 @@ export default function DiaryFormMoodSelector({
   );
   return (
     <div
-      className="flex items-center justify-between gap-5 py-6 bg-accent rounded-md px-6 mb-6"
+      className="flex items-center justify-between gap-5 py-6 bg-accent rounded-md px-6 mb-4"
       style={
         selectedMood
           ? {

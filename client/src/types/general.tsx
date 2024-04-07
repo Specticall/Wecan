@@ -36,3 +36,8 @@ export type TUserLoginResponse = {
   userData: TUserData;
   status: "success" | "error";
 };
+
+export type TServerSucessResponse<T> = {
+  status: "success" | "fail";
+  data: T;
+};

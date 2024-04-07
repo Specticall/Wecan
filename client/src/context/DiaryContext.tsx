@@ -89,6 +89,7 @@ type TDiaryContextValues = {
   diaryList: TDiary[];
   selectedDiary: TDiary | undefined;
   selectDiaryById: (id: string) => void;
+  appendNewDiary: (newDiary: TDiary) => void;
 };
 
 const DiaryContext = createContext<TDiaryContextValues | null>(null);
@@ -110,9 +111,13 @@ export function DiaryProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const appendNewDiary = (newDiary: TDiary) => {
+    setDiaryList((current) => [...current, newDiary]);
+  };
+
   return (
     <DiaryContext.Provider
-      value={{ diaryList, selectDiaryById, selectedDiary }}
+      value={{ diaryList, selectDiaryById, selectedDiary, appendNewDiary }}
     >
       {children}
     </DiaryContext.Provider>

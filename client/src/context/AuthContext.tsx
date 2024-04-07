@@ -6,12 +6,14 @@ import { useUser } from "./UserContext";
 type TAuthContextValues = {
   token: string | undefined;
   handleSuccessfulLogin: (userData: TUserData, token: string) => void;
+  userId: string | undefined;
 };
 
 const AuthContext = createContext<TAuthContextValues | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | undefined>(undefined);
+  const [userId, setUserId] = useState<string | undefined>();
 
   const { setUserData } = useUser();
   const navigate = useNavigate();
@@ -23,6 +25,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     //2. Send user data to the `UserContext`
     setUserData(userData);
+    setUserId(userData.id);
 
     //3. Update user last login date
     type TODO = any;
@@ -32,7 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ token, handleSuccessfulLogin }}>
+    <AuthContext.Provider value={{ token, handleSuccessfulLogin, userId }}>
       {children}
     </AuthContext.Provider>
   );

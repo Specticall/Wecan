@@ -17,6 +17,8 @@ export const handleErrorDevelopment: ErrorRequestHandler = async (
     error = new AppError("Invalid JWT Token", 401);
   }
 
+  console.log(error, error instanceof AppError);
+
   if (error instanceof AppError) {
     response.status(error.statusCode).send({
       status: error.status,

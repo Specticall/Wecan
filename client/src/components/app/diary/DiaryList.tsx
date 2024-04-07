@@ -12,6 +12,8 @@ export default function DiaryList() {
 
   const handleSelect = (id: string) => () => selectDiaryById(id);
 
+  if (!diaryList) return;
+
   return (
     <ul className="">
       <Tooltip text="Completed" count={diaryList.length} className="mb-4" />

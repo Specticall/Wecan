@@ -7,7 +7,6 @@ import {
   useState,
 } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { useUser } from "./UserContext";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
 import axios from "axios";
 
@@ -76,9 +75,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     setUserId(userData.id);
     localStorage.setItem("id", userData.id);
-
-    //2. Send user data to the `UserContext`
-    setUserData(userData);
 
     //4. Redirect the user to `/app/dashboard`
     navigate("/app/dashboard");

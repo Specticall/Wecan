@@ -12,14 +12,14 @@ export const getUserDiaries: RequestHandler = async (
 ) => {
   try {
     // 1. Retrieve the user id from the user body
-    const { id: userId } = request.params;
+    const { id: userId } = request.query;
     if (!userId)
-      throw new Error("This request is missing `userId` in the body");
+      throw new Error("This request is missing `userId` in the parameter");
 
     // 2. Retrieve the user diaries
     const userDiaries = await prisma.diary.findMany({
       where: {
-        authorId: userId,
+        authorId: userId as string,
       },
     });
 

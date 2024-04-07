@@ -1,5 +1,5 @@
 import { useAuth } from "@/context/AuthContext";
-import { TDiary, useDiary } from "@/context/DiaryContext";
+import { TDiary } from "@/context/DiaryContext";
 import { TMood } from "@/context/MoodContext";
 import { usePopup } from "@/context/PopupContext";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
@@ -10,7 +10,7 @@ import { useMutation, useQueryClient } from "react-query";
 export default function useDiaryMutation() {
   const { token, userId } = useAuth();
   const { notify } = usePopup();
-  const { appendNewDiary } = useDiary();
+  // const { appendNewDiary } = useDiary();
   const queryClient = useQueryClient();
 
   const bearerTokenHeader = {
@@ -34,10 +34,10 @@ export default function useDiaryMutation() {
     onMutate: () => {
       notify("Saving your diary...");
     },
-    onSuccess: (data) => {
-      appendNewDiary(data.data.data);
+    onSuccess: () => {
+      // appendNewDiary(data.data.data);
       notify("Successfuly saved your diary");
-      queryClient.invalidateQueries({ queryKey: ["userData"] });
+      queryClient.invalidateQueries({ queryKey: ["userData", "diaryList"] });
     },
     onError: (error: AxiosError) => {
       console.error({ ...error, stack: "" });

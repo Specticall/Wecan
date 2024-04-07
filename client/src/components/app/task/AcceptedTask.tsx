@@ -2,6 +2,7 @@ import { ScrollArea } from "@/components/ui/scrollable";
 import TaskCard from "./TaskCard";
 import { Tooltip } from "@/components/general/Tooltip";
 import { getMoodColor } from "@/lib/utils";
+import { TMood } from "@/context/MoodContext";
 
 const dummy = [
   {
@@ -46,7 +47,7 @@ export default function AcceptedTask() {
               return (
                 <li className="px-8">
                   <TaskCard
-                    badgeColor={getMoodColor(task.mood)}
+                    badgeColor={getMoodColor(task.mood as TMood)}
                     task={task}
                     className="shadow-xl shadow-accent/5"
                   />

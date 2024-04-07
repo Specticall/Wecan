@@ -3,11 +3,9 @@ import cors from "cors";
 import { BASE_ENDPOINT } from "./utils/config";
 import authRouter from "./routes/authRouter";
 import diaryRouter from "./routes/diaryRouter";
-import {
-  handleErrorDevelopment,
-  handleErrorProduction,
-} from "./controller/errorController";
+import { handleErrorDevelopment } from "./controller/errorController";
 import { AppError } from "./utils/AppError";
+import userRouter from "./routes/userRouter";
 const app = express();
 
 // Enable fetching from localhost
@@ -17,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 // Main Endpoints
+app.use(`${BASE_ENDPOINT}/v1/user`, userRouter);
 app.use(`${BASE_ENDPOINT}/v1/auth`, authRouter);
 app.use(`${BASE_ENDPOINT}/v1/diary`, diaryRouter);
 

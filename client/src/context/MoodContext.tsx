@@ -1,14 +1,7 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 
-export type TMood = "Ecstatic" | "Happy" | "Neutral" | "Sad" | "Depressed";
-
 // The format of the `mood` field used by the API
-export type TMoodServerEnum =
-  | "ECSTATIC"
-  | "HAPPY"
-  | "NEUTRAL"
-  | "SAD"
-  | "DEPRESSED";
+export type TMood = "Ecstatic" | "Happy" | "Neutral" | "Sad" | "Depressed";
 
 type TMoodContextValues = {
   currentMood: TMood | undefined;

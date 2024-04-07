@@ -9,8 +9,7 @@ import Button from "@/components/general/Button";
 export default function DiaryDetails() {
   const { selectedDiary } = useDiary();
   const progressPercent = selectedDiary
-    ? (selectedDiary.wellnessPointsEarned * 100) /
-      selectedDiary.wellnessPointsTarget
+    ? (selectedDiary.earnedPoints * 100) / selectedDiary.targetPoints
     : 0;
 
   return (
@@ -21,7 +20,7 @@ export default function DiaryDetails() {
           <h2 className="text-lg">Joseph's Diary</h2>
           {selectedDiary ? (
             <DateDisplay
-              date={selectedDiary?.dateCreated}
+              date={new Date(selectedDiary?.dateCreated)}
               variant="light"
               className="mt-2"
             />
@@ -50,10 +49,7 @@ export default function DiaryDetails() {
                       Wellness Points Earned
                     </p>
                     <h3 className="text-[2rem]">
-                      {selectedDiary.wellnessPointsEarned.toLocaleString(
-                        "de-DE"
-                      )}{" "}
-                      pts
+                      {selectedDiary.earnedPoints.toLocaleString("de-DE")} pts
                     </h3>
                   </div>
                   <p className="font-semibold text-light text-lg self-end">{`${Math.round(
@@ -63,9 +59,7 @@ export default function DiaryDetails() {
                 <ProgressBar progressPercent={progressPercent} />
                 <div className="flex justify-between items-center mt-2 text-light text-[0.75rem]">
                   <p>Your Progress</p>
-                  <p>
-                    {selectedDiary.wellnessPointsTarget.toLocaleString("de-DE")}
-                  </p>
+                  <p>{selectedDiary.targetPoints.toLocaleString("de-DE")}</p>
                 </div>
               </div>
             </ScrollArea>

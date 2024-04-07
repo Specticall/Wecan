@@ -1,5 +1,7 @@
+import { RequestHandler } from "express";
 import { isToday } from "../utils/helper";
 import { PrismaClient, User } from "@prisma/client";
+import { AppError } from "../utils/AppError";
 
 const prisma = new PrismaClient();
 
@@ -35,4 +37,43 @@ export const refreshUserData = async (userData: User) => {
   });
 
   return updatedUser;
+};
+
+export const getUser: RequestHandler = async (request, response, next) => {
+  try {
+    // 1. Retrieve the id from URL query string
+    const { id: userId } = request.query;
+    if (!userId)
+      throw new AppError("User id was not provided in the `id` params!", 400);
+
+    // 2. Retrieve user from the database
+    const userData = await prisma.user.findUnique({
+      where: {
+        id: userId as string,
+      },
+    });
+    if (!userData)
+      throw new AppError(
+        `User data with the id of ${userId} was not found!`,
+        404
+      );
+
+    // 3. Sync and update the user data in respect to the current time
+    const refreshedUserData = await refreshUserData(userData);
+    if (!refreshUserData)
+      throw new AppError(
+        "Something went wrong while trying to refresh the user data",
+        500
+      );
+
+    //4. Send back the user data
+    response.status(200).send({
+      status: "success",
+      data: refreshedUserData,
+    });
+
+    // const userData = await prisma.get()
+  } catch (error) {
+    next(error);
+  }
 };

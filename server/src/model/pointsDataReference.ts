@@ -2,23 +2,23 @@ import { Mood } from "@prisma/client";
 import { getRandomNumber } from "../utils/helper";
 
 const pointReference = {
-  DEPRESSED: {
+  Depressed: {
     upper: 10000,
     lower: 8000,
   },
-  SAD: {
+  Sad: {
     upper: 8000,
     lower: 6000,
   },
-  NEUTRAL: {
+  Neutral: {
     upper: 6000,
     lower: 4000,
   },
-  HAPPY: {
+  Happy: {
     upper: 4000,
     lower: 2000,
   },
-  ECSTATIC: {
+  Ecstatic: {
     upper: 2000,
     lower: 1000,
   },
@@ -27,7 +27,7 @@ const pointReference = {
 /**
  * Returns a number that indicates the wellness point a user needs to earned that is generated based on the mood they gave.
  */
-export function getPointsByMood(mood: Exclude<Mood, "UNKNOWN">) {
+export function getPointsByMood(mood: Exclude<Mood, "Unknown">) {
   const { lower, upper } = pointReference[mood];
   return getRandomNumber(lower / 100, upper / 100) * 100;
 }

@@ -73,12 +73,12 @@ enum TaskStatus {
 }
 
 enum Mood {
-  ECSTATIC
-  HAPPY
-  NEUTRAL
-  SAD
-  DEPRESSED
-  UNKNOWN
+  Ecstatic
+  Happy
+  Neutral
+  Sad
+  Depressed
+  Unknown
 }
 
 model AvailableTask {

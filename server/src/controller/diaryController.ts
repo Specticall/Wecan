@@ -12,7 +12,7 @@ export const getUserDiaries: RequestHandler = async (
 ) => {
   try {
     // 1. Retrieve the user id from the user body
-    const { id: userId } = request.body;
+    const { id: userId } = request.params;
     if (!userId)
       throw new Error("This request is missing `userId` in the body");
 
@@ -48,16 +48,16 @@ export const createUserDiary: RequestHandler = async (
 
     // 1.5 Typecheck the incoming mood value
     const containsValidMoodValue = [
-      "ECSTATIC",
-      "HAPPY",
-      "SAD",
-      "DEPRESSED",
-      "NEUTRAL",
+      "Ecstatic",
+      "Happy",
+      "Sad",
+      "Depressed",
+      "Neutral",
     ].some((moodItem) => mood === moodItem);
 
     if (!containsValidMoodValue) {
       throw new AppError(
-        '"mood" must have the following values: "ECSTATIC", "HAPPY", "SAD", "DEPRESSED", "NEUTRAL"',
+        '"mood" must have the following values: "Ecstatic", "Happy", "Sad", "Depressed", "Neutral"',
         401
       );
     }
@@ -81,13 +81,20 @@ export const createUserDiary: RequestHandler = async (
         500
       );
 
-    // 4. Update the user's `hasCreatedDiaryToday` field
+    // 4. Update the user's `hasCreatedDiaryToday` and `Point` field
     await prisma.user.update({
       where: {
         id: userId,
       },
       data: {
         hasCreatedDiaryToday: true,
+        mood: mood,
+        point: {
+          update: {
+            earnedToday: 0,
+            targetToday: generatedTargetPoints,
+          },
+        },
       },
     });
 

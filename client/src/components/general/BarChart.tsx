@@ -1,3 +1,4 @@
+import { TMood } from "@/context/MoodContext";
 import { getMoodColor } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
@@ -33,7 +34,7 @@ export default function BarChart<
             const heightPercentage = Math.floor(
               ((heightLevel + 1) * 100) / (yAxis.length + 1)
             );
-            const cellColor = getMoodColor(item.value);
+            const cellColor = getMoodColor(item.value as TMood);
             return (
               <div
                 className="h-full w-full origin-bottom bar-element transition-all duration-300"

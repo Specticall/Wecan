@@ -1,3 +1,4 @@
+import PageLoader from "@/components/general/PageLoader";
 import TitleWatcher, { TitleConfig } from "@/components/service/TitleWatcher";
 import { AuthProvider } from "@/context/AuthContext";
 import PopupProvider from "@/context/PopupContext";
@@ -19,12 +20,13 @@ export default function FirstRouterChild() {
   return (
     <ViewportProvider>
       <PopupProvider>
-        <UserProvider>
-          <AuthProvider>
+        <AuthProvider>
+          <UserProvider>
             <TitleWatcher titleConfig={titleConfig} />
+            <PageLoader />
             <Outlet />
-          </AuthProvider>
-        </UserProvider>
+          </UserProvider>
+        </AuthProvider>
       </PopupProvider>
     </ViewportProvider>
   );

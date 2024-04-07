@@ -12,7 +12,7 @@ export type TUserData = {
   email: string;
   id: string;
   lastLogin: Date;
-  mood: "ECSTATIC" | "HAPPY" | "NEUTRAL" | "SAD" | "DEPRESSED" | "UNKOWN";
+  mood: "Ecstatic" | "Happy" | "Neutral" | "Sad" | "Depressed" | "Unknown";
   name: string;
   password: string | null;
   streak: number;

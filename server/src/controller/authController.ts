@@ -41,7 +41,7 @@ export const googleLogin: RequestHandler = async (request, response, next) => {
         data: {
           email: dataFromGoogle.email,
           name: dataFromGoogle.name,
-          mood: Mood.UNKNOWN,
+          mood: Mood.Unknown,
           hasCreatedDiaryToday: false,
           lastLogin: new Date(Date.now()),
           point: {

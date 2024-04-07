@@ -17,10 +17,14 @@ import HomeLayout from "./pages/LandingLayout";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import ProtectRoute from "./components/service/ProtectRoute";
+import { PageLoaderProvider } from "./context/PageLoaderContext";
+import { reloadSavedLoginDataLoader } from "./context/AuthContext";
+import PageLoader from "./components/general/PageLoader";
 
 const router = createBrowserRouter([
   {
     element: <FirstRouterChild />,
+    loader: reloadSavedLoginDataLoader,
     children: [
       {
         path: "/",

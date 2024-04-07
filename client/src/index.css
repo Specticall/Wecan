@@ -15,6 +15,10 @@ body {
   min-height: 100vh;
 }
 
+body #g_a11y_announcement {
+  display: none;
+}
+
 .section {
   max-width: 1200px;
   margin-inline: auto;

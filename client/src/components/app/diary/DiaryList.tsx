@@ -3,7 +3,6 @@ import ProgressBar from "@/components/general/ProgressBar";
 import { Tooltip } from "@/components/general/Tooltip";
 import { ScrollArea } from "@/components/ui/scrollable";
 import { useDiary } from "@/context/DiaryContext";
-import { TMood } from "@/context/MoodContext";
 import { cn, getMoodColor, truncateText } from "@/lib/utils";
 
 const TEXT_TRUNCATE_LENGTH = 75;
@@ -21,7 +20,7 @@ export default function DiaryList() {
           {diaryList.map((dairy) => {
             const isSelected = selectedDiary?.id === dairy.id;
             const progressPercent =
-              (dairy.wellnessPointsEarned * 100) / dairy.wellnessPointsTarget;
+              (dairy.earnedPoints * 100) / dairy.targetPoints;
             return (
               <>
                 <article
@@ -34,11 +33,11 @@ export default function DiaryList() {
                   <div
                     className="w-8 aspect-square rounded-full right-[-1rem] top-[-0.5rem] absolute"
                     style={{
-                      backgroundColor: getMoodColor(dairy.mood as TMood),
+                      backgroundColor: getMoodColor(dairy.mood),
                     }}
                   ></div>
                   <DateDisplay
-                    date={dairy.dateCreated}
+                    date={new Date(dairy.dateCreated)}
                     className="mb-6"
                     variant={isSelected ? "light" : "dark"}
                   />
@@ -75,9 +74,7 @@ export default function DiaryList() {
                       )}
                     >
                       <p>Your Progress</p>
-                      <p>
-                        {dairy.wellnessPointsTarget.toLocaleString("de-DE")}
-                      </p>
+                      <p>{dairy.targetPoints.toLocaleString("de-DE")}</p>
                     </div>
                   </div>
                 </article>

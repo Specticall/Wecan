@@ -2,7 +2,7 @@ import Button from "@/components/general/Button";
 import DiaryFormMoodSelector from "./DiaryFormMoodSelector";
 import DiaryFormHeader from "./DiaryFormHeader";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { TMood, TMoodServerEnum } from "@/context/MoodContext";
+import { TMood } from "@/context/MoodContext";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
 import { cn } from "@/lib/utils";
@@ -13,12 +13,6 @@ type TDiaryFields = {
   content: "";
   mood: TMood;
 };
-
-type TODO = any;
-/*
-2. Create post request
-3. Loading State
-*/
 
 export default function DiaryForm() {
   const {
@@ -33,7 +27,7 @@ export default function DiaryForm() {
   const onSubmit: SubmitHandler<TDiaryFields> = (value) => {
     const newDiary = {
       ...value,
-      mood: value.mood.toUpperCase() as TMoodServerEnum,
+      mood: value.mood,
     };
     createMutation.mutate(newDiary);
   };

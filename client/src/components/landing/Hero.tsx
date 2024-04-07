@@ -1,15 +1,18 @@
 import Icons from "@/components/general/Icon";
 import ButtonArrow from "./ButtonArrow";
 import DateDisplay from "../general/DateDisplay";
+import { useUser } from "@/context/UserContext";
 
 export function Hero() {
+  const { userData } = useUser();
+
   return (
     <section className="section overflow-hidden pb-6">
       <DateDisplay className="justify-center mb-4" />
       <h1 className="font-semibold text-2xl text-darkest text-center max-w-[50rem] mx-auto leading-[125%] md:text-[2.5rem] whitespace-break-spaces">
         Welcome Back,
         <span className="text-accent relative">
-          Joseph!{" "}
+          {userData?.name}!{" "}
           <div className="absolute top-[-2.75rem] right-[-4.4rem] md:hidden">
             <Icons icon="heroDecoration" />
           </div>

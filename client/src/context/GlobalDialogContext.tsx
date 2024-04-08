@@ -1,7 +1,5 @@
 import { cn } from "@/lib/utils";
 import React, {
-  DetailedHTMLProps,
-  HTMLAttributes,
   ReactElement,
   ReactNode,
   createContext,

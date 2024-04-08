@@ -1,5 +1,6 @@
 import { useAuth } from "@/context/AuthContext";
 import { TDiary } from "@/context/DiaryContext";
+import { useGlobalDialog } from "@/context/GlobalDialogContext";
 import { TMood } from "@/context/MoodContext";
 import { usePopup } from "@/context/PopupContext";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
@@ -12,6 +13,8 @@ export default function useDiaryMutation() {
   const { notify } = usePopup();
   // const { appendNewDiary } = useDiary();
   const queryClient = useQueryClient();
+
+  const { showDialog } = useGlobalDialog();
 
   const bearerTokenHeader = {
     Authorization: `Bearer ${token}`,
@@ -31,12 +34,10 @@ export default function useDiaryMutation() {
         }
       );
     },
-    onMutate: () => {
-      notify("Saving your diary...");
-    },
     onSuccess: () => {
       // appendNewDiary(data.data.data);
-      notify("Successfuly saved your diary");
+      // notify("Successfuly saved your diary");
+      showDialog("diaryCreation");
       queryClient.invalidateQueries({
         queryKey: ["userData", "diaryList", "userMood"],
       });

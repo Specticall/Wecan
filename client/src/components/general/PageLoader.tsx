@@ -19,5 +19,5 @@ export default function PageLoader() {
     if (state === "idle") completeLoading();
   }, [state]);
 
-  return <LoadingBar color="rgb(74 90 239)" ref={ref} />;
+  // return <LoadingBar color="rgb(74 90 239)" ref={ref} />;
 }

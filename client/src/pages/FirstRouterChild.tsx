@@ -1,11 +1,12 @@
+import DiaryCreationDialog from "@/components/app/dashboard/DiaryCreationDialog";
 import PageLoader from "@/components/general/PageLoader";
 import TitleWatcher, { TitleConfig } from "@/components/service/TitleWatcher";
 import { AuthProvider } from "@/context/AuthContext";
 import {
-  DialogCollapse,
   DialogComponentProps,
   GlobalDialogProvider,
 } from "@/context/GlobalDialogContext";
+import { MoodProvider } from "@/context/MoodContext";
 import PopupProvider from "@/context/PopupContext";
 import { UserProvider } from "@/context/UserContext";
 import { ViewportProvider } from "@/context/ViewportContext";
@@ -18,35 +19,36 @@ const titleConfig: TitleConfig = {
     { path: "/home/landing", titlePath: "Landing" },
     { path: "/login", titlePath: "Login" },
     { path: "/register", titlePath: "Create an Account" },
+    { path: "/app/dashboard", titlePath: "Dashboard" },
+    { path: "/app/diary", titlePath: "Diary" },
+    { path: "/app/task", titlePath: "Task" },
+    { path: "/app/statistics", titlePath: "Statistics" },
   ],
 };
 
 const dialogComponents: DialogComponentProps = [
   {
     name: "diaryCreation",
-    component: (
-      <div className="bg-white p-8">
-        <DialogCollapse>Close</DialogCollapse>
-        TESTING
-      </div>
-    ),
+    component: <DiaryCreationDialog />,
   },
 ];
 
 export default function FirstRouterChild() {
   return (
     <ViewportProvider>
-      <GlobalDialogProvider dialogComponents={dialogComponents}>
-        <PopupProvider>
-          <AuthProvider>
+      <PopupProvider>
+        <AuthProvider>
+          <MoodProvider>
             <UserProvider>
-              <TitleWatcher titleConfig={titleConfig} />
-              <PageLoader />
-              <Outlet />
+              <GlobalDialogProvider dialogComponents={dialogComponents}>
+                <TitleWatcher titleConfig={titleConfig} />
+                <PageLoader />
+                <Outlet />
+              </GlobalDialogProvider>
             </UserProvider>
-          </AuthProvider>
-        </PopupProvider>
-      </GlobalDialogProvider>
+          </MoodProvider>
+        </AuthProvider>
+      </PopupProvider>
     </ViewportProvider>
   );
 }

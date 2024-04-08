@@ -2,6 +2,7 @@ import Icons from "@/components/general/Icon";
 import ButtonArrow from "./ButtonArrow";
 import DateDisplay from "../general/DateDisplay";
 import { useUser } from "@/context/UserContext";
+import LoadingBar from "react-top-loading-bar";
 
 export function Hero() {
   const { userData } = useUser();

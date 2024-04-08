@@ -50,6 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   //Retrieve user id and token from local storage and store them in state.
   useEffect(() => {
+    console.log(userData);
     if (!userData) {
       setHasReloadSavedLoginData(true);
       return;

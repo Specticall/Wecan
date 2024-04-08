@@ -6,7 +6,7 @@ import { TMood } from "@/context/MoodContext";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
 import { cn } from "@/lib/utils";
-import useDiaryMutation from "@/hooks/useSaveDiary";
+import useDiaryMutation from "@/hooks/useDiaryMutation";
 import LoadingSpinner from "@/components/general/loadingSpinner";
 
 type TDiaryFields = {

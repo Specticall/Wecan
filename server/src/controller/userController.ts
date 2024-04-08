@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
-import { isToday } from "../utils/helper";
-import { PrismaClient, User } from "@prisma/client";
+import { buildPrismaSelectQueryObject, isToday } from "../utils/helper";
+import { Prisma, PrismaClient, User } from "@prisma/client";
 import { AppError } from "../utils/AppError";
 
 const prisma = new PrismaClient();
@@ -41,25 +41,44 @@ export const refreshUserData = async (userData: User) => {
 
 export const getUser: RequestHandler = async (request, response, next) => {
   try {
-    // 1. Retrieve the id from URL query string
-    const { id: userId } = request.query;
+    // 1. Retrieve the data from URL query string
+    const queries = request.query;
+
+    const userId = queries.id;
     if (!userId)
       throw new AppError("User id was not provided in the `id` params!", 400);
 
-    // 2. Retrieve user from the database
-    const userData = await prisma.user.findUnique({
+    /*
+    With prisma, the query chaining method used in mongoose unfortunately does not work. The approach recommended by the maintainers of prisma is to create a query option object that builds on the user inputted request queries.
+    */
+    const queryOption: Prisma.UserFindUniqueArgs = {
       where: {
         id: userId as string,
       },
-    });
+    };
+
+    //2. Check for `field limiting` queries
+    if (queries.fields) {
+      const selectedFields = (queries.fields as string).split(" ");
+      queryOption.select = buildPrismaSelectQueryObject(selectedFields);
+    }
+
+    // 3. Retrieve user from the database
+    const userData = await prisma.user.findUnique(queryOption);
     if (!userData)
       throw new AppError(
         `User data with the id of ${userId} was not found!`,
         404
       );
 
-    // 3. Sync and update the user data in respect to the current time
-    const refreshedUserData = await refreshUserData(userData);
+    // 4. Sync and update the user data in respect to the current time IF the user does not provide any query other than the id
+    const shouldRefreshUserData = Object.keys(queries).every(
+      (item) => item === "id"
+    );
+    const refreshedUserData = shouldRefreshUserData
+      ? await refreshUserData(userData)
+      : userData;
+
     if (!refreshUserData)
       throw new AppError(
         "Something went wrong while trying to refresh the user data",
@@ -71,8 +90,71 @@ export const getUser: RequestHandler = async (request, response, next) => {
       status: "success",
       data: refreshedUserData,
     });
+  } catch (error) {
+    next(error);
+  }
+};
 
-    // const userData = await prisma.get()
+export const getUserMood: RequestHandler = async (request, response, next) => {
+  try {
+    const { id: userId } = request.query;
+    if (!userId)
+      throw new AppError(
+        "`id` was not provided in the request query string!",
+        400
+      );
+
+    const userMood = await prisma.user.findUnique({
+      where: {
+        id: userId as string,
+      },
+      select: {
+        mood: true,
+      },
+    });
+    if (!userMood)
+      throw new AppError(
+        "Something went wrong while trying to find the user's mood",
+        500
+      );
+
+    response.status(200).send({
+      status: "success",
+      data: userMood,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateUser: RequestHandler = async (request, response, next) => {
+  try {
+    // 1. Retrieve the data from URL query string
+    const queries = request.query;
+    const updatedData = request.body;
+
+    const userId = queries.id as string;
+    if (!userId)
+      throw new AppError("User id was not provided in the `id` params!", 400);
+
+    // 3. Retrieve user from the database
+    const updatedUserData = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: updatedData,
+    });
+    if (!updatedUserData)
+      throw new AppError(
+        `User data with the id of ${userId} was not found!`,
+        404
+      );
+
+    //4. Send back the user data
+    response.status(200).send({
+      status: "success",
+      data: updatedUserData,
+    });
   } catch (error) {
     next(error);
   }

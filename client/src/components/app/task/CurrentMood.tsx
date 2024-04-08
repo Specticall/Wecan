@@ -1,10 +1,16 @@
-import { useMood } from "@/context/MoodContext";
 import { getMoodColor } from "@/lib/utils";
 import MoodDropdown from "../moodModal/MoodDropdown";
 import { ReactNode } from "react";
+import { TMood, useMood } from "@/context/MoodContext";
+import useMoodMutation from "@/hooks/useMoodMutation";
 
 export default function CurrentMood({ children }: { children: ReactNode }) {
-  const { setCurrentMood, currentMood } = useMood();
+  const { currentMood } = useMood();
+  const { updateMutation } = useMoodMutation();
+
+  const handleSetMood = (value: TMood | undefined) => {
+    updateMutation.mutate(value);
+  };
 
   return (
     <article
@@ -15,10 +21,7 @@ export default function CurrentMood({ children }: { children: ReactNode }) {
     >
       <div className="w-14 aspect-square rounded-full bg-white"></div>
       <div className="flex-1">{children}</div>
-      <MoodDropdown
-        onSetMood={(currentMood) => setCurrentMood(currentMood)}
-        defaultValue={currentMood}
-      />
+      <MoodDropdown onSetMood={handleSetMood} defaultValue={currentMood} />
     </article>
   );
 }

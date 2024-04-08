@@ -34,3 +34,15 @@ export function isToday(inputDate: Date) {
     inputDate.getMonth() === new Date().getMonth()
   );
 }
+
+/**
+ * Converts an array of field into a prisma query select object
+ * @param queries
+ * @returns
+ */
+export function buildPrismaSelectQueryObject(fields: string[]) {
+  return fields.reduce((options: Record<string, boolean>, field) => {
+    options[field] = true;
+    return options;
+  }, {});
+}

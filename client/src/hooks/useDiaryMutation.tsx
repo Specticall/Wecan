@@ -37,7 +37,9 @@ export default function useDiaryMutation() {
     onSuccess: () => {
       // appendNewDiary(data.data.data);
       notify("Successfuly saved your diary");
-      queryClient.invalidateQueries({ queryKey: ["userData", "diaryList"] });
+      queryClient.invalidateQueries({
+        queryKey: ["userData", "diaryList", "userMood"],
+      });
     },
     onError: (error: AxiosError) => {
       console.error({ ...error, stack: "" });

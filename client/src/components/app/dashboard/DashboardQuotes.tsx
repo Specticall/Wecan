@@ -4,6 +4,7 @@ import dashboardDefaultImage from "/assets/dashboard-default.png";
 
 export default function DashboardQuotes() {
   const { currentMood } = useMood();
+
   return (
     <div className="flex flex-col self-stretch">
       <CurrentMood>

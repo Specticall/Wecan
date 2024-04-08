@@ -69,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     setToken(token);
     setUserId(userId);
-    // queryClient.setQueryData(["userData"], userData)
+    queryClient.setQueryData(["userData"], userData);
     setHasReloadSavedLoginData(true);
   }, [userData, token, userId, queryClient]);
 

@@ -38,15 +38,15 @@ export default function FirstRouterChild() {
     <ViewportProvider>
       <PopupProvider>
         <AuthProvider>
-          <MoodProvider>
-            <UserProvider>
+          <UserProvider>
+            <MoodProvider>
               <GlobalDialogProvider dialogComponents={dialogComponents}>
                 <TitleWatcher titleConfig={titleConfig} />
-                <PageLoader />
+                {/* <PageLoader /> */}
                 <Outlet />
               </GlobalDialogProvider>
-            </UserProvider>
-          </MoodProvider>
+            </MoodProvider>
+          </UserProvider>
         </AuthProvider>
       </PopupProvider>
     </ViewportProvider>

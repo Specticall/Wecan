@@ -4,6 +4,7 @@ import { ReactNode, createContext, useContext } from "react";
 import { UseQueryResult, useQuery } from "react-query";
 import { useAuth } from "./AuthContext";
 import { TServerSucessResponse } from "@/types/general";
+import { useUser } from "./UserContext";
 
 // The format of the `mood` field used by the API
 export type TMood = "Ecstatic" | "Happy" | "Neutral" | "Sad" | "Depressed";
@@ -20,9 +21,12 @@ export function MoodProvider({ children }: { children: ReactNode }) {
   // const [currentMood, setCurrentMood] = useState<TMood | undefined>();
 
   const { userId, token } = useAuth();
+  // const { userData } = useUser();
+
+  // const username = userData?.name;
 
   const moodQuery = useQuery({
-    queryKey: ["userMood", userId],
+    queryKey: ["userMood", token],
     queryFn: async () => {
       const response = await axios.get<
         TServerSucessResponse<{ mood: TMood | "Unknown" }>
@@ -35,6 +39,8 @@ export function MoodProvider({ children }: { children: ReactNode }) {
     },
     enabled: userId ? true : false,
   });
+
+  console.log(moodQuery.data);
 
   const currentMood = moodQuery.data === "Unknown" ? undefined : moodQuery.data;
 

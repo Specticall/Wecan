@@ -111,7 +111,7 @@ export function DiaryProvider({ children }: { children: ReactNode }) {
   const [selectedDiary, setSelectedDiary] = useState<TDiary | undefined>();
 
   const diaryQuery = useQuery(
-    ["diaryList", userId],
+    ["diaryList", token],
     async () => {
       const response = await axios.get<TServerSucessResponse<TDiary[]>>(
         `${BASE_URL}${BASE_ENDPOINT}/v1/diary?id=${userId}`,
@@ -124,7 +124,7 @@ export function DiaryProvider({ children }: { children: ReactNode }) {
       return response.data.data;
     },
     {
-      enabled: userId && token ? true : false,
+      enabled: userId ? true : false,
     }
   );
 

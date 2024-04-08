@@ -27,13 +27,13 @@ export default function useMoodMutation() {
     {
       onMutate: (newMood?: TMood) => {
         //1. Cancel outgoing queries (data fetching) to prevent race conditions
-        queryClient.cancelQueries({ queryKey: ["userMood"] });
+        queryClient.cancelQueries({ queryKey: ["userMood", token] });
 
         //2. Save the previous value from the mood query cache (used in case the mutation fails)
-        const previousMood = queryClient.getQueryData(["userMood"]);
+        const previousMood = queryClient.getQueryData(["userMood", token]);
 
         //3. Set an optimisitic update to the mood query cache
-        queryClient.setQueryData(["userMood"], newMood);
+        queryClient.setQueryData(["userMood", token], newMood);
 
         //4. Return the context (storage) that contains the previous value in case of an error
         return { previousMood };
@@ -42,7 +42,7 @@ export default function useMoodMutation() {
         /*
         If an error occurs, we can simply revert back to the previous value we stored in the context
         */
-        queryClient.setQueryData(["userMood"], context?.previousMood);
+        queryClient.setQueryData(["userMood", token], context?.previousMood);
         // Make sure to also display an error message indicating something went wrong
         notify(
           "Something went wrong while attempting to change your mood, please try again later."
@@ -52,7 +52,7 @@ export default function useMoodMutation() {
         /*
         It is important to have the query refetch again after the optimistic mutation process finished to make sure our UI contains the most recent and up to date data.
         */
-        queryClient.invalidateQueries({ queryKey: ["userMood"] });
+        queryClient.invalidateQueries({ queryKey: ["userMood", token] });
       },
     }
   );

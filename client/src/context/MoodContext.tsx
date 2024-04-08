@@ -22,7 +22,7 @@ export function MoodProvider({ children }: { children: ReactNode }) {
   const { userId, token } = useAuth();
 
   const moodQuery = useQuery({
-    queryKey: ["userMood"],
+    queryKey: ["userMood", userId],
     queryFn: async () => {
       const response = await axios.get<
         TServerSucessResponse<{ mood: TMood | "Unknown" }>

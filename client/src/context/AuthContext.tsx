@@ -9,6 +9,7 @@ import {
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
 import axios from "axios";
+import { useQueryClient } from "react-query";
 
 type TAuthContextValues = {
   token: string | undefined;
@@ -46,11 +47,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [hasReloadSavedLoginData, setHasReloadSavedLoginData] = useState(false);
 
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const userData = useLoaderData() as TUserData | undefined;
 
   //Retrieve user id and token from local storage and store them in state.
   useEffect(() => {
-    console.log(userData);
+    queryClient.resetQueries();
+
     if (!userData) {
       setHasReloadSavedLoginData(true);
       return;
@@ -66,15 +69,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     setToken(token);
     setUserId(userId);
+    // queryClient.setQueryData(["userData"], userData)
     setHasReloadSavedLoginData(true);
-  }, [userData, token, userId]);
+  }, [userData, token, userId, queryClient]);
 
   const handleSuccessfulLogin = (userData: TUserData, token: string) => {
     //1. Store the token and user id in local storage and state
     setToken(token);
-    localStorage.setItem("token", token);
-
     setUserId(userData.id);
+
+    localStorage.setItem("token", token);
     localStorage.setItem("id", userData.id);
 
     //4. Redirect the user to `/app/dashboard`

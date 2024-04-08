@@ -4,6 +4,7 @@ import { Tooltip } from "@/components/general/Tooltip";
 import { ScrollArea } from "@/components/ui/scrollable";
 import { useDiary } from "@/context/DiaryContext";
 import { cn, getMoodColor, truncateText } from "@/lib/utils";
+import EmptyDiaryList from "./EmptyDiaryList";
 
 const TEXT_TRUNCATE_LENGTH = 75;
 
@@ -18,6 +19,7 @@ export default function DiaryList() {
     <ul className="">
       <Tooltip text="Completed" count={diaryList.length} className="mb-4" />
       <ScrollArea className="h-[calc(100vh-10.5rem)]">
+        {diaryList.length === 0 && <EmptyDiaryList />}
         <div className="grid grid-cols-2 gap-8 items-start pr-8 pt-4  content-start auto-rows-fr">
           {diaryList.map((dairy) => {
             const isSelected = selectedDiary?.id === dairy.id;

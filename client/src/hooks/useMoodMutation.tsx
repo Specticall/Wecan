@@ -2,7 +2,7 @@ import { useAuth } from "@/context/AuthContext";
 import { TMood } from "@/context/MoodContext";
 import { usePopup } from "@/context/PopupContext";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useMutation, useQueryClient } from "react-query";
 
 export default function useMoodMutation() {
@@ -38,10 +38,9 @@ export default function useMoodMutation() {
         //4. Return the context (storage) that contains the previous value in case of an error
         return { previousMood };
       },
-      onSuccess: (data) => {},
-      onError: (error: AxiosError, newMood, context) => {
+      onError: (_, __, context) => {
         /*
-        If an error occur, we can simply revert back to the previous value we stored in the context
+        If an error occurs, we can simply revert back to the previous value we stored in the context
         */
         queryClient.setQueryData(["userMood"], context?.previousMood);
         // Make sure to also display an error message indicating something went wrong

@@ -62,8 +62,9 @@ export function GlobalDialogProvider({
       ></div>
       <div
         className={cn(
-          `fixed inset-0 z-[110] flex flex-col items-center justify-center invisible opacity-0 transition-all duration-200`,
-          isShowing.selectedComponent && "opacity-1 visible"
+          `fixed inset-0 z-[110] flex flex-col items-center justify-center invisible scale-90 translate-y-[5%] duration-200 transition-all opacity-0`,
+          isShowing.selectedComponent &&
+            "opacity-1 visible scale-1 translate-y-0"
         )}
       >
         {isShowing.selectedComponent}

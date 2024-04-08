@@ -18,7 +18,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const userQuery = useQuery(
     ["userData", userId, token],
     async () => {
-      console.log("FETCHIN USER DATA");
+      console.log("RUNNN", userId && token ? true : false);
       const response = await axios.get<TServerSucessResponse<TUserData>>(
         `${BASE_URL}${BASE_ENDPOINT}/v1/user?id=${userId}`,
         {

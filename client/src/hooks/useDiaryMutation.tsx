@@ -22,7 +22,6 @@ export default function useDiaryMutation() {
 
   const createMutation = useMutation({
     mutationFn: (diary: { content: string; mood: TMood }) => {
-      console.log(diary);
       return axios.post<TServerSucessResponse<TDiary>>(
         `${BASE_URL}${BASE_ENDPOINT}/v1/diary`,
         {
@@ -38,9 +37,9 @@ export default function useDiaryMutation() {
       // appendNewDiary(data.data.data);
       // notify("Successfuly saved your diary");
       showDialog("diaryCreation");
-      queryClient.invalidateQueries({
-        queryKey: ["userData", "diaryList", "userMood"],
-      });
+      queryClient.invalidateQueries("userData");
+      queryClient.invalidateQueries("diaryList");
+      queryClient.invalidateQueries("userMood");
     },
     onError: (error: AxiosError) => {
       console.error({ ...error, stack: "" });

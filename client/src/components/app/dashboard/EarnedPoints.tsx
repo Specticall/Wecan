@@ -14,7 +14,8 @@ export default function EarnedPoints() {
       <div>
         <p>Wellness Points Earned Today</p>
         <h3 className="text-xl">
-          {earnedToday.toLocaleString("de-DE")} points
+          {earnedToday.toLocaleString("de-DE")} /{" "}
+          {targetToday.toLocaleString("de-DE")} points
         </h3>
       </div>
       <div>
@@ -25,8 +26,8 @@ export default function EarnedPoints() {
         </div>
         <ProgressBar progressPercent={progressPercent} />
         <div className="flex justify-between items-center mt-2 text-light text-[0.75rem]">
-          <p>Your Progress</p>
-          <p>{targetToday.toLocaleString("de-DE")}</p>
+          <p className="text-[1rem]">Your Progress</p>
+          <p className="text-md">{targetToday.toLocaleString("de-DE")}</p>
         </div>
       </div>
     </article>

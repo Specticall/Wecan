@@ -4,9 +4,11 @@ import OnGoingTask from "@/components/app/dashboard/OnGoingTask";
 import DashboardQuotes from "@/components/app/dashboard/DashboardQuotes";
 import DiaryForm from "@/components/app/dashboard/DiaryForm";
 import { useUser } from "@/context/UserContext";
+import { useGlobalDialog } from "@/context/GlobalDialogContext";
 
 export default function Dashboard() {
   const { userData } = useUser();
+  const { showDialog } = useGlobalDialog();
 
   if (!userData) return;
 

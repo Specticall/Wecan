@@ -6,7 +6,7 @@ import { getMoodColor } from "@/lib/utils";
 export default function GeneratorTaskCard() {
   const { currentMood } = useMood();
   const { generatedTask, generatedTaskQuery } = useTaskGenerator();
-  const moodColor = currentMood && getMoodColor(currentMood);
+  const moodColor = generatedTask?.mood && getMoodColor(generatedTask?.mood);
   return (
     <article className="shadow-lg relative w-full">
       <Skeleton
@@ -22,7 +22,11 @@ export default function GeneratorTaskCard() {
               <p className="text-light text mb-2">On Completion</p>
               <p
                 className="bg-dark px-4 py-[2px] rounded-full text-lightest"
-                style={currentMood ? { backgroundColor: moodColor } : undefined}
+                style={
+                  generatedTask?.mood
+                    ? { backgroundColor: moodColor }
+                    : undefined
+                }
               >
                 + {generatedTask?.points} pts
               </p>

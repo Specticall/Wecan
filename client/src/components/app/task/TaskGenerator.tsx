@@ -7,19 +7,14 @@ import TaskCard from "./TaskCard";
 import "@/styles/animation.css";
 import { Skeleton } from "@/components/general/Skeleton";
 import { getMoodColor } from "@/lib/utils";
+import useTaskGenerator from "@/hooks/useTaskGenerator";
 
 export default function TaskGenerator() {
   const { currentMood } = useMood();
-
-  const generator = useQuery({
-    queryKey: ["generatedTask"],
-    queryFn: () => generateTask(currentMood),
-  });
-
-  const generatedTask = generator.data;
+  const { generatedTask, generatedTaskQuery } = useTaskGenerator();
 
   const shuffleTask = () => {
-    generator.refetch();
+    generatedTaskQuery.refetch();
   };
 
   return (
@@ -34,7 +29,9 @@ export default function TaskGenerator() {
       <div className="relative z-10 flex-1 flex flex-col justify-center gap-8">
         <article className="shadow-lg relative w-full">
           <Skeleton
-            isLoading={generator.isLoading || generator.isRefetching}
+            isLoading={
+              generatedTaskQuery.isLoading || generatedTaskQuery.isRefetching
+            }
             className="h-48"
           >
             <TaskCard task={generatedTask} />

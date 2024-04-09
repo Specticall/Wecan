@@ -37,9 +37,9 @@ export default function useDiaryMutation() {
       // appendNewDiary(data.data.data);
       // notify("Successfuly saved your diary");
       showDialog("diaryCreation");
-      queryClient.invalidateQueries("userData");
-      queryClient.invalidateQueries("diaryList");
-      queryClient.invalidateQueries("userMood");
+      queryClient.invalidateQueries(["userData"]);
+      queryClient.invalidateQueries(["diaryList"]);
+      queryClient.invalidateQueries(["userMood"]);
     },
     onError: (error: AxiosError) => {
       console.error({ ...error, stack: "" });

@@ -1,24 +1,35 @@
-import { TMood } from "@/context/MoodContext";
-import { generateTask } from "@/data/dummyTasksEndpoint";
+import { useAuth } from "@/context/AuthContext";
+import { useMood } from "@/context/MoodContext";
+import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
+import { TGeneratedTask, TServerSucessResponse } from "@/types/general";
+import axios from "axios";
 import { useQuery } from "react-query";
 
-export default function useTaskGenerator({ mood }: { mood?: TMood }) {
-  const generator = useQuery({
+export default function useTaskGenerator() {
+  const { currentMood } = useMood();
+  const { token, userId } = useAuth();
+
+  const moodQueryString = `&mood=${currentMood}`;
+
+  const generatedTaskQuery = useQuery({
     queryKey: ["generatedTask"],
-    queryFn: () => generateTask(mood),
+    queryFn: async () => {
+      const response = await axios.get<TServerSucessResponse<TGeneratedTask>>(
+        `${BASE_URL}${BASE_ENDPOINT}/v1/task/generated?id=${userId}${
+          currentMood ? moodQueryString : ""
+        }`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      return response.data.data;
+    },
   });
 
-  const generateNewTask = () => {
-    generator.refetch();
-  };
+  const generatedTask = generatedTaskQuery.data;
 
-  const generatedTask = generator.data;
-
-  const generatorState = {
-    isLoading: generator.isLoading || generator.isRefetching,
-    isError: generator.isError,
-    isSuccess: generator.isSuccess,
-  };
-
-  return { generateNewTask, generatorState, generatedTask };
+  return { generatedTask, generatedTaskQuery };
 }

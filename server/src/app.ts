@@ -1,11 +1,15 @@
 import express from "express";
 import cors from "cors";
-import { BASE_ENDPOINT } from "./utils/config";
+
 import authRouter from "./routes/authRouter";
 import diaryRouter from "./routes/diaryRouter";
+import userRouter from "./routes/userRouter";
+import taskRouter from "./routes/taskRouter";
+
+import { BASE_ENDPOINT } from "./utils/config";
 import { handleErrorDevelopment } from "./controller/errorController";
 import { AppError } from "./utils/AppError";
-import userRouter from "./routes/userRouter";
+
 const app = express();
 
 // Enable fetching from localhost
@@ -18,6 +22,7 @@ app.use(express.json());
 app.use(`${BASE_ENDPOINT}/v1/user`, userRouter);
 app.use(`${BASE_ENDPOINT}/v1/auth`, authRouter);
 app.use(`${BASE_ENDPOINT}/v1/diary`, diaryRouter);
+app.use(`${BASE_ENDPOINT}/v1/task`, taskRouter);
 
 // Handle invalid routes
 app.use("*", (request, response, next) => {

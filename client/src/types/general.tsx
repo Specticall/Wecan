@@ -1,3 +1,5 @@
+import { TMood } from "@/context/MoodContext";
+
 //eslint-disable-next-line
 export type ExtractCVAVariants<T extends (...args: any) => unknown> =
   NonNullable<NonNullable<Parameters<T>[0]>["variant"]>;
@@ -40,4 +42,12 @@ export type TUserLoginResponse = {
 export type TServerSucessResponse<T> = {
   status: "success" | "fail";
   data: T;
+};
+
+export type TGeneratedTask = {
+  id: string;
+  points: number;
+  title: string;
+  description: string;
+  mood: TMood | "Unknown";
 };

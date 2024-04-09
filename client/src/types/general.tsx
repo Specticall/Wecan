@@ -51,3 +51,28 @@ export type TGeneratedTask = {
   description: string;
   mood: TMood | "Unknown";
 };
+
+export type TUserTask = {
+  id: string;
+  userId: string;
+  points: number;
+  title: string;
+  description: string;
+  status: "Completed" | "OnGoing";
+  mood: TMood | "Unknown";
+};
+
+export type TTask = {
+  id: string;
+  title: string;
+  points: number;
+  description: string;
+};
+
+export type TTaskRequest = {
+  description: string;
+  points: number;
+  title: string;
+  status: "OnGoing" | "Completed";
+  mood: TMood | "Unknown";
+};

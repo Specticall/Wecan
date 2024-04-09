@@ -2,7 +2,7 @@ import { ReactNode, createContext, useContext, useState } from "react";
 
 type TTaskContextValues = {};
 
-export type TTask = {
+type TTask = {
   id: string;
   title: string;
   points: number;

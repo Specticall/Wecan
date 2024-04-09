@@ -49,6 +49,7 @@ model Task {
   points Int
   title String
   description String
+  mood Mood
   status TaskStatus @default(OnGoing)
   
   user User @relation(fields: [userId], references: [id])

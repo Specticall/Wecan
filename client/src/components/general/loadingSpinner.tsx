@@ -14,7 +14,7 @@ const styles = cva("", {
       xl: "!border-[0.4rem]",
       lg: "!border-[0.3rem]",
       md: "!border-[0.2rem]",
-      sm: "!border-[0.2rem]",
+      sm: "!border-[0.175rem]",
     },
   },
 });

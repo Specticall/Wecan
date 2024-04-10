@@ -189,21 +189,25 @@ export const updateUserTask: RequestHandler = async (
   next
 ) => {
   try {
-    const { id: taskId } = request.query;
+    const taskId = request.query.taskId as string;
     if (!taskId)
       throw new AppError(
-        "The request is missing 'id' in the query string (the id field is the task id)",
+        "The request is missing 'taskId' in the query string",
         400
       );
-
-    const data = request.body;
-    if (!data) throw new AppError("No data found in the body", 400);
 
     const updatedUserTask = await prisma.task.update({
       where: {
         id: taskId as string,
       },
-      data,
+      // If they don't exist (undefined) the query will be ignored
+      data: {
+        description: request.body.description,
+        mood: request.body.mood,
+        points: request.body.points,
+        status: request.body.status,
+        title: request.body.title,
+      },
     });
     if (!updatedUserTask)
       throw new AppError(
@@ -214,6 +218,76 @@ export const updateUserTask: RequestHandler = async (
     response.status(200).send({
       status: "success",
       data: updatedUserTask,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const completedUserTask: RequestHandler = async (
+  request,
+  response,
+  next
+) => {
+  try {
+    const taskId = request.query.taskId as string;
+    const userId = request.query.userId as string;
+    if (!taskId || !userId)
+      throw new AppError(
+        "The request is missing 'taskId' or 'userId' in the query string",
+        400
+      );
+
+    // Make sure the task was not previously completed
+    const taskStatus = await prisma.task.findUnique({
+      where: {
+        id: taskId,
+      },
+      select: {
+        status: true,
+      },
+    });
+    if (taskStatus?.status === "Completed")
+      throw new AppError("Task is already completed", 400);
+
+    // Update the task document
+    const updatedTask = await prisma.task.update({
+      where: {
+        id: taskId,
+      },
+      data: {
+        status: "Completed",
+      },
+    });
+    if (!updatedTask)
+      throw new AppError(
+        "Something went wrong while trying to update the task",
+        500
+      );
+
+    // Update the user's point value
+    const updatedUserPoints = await prisma.point.update({
+      where: {
+        userId,
+      },
+      data: {
+        earnedToday: {
+          increment: updatedTask.points,
+        },
+        earnedOverall: {
+          increment: updatedTask.points,
+        },
+      },
+    });
+    if (!updatedUserPoints)
+      throw new AppError(
+        "Something went wrong while trying to update the user data",
+        500
+      );
+
+    response.status(200).send({
+      status: "success",
+      data: updatedUserPoints,
     });
   } catch (error) {
     next(error);

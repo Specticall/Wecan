@@ -1,6 +1,6 @@
 import DiaryCreationDialog from "@/components/app/dashboard/DiaryCreationDialog";
+import TaskCompleteDialog from "@/components/app/task/TaskCompleteDialog";
 import TaskDetailDialog from "@/components/app/task/taskDetailDialog/TaskDetailDialog";
-import PageLoader from "@/components/general/PageLoader";
 import TitleWatcher, { TitleConfig } from "@/components/service/TitleWatcher";
 import { AuthProvider } from "@/context/AuthContext";
 import {
@@ -35,6 +35,13 @@ const dialogComponents: DialogComponentProps = [
   {
     name: "taskDetail",
     component: <TaskDetailDialog />,
+    options: {
+      collapseWhenClickOutside: true,
+    },
+  },
+  {
+    name: "taskComplete",
+    component: <TaskCompleteDialog />,
     options: {
       collapseWhenClickOutside: true,
     },

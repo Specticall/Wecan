@@ -54,7 +54,9 @@ export function Dropdown({
       }}
     >
       <div
-        className={twMerge(clsx("hidden fixed inset-0", isOpen && "block"))}
+        className={twMerge(
+          clsx("hidden fixed inset-0 z-50", isOpen && "block")
+        )}
         onClick={handleClose}
       ></div>
       <div className={twMerge(clsx("relative", className))}>{children}</div>
@@ -101,7 +103,7 @@ export function DropdownContent({
     <ul
       className={twMerge(
         clsx(
-          "absolute bg-white rounded-sm top-[140%] left-[50%] translate-x-[-50%] p-2 scale-90 translate-y-[-5%] duration-200 transition-all opacity-0 z-20",
+          "absolute bg-white rounded-sm top-[140%] left-[50%] translate-x-[-50%] p-2 scale-90 translate-y-[-5%] duration-200 transition-all opacity-0 z-[60]",
           className,
           isOpen && "scale-100 opacity-100 translate-y-[0%]"
         )

@@ -1,8 +1,8 @@
 import { useAuth } from "@/context/AuthContext";
-import { TMood } from "@/context/MoodContext";
 import { usePopup } from "@/context/PopupContext";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
 import {
+  TPoint,
   TServerSucessResponse,
   TTaskRequest,
   TUserTask,
@@ -83,5 +83,38 @@ export default function useTaskMutation() {
     }
   );
 
-  return { taskQuery, userTask, addMutation, onGoingTask, deleteMutation };
+  const completeTaskMutation = useMutation(
+    (taskId: string) => {
+      return axios.post<TServerSucessResponse<TPoint>>(
+        `${BASE_URL}${BASE_ENDPOINT}/v1/task/completed?taskId=${taskId}&userId=${userId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    },
+    {
+      onMutate: () => {},
+      onSuccess: () => {
+        notify("Success");
+        queryClient.invalidateQueries(["userTask", userId, token]);
+        queryClient.invalidateQueries(["userData", userId, token]);
+      },
+      onError: (error: AxiosError) => {
+        console.error({ ...error, stack: "" });
+        notify("Oops, something went wrong while trying to complete the task");
+      },
+    }
+  );
+
+  return {
+    taskQuery,
+    userTask,
+    addMutation,
+    onGoingTask,
+    deleteMutation,
+    completeTaskMutation,
+  };
 }

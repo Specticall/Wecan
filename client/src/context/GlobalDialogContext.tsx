@@ -4,8 +4,10 @@ import React, {
   ReactNode,
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
+import ConfettiExplosion from "react-confetti-explosion";
 
 type TGlobalDialogContextValues = {
   showDialog: (dialogName: string, context?: unknown) => void;
@@ -43,6 +45,8 @@ export function GlobalDialogProvider({
   }>({
     name: "",
   });
+
+  useEffect(() => {}, []);
 
   const showDialog = (dialogName: string, context?: unknown) => {
     const selectedComponent = dialogComponents.find(

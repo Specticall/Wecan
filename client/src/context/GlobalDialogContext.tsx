@@ -8,11 +8,19 @@ import React, {
 } from "react";
 
 type TGlobalDialogContextValues = {
-  showDialog: (dialogName: string) => void;
+  showDialog: (dialogName: string, context?: unknown) => void;
   closeDialog: () => void;
+  contextData?: unknown;
 };
 
-export type DialogComponent = { name: string; component: ReactElement };
+export type DialogComponentOptions = {
+  collapseWhenClickOutside?: boolean;
+};
+export type DialogComponent = {
+  name: string;
+  component: ReactElement;
+  options?: DialogComponentOptions;
+};
 export type DialogComponentProps = DialogComponent[];
 
 const GlobalDialogContext = createContext<TGlobalDialogContextValues | null>(
@@ -24,8 +32,11 @@ export function GlobalDialogProvider({
   dialogComponents,
 }: {
   children: ReactNode;
-  dialogComponents: { name: string; component: ReactElement }[];
+  dialogComponents: DialogComponent[];
 }) {
+  const [contextData, setContextData] = useState<unknown>({});
+  const [options, setOptions] = useState<DialogComponentOptions | undefined>();
+
   const [isShowing, setIsShowing] = useState<{
     name: string;
     selectedComponent?: ReactElement;
@@ -33,16 +44,23 @@ export function GlobalDialogProvider({
     name: "",
   });
 
-  const showDialog = (dialogName: string) => {
+  const showDialog = (dialogName: string, context?: unknown) => {
     const selectedComponent = dialogComponents.find(
       (component) => component.name === dialogName
-    )?.component;
+    );
 
     if (!selectedComponent)
       throw new Error(`Dialog with the name of ${dialogName} does not exist!`);
 
+    if (context) setContextData(context);
+    if (selectedComponent.options) setOptions(selectedComponent.options);
+
     setIsShowing((current) => {
-      return { ...current, name: dialogName, selectedComponent };
+      return {
+        ...current,
+        name: dialogName,
+        selectedComponent: selectedComponent.component,
+      };
     });
   };
 
@@ -50,24 +68,35 @@ export function GlobalDialogProvider({
     setIsShowing({
       name: "",
     });
+    setContextData({});
+    setOptions(undefined);
   };
 
   return (
-    <GlobalDialogContext.Provider value={{ showDialog, closeDialog }}>
+    <GlobalDialogContext.Provider
+      value={{ showDialog, closeDialog, contextData }}
+    >
       <div
         className={cn(
-          `fixed opacity-0 invisible bg-black/60 inset-0 z-[100] transition-all duration-200`,
-          isShowing.selectedComponent && "opacity-1 visible"
-        )}
-      ></div>
-      <div
-        className={cn(
-          `fixed inset-0 z-[110] flex flex-col items-center justify-center invisible scale-90 translate-y-[5%] duration-200 transition-all opacity-0`,
-          isShowing.selectedComponent &&
-            "opacity-1 visible scale-1 translate-y-0"
+          "fixed inset-0 z-[100] opacity-0 invisible bg-black/50 flex flex-col items-center justify-center transition-all duration-400",
+          isShowing.selectedComponent && "opacity-1 visible "
         )}
       >
-        {isShowing.selectedComponent}
+        <div
+          className={cn("absolute inset-0")}
+          onClick={() => {
+            if (options?.collapseWhenClickOutside) closeDialog();
+          }}
+        ></div>
+        <div
+          className={cn(
+            `invisible scale-90 translate-y-[5%] duration-200 transition-all opacity-0`,
+            isShowing.selectedComponent &&
+              "opacity-1 visible scale-1 translate-y-0"
+          )}
+        >
+          {isShowing.selectedComponent}
+        </div>
       </div>
       {children}
     </GlobalDialogContext.Provider>

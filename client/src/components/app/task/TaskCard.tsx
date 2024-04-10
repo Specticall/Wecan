@@ -1,4 +1,5 @@
 import Button from "@/components/general/Button";
+import { useGlobalDialog } from "@/context/GlobalDialogContext";
 import useTaskMutation from "@/hooks/useTaskMutation";
 import { cn } from "@/lib/utils";
 import { TTask } from "@/types/general";
@@ -22,10 +23,16 @@ export default function TaskCard({
   const [isDeleting, setIsDeleting] = useState(false);
   const { deleteMutation } = useTaskMutation();
 
+  const { showDialog } = useGlobalDialog();
+
   const handleDelete = () => {
     if (!task?.id) return;
     deleteMutation.mutate(task.id);
     setIsDeleting(true);
+  };
+
+  const handleOpenDetailDialog = () => {
+    showDialog("taskDetail", task);
   };
 
   useEffect(() => {
@@ -35,10 +42,11 @@ export default function TaskCard({
   return (
     <article
       className={cn(
-        "bg-white p-8 rounded-md",
+        "bg-white p-8 rounded-md hover:scale-[97.5%] transition-all duration-200 cursor-pointer",
         className,
         isDeleting && "opacity-50"
       )}
+      onClick={handleOpenDetailDialog}
     >
       <div className="flex gap-6 justify-between items-center">
         <div>

@@ -40,8 +40,6 @@ export function MoodProvider({ children }: { children: ReactNode }) {
     enabled: userId ? true : false,
   });
 
-  console.log(moodQuery.data);
-
   const currentMood = moodQuery.data === "Unknown" ? undefined : moodQuery.data;
 
   return (

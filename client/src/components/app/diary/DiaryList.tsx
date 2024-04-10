@@ -21,27 +21,28 @@ export default function DiaryList() {
       <ScrollArea className="h-[calc(100vh-10.5rem)]">
         {diaryList.length === 0 && <EmptyDiaryList />}
         <div className="grid grid-cols-2 gap-8 items-start pr-8 pt-4  content-start auto-rows-fr">
-          {diaryList.map((dairy) => {
-            const isSelected = selectedDiary?.id === dairy.id;
+          {diaryList.map((diary) => {
+            const isSelected = selectedDiary?.id === diary.id;
             const progressPercent =
-              (dairy.earnedPoints * 100) / dairy.targetPoints;
+              (diary.earnedPoints * 100) / diary.targetPoints;
             return (
               <>
                 <article
+                  key={diary.id}
                   className={cn(
                     "bg-white rounded-lg p-8 shadow-lg shadow-accent/10 relative cursor-pointer transition-all duration-100 hover:scale-[0.95]",
                     isSelected && "bg-accent"
                   )}
-                  onClick={handleSelect(dairy.id)}
+                  onClick={handleSelect(diary.id)}
                 >
                   <div
                     className="w-8 aspect-square rounded-full right-[-1rem] top-[-0.5rem] absolute"
                     style={{
-                      backgroundColor: getMoodColor(dairy.mood),
+                      backgroundColor: getMoodColor(diary.mood),
                     }}
                   ></div>
                   <DateDisplay
-                    date={new Date(dairy.dateCreated)}
+                    date={new Date(diary.dateCreated)}
                     className="mb-6"
                     variant={isSelected ? "light" : "dark"}
                   />
@@ -51,7 +52,7 @@ export default function DiaryList() {
                       isSelected && "text-lightest"
                     )}
                   >
-                    {truncateText(dairy.content, TEXT_TRUNCATE_LENGTH)}
+                    {truncateText(diary.content, TEXT_TRUNCATE_LENGTH)}
                   </p>
                   <div>
                     <div className="flex justify-between items-center mb-2">
@@ -78,7 +79,7 @@ export default function DiaryList() {
                       )}
                     >
                       <p>Your Progress</p>
-                      <p>{dairy.targetPoints.toLocaleString("de-DE")}</p>
+                      <p>{diary.targetPoints.toLocaleString("de-DE")}</p>
                     </div>
                   </div>
                 </article>

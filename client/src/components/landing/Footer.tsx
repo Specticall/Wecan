@@ -62,13 +62,16 @@ export function Footer() {
         </div>
         {footerList.map((footer) => {
           return (
-            <ul className="text-light flex flex-col gap-4">
+            <ul className="text-light flex flex-col gap-4" key={footer.title}>
               <h3 className="text-white text-[1rem] sm:text-center">
                 {footer.title}
               </h3>
               {footer.links.map((item) => {
                 return (
-                  <li className="cursor-pointer hover:text-lighter sm:text-center">
+                  <li
+                    className="cursor-pointer hover:text-lighter sm:text-center"
+                    key={item.display}
+                  >
                     <a href={item.link}></a>
                     {item.display}
                   </li>

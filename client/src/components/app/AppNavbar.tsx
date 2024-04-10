@@ -43,6 +43,7 @@ export default function AppNavbar() {
           const isOnPath = route.route === pathname;
           return (
             <li
+              key={`${route.route}`}
               className={clsx(
                 "rounded-r-full pr-5 pl-8 py-3 flex gap-4 cursor-pointer transition-all duration-100 items-center justify-start hover:bg-black hover:text-white",
                 isOnPath && "bg-accent text-white"

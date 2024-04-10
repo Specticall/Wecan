@@ -73,6 +73,7 @@ export default function MoodDropdown({
             <DropdownItem
               className="flex items-center justify-start gap-3"
               itemValue={mood.mood}
+              key={mood.mood}
             >
               <div
                 className="w-4 aspect-square bg-accent rounded-full"

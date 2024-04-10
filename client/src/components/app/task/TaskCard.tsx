@@ -3,7 +3,7 @@ import { useGlobalDialog } from "@/context/GlobalDialogContext";
 import useTaskMutation from "@/hooks/useTaskMutation";
 import { cn } from "@/lib/utils";
 import { TTask } from "@/types/general";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 
 export default function TaskCard({
   task,
@@ -31,7 +31,9 @@ export default function TaskCard({
     setIsDeleting(true);
   };
 
-  const handleOpenDetailDialog = () => {
+  const handleOpenDetailDialog = (e: MouseEvent) => {
+    console.log((e.target as HTMLDivElement).classList);
+    if ((e.target as HTMLDivElement).classList.contains("bx-trash")) return;
     showDialog("taskDetail", task);
   };
 

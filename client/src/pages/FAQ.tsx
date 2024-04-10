@@ -41,7 +41,10 @@ export default function FAQ() {
       </p>
       <Accordion className="divide-y-[1px] divide-lighter mb-12">
         {accordionItemList.map((item, i) => (
-          <AccordionItem itemKey={`${item.title}${i}`} className="">
+          <AccordionItem
+            itemKey={`${item.title}${i}`}
+            key={`${item.title}${item.content}`}
+          >
             <AccordionHeading>
               <div className="flex gap-4">
                 <p className="text-lighter">{`${i + 1 < 10 ? "0" : ""}${

@@ -28,7 +28,7 @@ export default function AcceptedTask() {
               <div className=" flex flex-col gap-8 py-8">
                 {onGoingTask.map((task) => {
                   return (
-                    <li className="px-8">
+                    <li className="px-8" key={task.id}>
                       <TaskCard
                         badgeColor={getMoodColor(task.mood as TMood)}
                         task={task}

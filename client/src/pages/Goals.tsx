@@ -32,7 +32,10 @@ export function Goals() {
       <ul className="grid grid-cols-3 lg:[&&]:grid-cols-1 lg:[&&]:max-w-[30rem] lg:[&&]:mx-auto lg:[&&]:gap-20 xl:grid-cols-2 gap-8 mt-16">
         {goalList.map((goal) => {
           return (
-            <li className="relative max-h-[40rem] bg-white px-8 rounded-md overflow-hidden pb-8 pt-10 grid grid-rows-[20rem_1fr] xl:grid-rows-[25rem_1fr] md:flex md:flex-col gap-y-6 md:px-6">
+            <li
+              className="relative max-h-[40rem] bg-white px-8 rounded-md overflow-hidden pb-8 pt-10 grid grid-rows-[20rem_1fr] xl:grid-rows-[25rem_1fr] md:flex md:flex-col gap-y-6 md:px-6"
+              key={`${goal.title}${goal.description}`}
+            >
               <div className="w-full bg-accent absolute top-0 right-0 left-0 h-2"></div>
               <div className="p-3 pb-12 border-b-[1px] border-border">
                 <img

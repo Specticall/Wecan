@@ -20,8 +20,14 @@ export default function TaskDetailDialog() {
         particleCount={80}
         width={2000}
         zIndex={101}
+        style={{
+          translate: "-50%",
+          position: "fixed",
+          top: "37.5%",
+          left: "50%",
+        }}
       />
-      <article className="bg-white rounded-md px-12 pb-12 py-8 w-full max-w-[37.5rem] isolate">
+      <article className="bg-white rounded-md px-12 pb-12 py-8 w-full max-w-[37.5rem]">
         <div
           className="flex items-center justify-end mb-1"
           onClick={() => closeDialog()}
@@ -29,13 +35,6 @@ export default function TaskDetailDialog() {
           <i className="bx bx-x text-md text-lighter hover:text-dark duration-200 transition-all cursor-pointer"></i>
         </div>
 
-        {/* <ConfettiExplosion
-        force={0.6}
-        duration={2500}
-        particleCount={80}
-        width={1000}
-      />
-      <ConfettiExplosion /> */}
         <TaskDetailDialogHeading />
         <TaskDetailDialogDesc />
         <TaskDetailDialogInfo />

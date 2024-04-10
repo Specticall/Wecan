@@ -182,3 +182,40 @@ export const deleteUserTask: RequestHandler = async (
     next(error);
   }
 };
+
+export const updateUserTask: RequestHandler = async (
+  request,
+  response,
+  next
+) => {
+  try {
+    const { id: taskId } = request.query;
+    if (!taskId)
+      throw new AppError(
+        "The request is missing 'id' in the query string (the id field is the task id)",
+        400
+      );
+
+    const data = request.body;
+    if (!data) throw new AppError("No data found in the body", 400);
+
+    const updatedUserTask = await prisma.task.update({
+      where: {
+        id: taskId as string,
+      },
+      data,
+    });
+    if (!updatedUserTask)
+      throw new AppError(
+        "Something went wrong while trying to update the user id",
+        500
+      );
+
+    response.status(200).send({
+      status: "success",
+      data: updatedUserTask,
+    });
+  } catch (error) {
+    next(error);
+  }
+};

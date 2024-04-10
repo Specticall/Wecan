@@ -38,6 +38,7 @@ export function GlobalDialogProvider({
 }) {
   const [contextData, setContextData] = useState<unknown>({});
   const [options, setOptions] = useState<DialogComponentOptions | undefined>();
+  const [timeSinceOpened, setTimeSinceOpened] = useState(0);
 
   const [isShowing, setIsShowing] = useState<{
     name: string;
@@ -46,7 +47,25 @@ export function GlobalDialogProvider({
     name: "",
   });
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (!options?.collapseWhenClickOutside) return;
+      if (Date.now() - timeSinceOpened < 100) return;
+      if (
+        isShowing.selectedComponent &&
+        !(e.target as HTMLDivElement).closest(".dialog-content")
+      ) {
+        closeDialog();
+      }
+    };
+
+    window.addEventListener("click", handleClickOutside);
+    return () => window.removeEventListener("click", handleClickOutside);
+  }, [
+    isShowing.selectedComponent,
+    timeSinceOpened,
+    options?.collapseWhenClickOutside,
+  ]);
 
   const showDialog = (dialogName: string, context?: unknown) => {
     const selectedComponent = dialogComponents.find(
@@ -58,6 +77,8 @@ export function GlobalDialogProvider({
 
     if (context) setContextData(context);
     if (selectedComponent.options) setOptions(selectedComponent.options);
+
+    setTimeSinceOpened(Date.now());
 
     setIsShowing((current) => {
       return {
@@ -74,6 +95,7 @@ export function GlobalDialogProvider({
     });
     setContextData({});
     setOptions(undefined);
+    setTimeSinceOpened(0);
   };
 
   return (
@@ -82,25 +104,19 @@ export function GlobalDialogProvider({
     >
       <div
         className={cn(
-          "fixed inset-0 z-[100] opacity-0 invisible bg-black/50 flex flex-col items-center justify-center transition-all duration-400",
+          "fixed inset-0 z-[100] opacity-0 invisible bg-black/50 transition-all duration-400",
           isShowing.selectedComponent && "opacity-1 visible "
         )}
+      ></div>
+
+      <div
+        className={cn(
+          `dialog-content fixed top-[50%] left-[50%] translate-x-[-50%] invisible scale-90 translate-y-[-45%] duration-200 transition-all opacity-0 z-[102]`,
+          isShowing.selectedComponent &&
+            "opacity-1 visible scale-1 translate-y-[-50%]"
+        )}
       >
-        <div
-          className={cn("absolute inset-0")}
-          onClick={() => {
-            if (options?.collapseWhenClickOutside) closeDialog();
-          }}
-        ></div>
-        <div
-          className={cn(
-            `invisible scale-90 translate-y-[5%] duration-200 transition-all opacity-0`,
-            isShowing.selectedComponent &&
-              "opacity-1 visible scale-1 translate-y-0"
-          )}
-        >
-          {isShowing.selectedComponent}
-        </div>
+        {isShowing.selectedComponent}
       </div>
       {children}
     </GlobalDialogContext.Provider>

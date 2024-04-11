@@ -2,6 +2,7 @@ import { useAuth } from "@/context/AuthContext";
 import { usePopup } from "@/context/PopupContext";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
 import {
+  TDeletionBatch,
   TPoint,
   TServerSucessResponse,
   TTaskRequest,
@@ -18,22 +19,29 @@ export default function useTaskMutation() {
   const taskQuery = useQuery({
     queryKey: ["userTask", userId, token],
     queryFn: async () => {
-      const response = await axios.get<TServerSucessResponse<TUserTask[]>>(
-        `${BASE_URL}${BASE_ENDPOINT}/v1/task?id=${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get<
+        TServerSucessResponse<TUserTask[] | TDeletionBatch>
+      >(`${BASE_URL}${BASE_ENDPOINT}/v1/task?id=${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return response.data.data;
     },
   });
 
-  const userTask = taskQuery.data;
-  const onGoingTask = taskQuery.data?.filter(
-    (data) => data.status === "OnGoing"
-  );
+  const taskHasExpired = taskQuery.data && "count" in taskQuery.data;
+  console.log(taskQuery.data);
+
+  // Typescript was not able to infer taskQuery.data as TUserTask[] because we seperated the check into a different variable `taskHasExpired` which why is have to manually assert to type.
+  const userTask = taskHasExpired ? [] : (taskQuery.data as TUserTask[]);
+
+  const expiredTaskCount = taskHasExpired
+    ? (taskQuery.data as TDeletionBatch).count
+    : 0;
+
+  const onGoingTask = userTask?.filter((data) => data.status === "OnGoing");
+
   const addMutation = useMutation(
     (newTask: TTaskRequest) => {
       return axios.post(
@@ -116,5 +124,6 @@ export default function useTaskMutation() {
     onGoingTask,
     deleteMutation,
     completeTaskMutation,
+    expiredTaskCount,
   };
 }

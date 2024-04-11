@@ -1,4 +1,11 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import useTaskMutation from "@/hooks/useTaskMutation";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 type TTaskContextValues = {};
 
@@ -12,7 +19,12 @@ type TTask = {
 const TaskContext = createContext<TTaskContextValues | null>(null);
 
 export function TaskProvider({ children }: { children: ReactNode }) {
-  // const [acceptedTaskId, setAcceptedTaskId] = useState<string[]>([]);
+  // const [expiredTaskCount, setExpiredTaskCount] = useState(0);
+
+  // const { expiredTaskCount: expiredTaskAmount } = useTaskMutation();
+  // useEffect(() => {
+  //   setExpiredTaskCount(expiredTaskAmount);
+  // }, []);
 
   return <TaskContext.Provider value={{}}>{children}</TaskContext.Provider>;
 }

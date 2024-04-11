@@ -76,3 +76,7 @@ export type TTaskRequest = {
   status: "OnGoing" | "Completed";
   mood: TMood | "Unknown";
 };
+
+export type TDeletionBatch = {
+  count: number;
+};

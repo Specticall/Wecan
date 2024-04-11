@@ -2,8 +2,11 @@ import { RequestHandler } from "express";
 import { prisma } from "../../prisma/prisma";
 import { Mood, Prisma, TaskStatus } from "@prisma/client";
 import { AppError } from "../utils/AppError";
-import { getRandomNumber } from "../utils/helper";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { getRandomNumber, isToday } from "../utils/helper";
+import {
+  GetBatchResult,
+  PrismaClientKnownRequestError,
+} from "@prisma/client/runtime/library";
 
 export const generateAvailableTask: RequestHandler = async (
   request,
@@ -105,9 +108,23 @@ export const getUserTask: RequestHandler = async (request, response, next) => {
       },
     });
 
+    // Check if the tasks has expired.
+    const dateCreated = userTask[0].createdAt;
+    const tasksHasExpired = !isToday(dateCreated);
+
+    let deletedTask: GetBatchResult | undefined = undefined;
+    if (tasksHasExpired) {
+      deletedTask = await prisma.task.deleteMany({
+        where: {
+          userId,
+        },
+      });
+    }
+
     response.status(200).send({
       status: "success",
-      data: userTask,
+      // This will send back deletedTask if they exist (which happens if tasks has expired)
+      data: deletedTask || userTask,
     });
   } catch (error) {
     next(error);

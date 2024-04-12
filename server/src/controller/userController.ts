@@ -18,7 +18,6 @@ export const refreshUserData = async (userData: User) => {
   const unannouncedExpiredTaskCount = await getUnannouncedExpiredTaskCount(
     userData
   );
-  console.log(unannouncedExpiredTaskCount);
 
   const updatedUser = await prisma.user.update({
     where: {

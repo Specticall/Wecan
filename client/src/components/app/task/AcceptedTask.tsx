@@ -22,7 +22,7 @@ export default function AcceptedTask() {
       </Skeleton>
 
       <ul className="rounded-md border-[1px] border-lighter">
-        <ScrollArea className="h-[calc(100vh-10rem)]">
+        <ScrollArea className="h-[calc(100vh-12rem)]">
           <Skeleton isLoading={!onGoingTask}>
             {onGoingTask && (
               <div className=" flex flex-col gap-8 py-8">

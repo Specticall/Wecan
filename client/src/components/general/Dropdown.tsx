@@ -16,11 +16,13 @@ export function Dropdown({
   className,
   children,
   defaultValue,
+  canUnselect = true,
   onSelect = () => {},
 }: {
   className?: string;
   defaultValue?: string;
   children: ReactNode;
+  canUnselect?: boolean;
   onSelect?: (selectedValue?: string) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,9 +40,11 @@ export function Dropdown({
 
   const handleSelect = (itemValue: string) => {
     setSelectedValue((current) =>
-      itemValue === current ? undefined : itemValue
+      itemValue === current && canUnselect ? undefined : itemValue
     );
-    onSelect(itemValue === selectedValue ? undefined : itemValue);
+    onSelect(
+      itemValue === selectedValue && canUnselect ? undefined : itemValue
+    );
   };
 
   return (
@@ -103,9 +107,9 @@ export function DropdownContent({
     <ul
       className={twMerge(
         clsx(
-          "absolute bg-white rounded-sm top-[140%] left-[50%] translate-x-[-50%] p-2 scale-90 translate-y-[-5%] duration-200 transition-all opacity-0 z-[60]",
+          "absolute bg-white rounded-sm top-[140%] left-[50%] translate-x-[-50%] p-2 scale-90 translate-y-[-5%] duration-200 transition-all opacity-0 z-[60] invisible",
           className,
-          isOpen && "scale-100 opacity-100 translate-y-[0%]"
+          isOpen && "scale-100 opacity-100 translate-y-[0%] visible"
         )
       )}
     >

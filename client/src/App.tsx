@@ -20,6 +20,9 @@ import { reloadSavedLoginDataLoader } from "./context/AuthContext";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import AcceptedTask from "./components/app/task/AcceptedTask";
+import TaskGenerator from "./components/app/task/TaskGenerator";
+import AllTasks from "./components/app/task/allTasks/AllTasks";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +74,21 @@ const router = createBrowserRouter([
           {
             path: "task",
             element: <Task />,
+            children: [
+              {
+                path: "generator",
+                element: (
+                  <>
+                    <TaskGenerator />
+                    <AcceptedTask />
+                  </>
+                ),
+              },
+              {
+                path: "all",
+                element: <AllTasks />,
+              },
+            ],
           },
           {
             path: "statistics",

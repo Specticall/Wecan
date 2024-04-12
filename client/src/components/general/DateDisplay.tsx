@@ -12,14 +12,16 @@ const styles = cva("text-center flex items-center justify-start gap-3", {
 
 export default function DateDisplay({
   className,
-  date = new Date(),
+  date,
   variant = "dark",
+  fallback,
 }: {
   className?: string;
   date?: Date;
   variant?: VariantProps<typeof styles>["variant"];
+  fallback?: string;
 }) {
-  const formattedDate = date.toLocaleDateString("en-US", {
+  const formattedDate = date?.toLocaleDateString("en-US", {
     weekday: "long",
     day: "numeric",
     month: "long",
@@ -29,7 +31,7 @@ export default function DateDisplay({
   return (
     <p className={twMerge(styles({ variant }), className)}>
       <i className="bx bx-calendar text-light text-md"></i>
-      {formattedDate}
+      {formattedDate || fallback}
     </p>
   );
 }

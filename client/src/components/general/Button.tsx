@@ -17,6 +17,7 @@ const variants = cva(
           "bg-transparent border-[1px] text-darkest border-darkest hover:bg-black/5",
         dark: "bg-black text-white hover:bg-black hover:opacity-70",
         tertiary: "bg-slate-100 text-light hover:bg-slate-200",
+        clean: "p-0",
       },
     },
     defaultVariants: {
@@ -37,7 +38,7 @@ export default function Button({
   className = "",
   variant,
   disabled,
-  to,
+  to = "",
   onClick = () => {},
   ...props
 }: ButtonProps) {

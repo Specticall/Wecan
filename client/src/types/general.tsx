@@ -61,6 +61,7 @@ export type TUserTask = {
   description: string;
   status: "Completed" | "OnGoing";
   mood: TMood | "Unknown";
+  createdAt: string;
 };
 
 export type TTask = {

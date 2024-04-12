@@ -40,7 +40,7 @@ export default function AppNavbar() {
           <p className="text-lighter mb-2">All Menu</p>
         </div>
         {routes.map((route) => {
-          const isOnPath = route.route === pathname;
+          const isOnPath = route.route.includes(pathname);
           return (
             <li
               key={`${route.route}`}

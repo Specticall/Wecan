@@ -3,7 +3,7 @@ import { useMood } from "@/context/MoodContext";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
 import { TGeneratedTask, TServerSucessResponse } from "@/types/general";
 import axios from "axios";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export default function useTaskGenerator() {
   const { currentMood } = useMood();

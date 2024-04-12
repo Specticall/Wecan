@@ -1,19 +1,20 @@
 import AppNavbar from "@/components/app/AppNavbar";
 import { DiaryProvider } from "@/context/DiaryContext";
 import { useGlobalDialog } from "@/context/GlobalDialogContext";
-import useTaskMutation from "@/hooks/useTaskMutation";
+import { useUser } from "@/context/UserContext";
 import { useEffect } from "react";
 
 import { Outlet } from "react-router-dom";
 
 export default function AppLayout() {
-  const { expiredTaskCount } = useTaskMutation();
+  const { userData } = useUser();
   const { showDialog } = useGlobalDialog();
 
   useEffect(() => {
-    if (expiredTaskCount <= 0) return;
-    showDialog("taskExpired", expiredTaskCount);
-  }, []);
+    if (!userData) return;
+    if (userData.unannouncedExpiredTaskCount > 0)
+      showDialog("taskExpired", userData.unannouncedExpiredTaskCount);
+  }, [showDialog, userData]);
 
   return (
     <DiaryProvider>

@@ -14,10 +14,12 @@ import Diary from "./pages/Diary";
 import Task from "./pages/Task";
 import Statistics from "./pages/Statistics";
 import HomeLayout from "./pages/LandingLayout";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import ProtectRoute from "./components/service/ProtectRoute";
 import { reloadSavedLoginDataLoader } from "./context/AuthContext";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const router = createBrowserRouter([
   {
@@ -84,10 +86,11 @@ const queryClient = new QueryClient();
 
 export default function App() {
   return (
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_ID}>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_ID}>
         <RouterProvider router={router} />
-      </QueryClientProvider>
-    </GoogleOAuthProvider>
+      </GoogleOAuthProvider>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   );
 }

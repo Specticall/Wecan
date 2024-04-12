@@ -1,12 +1,48 @@
 import { RequestHandler } from "express";
 import { prisma } from "../../prisma/prisma";
-import { Mood, Prisma, TaskStatus } from "@prisma/client";
+import { Mood, Prisma, TaskStatus, User } from "@prisma/client";
 import { AppError } from "../utils/AppError";
 import { getRandomNumber, isToday } from "../utils/helper";
-import {
-  GetBatchResult,
-  PrismaClientKnownRequestError,
-} from "@prisma/client/runtime/library";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+
+/**
+ * Checks for expired tasks and returns the number task that has been deleted. This function also deletes the expired task automatically from the database.
+ * @param task
+ * @param userId
+ * @returns
+ */
+export const getUnannouncedExpiredTaskCount = async (userData: User) => {
+  const userId = userData.id;
+  const currentUnannouncedExpiredTaskCount =
+    userData.unannouncedExpiredTaskCount;
+
+  // Retrieve the user's ongoing task data
+  const userTaskData = await prisma.task.findMany({
+    where: {
+      userId,
+      status: "OnGoing",
+    },
+  });
+
+  // Checks if any tasks even exist in the array
+  if (!userTaskData || userTaskData.length === 0)
+    return currentUnannouncedExpiredTaskCount;
+
+  const dateCreated = userTaskData[0].createdAt;
+
+  // Checks if the ongoing task's creation date is NOT today
+  if (isToday(dateCreated)) return currentUnannouncedExpiredTaskCount;
+
+  // Deletes any ongoing thak that has expired (not created today)
+  const deletedTask = await prisma.task.deleteMany({
+    where: {
+      userId,
+      status: "OnGoing",
+    },
+  });
+
+  return deletedTask.count;
+};
 
 export const generateAvailableTask: RequestHandler = async (
   request,
@@ -103,28 +139,17 @@ export const getUserTask: RequestHandler = async (request, response, next) => {
     const userTask = await prisma.task.findMany({
       where: {
         userId,
-        // Only apply the status query if if exists.
+        // Only apply the status query if it exists.
         ...(status ? { status } : {}),
       },
     });
 
-    // Check if the tasks has expired.
-    const dateCreated = userTask[0].createdAt;
-    const tasksHasExpired = !isToday(dateCreated);
-
-    let deletedTask: GetBatchResult | undefined = undefined;
-    if (tasksHasExpired) {
-      deletedTask = await prisma.task.deleteMany({
-        where: {
-          userId,
-        },
-      });
-    }
-
     response.status(200).send({
       status: "success",
-      // This will send back deletedTask if they exist (which happens if tasks has expired)
-      data: deletedTask || userTask,
+      /*
+      Since tasks only last for a day each, if one tasks expires, every other task also expires.
+      */
+      data: userTask,
     });
   } catch (error) {
     next(error);

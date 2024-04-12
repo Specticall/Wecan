@@ -1,7 +1,7 @@
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
 import axios from "axios";
 import { ReactNode, createContext, useContext } from "react";
-import { UseQueryResult, useQuery } from "react-query";
+import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import { useAuth } from "./AuthContext";
 import { TServerSucessResponse } from "@/types/general";
 import { useUser } from "./UserContext";
@@ -21,7 +21,6 @@ export function MoodProvider({ children }: { children: ReactNode }) {
   // const [currentMood, setCurrentMood] = useState<TMood | undefined>();
 
   const { userId, token } = useAuth();
-  // const { userData } = useUser();
 
   // const username = userData?.name;
 

@@ -3,11 +3,11 @@ import React, {
   ReactElement,
   ReactNode,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
 } from "react";
-import ConfettiExplosion from "react-confetti-explosion";
 
 type TGlobalDialogContextValues = {
   showDialog: (dialogName: string, context?: unknown) => void;
@@ -67,27 +67,32 @@ export function GlobalDialogProvider({
     options?.collapseWhenClickOutside,
   ]);
 
-  const showDialog = (dialogName: string, context?: unknown) => {
-    const selectedComponent = dialogComponents.find(
-      (component) => component.name === dialogName
-    );
+  const showDialog = useCallback(
+    (dialogName: string, context?: unknown) => {
+      const selectedComponent = dialogComponents.find(
+        (component) => component.name === dialogName
+      );
 
-    if (!selectedComponent)
-      throw new Error(`Dialog with the name of ${dialogName} does not exist!`);
+      if (!selectedComponent)
+        throw new Error(
+          `Dialog with the name of ${dialogName} does not exist!`
+        );
 
-    if (context) setContextData(context);
-    if (selectedComponent.options) setOptions(selectedComponent.options);
+      if (context) setContextData(context);
+      if (selectedComponent.options) setOptions(selectedComponent.options);
 
-    setTimeSinceOpened(Date.now());
+      setTimeSinceOpened(Date.now());
 
-    setIsShowing((current) => {
-      return {
-        ...current,
-        name: dialogName,
-        selectedComponent: selectedComponent.component,
-      };
-    });
-  };
+      setIsShowing((current) => {
+        return {
+          ...current,
+          name: dialogName,
+          selectedComponent: selectedComponent.component,
+        };
+      });
+    },
+    [dialogComponents]
+  );
 
   const closeDialog = () => {
     setIsShowing({

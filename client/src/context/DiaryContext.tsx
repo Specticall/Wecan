@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import { TMood } from "./MoodContext";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
 import axios from "axios";
 import { TServerSucessResponse } from "@/types/general";

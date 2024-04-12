@@ -2,6 +2,7 @@ import { RequestHandler } from "express";
 import { buildPrismaSelectQueryObject, isToday } from "../utils/helper";
 import { Prisma, PrismaClient, User } from "@prisma/client";
 import { AppError } from "../utils/AppError";
+import { getUnannouncedExpiredTaskCount } from "./taskController";
 
 const prisma = new PrismaClient();
 
@@ -13,6 +14,12 @@ export const refreshUserData = async (userData: User) => {
   // Check if the last time user logged is today or not, if not then the diary should be renewed
   const isANewDay = !isToday(userData.lastLogin);
 
+  // Checks if there are any expired tasks today that has not yet been announced to the user.
+  const unannouncedExpiredTaskCount = await getUnannouncedExpiredTaskCount(
+    userData
+  );
+  console.log(unannouncedExpiredTaskCount);
+
   const updatedUser = await prisma.user.update({
     where: {
       id: userData.id,
@@ -22,6 +29,10 @@ export const refreshUserData = async (userData: User) => {
 
       // Reset the diary and point data if its a new day.
       hasCreatedDiaryToday: isANewDay ? false : userData.hasCreatedDiaryToday,
+
+      // Checks for any expired task
+      unannouncedExpiredTaskCount,
+
       point: {
         update: isANewDay
           ? {

@@ -9,7 +9,7 @@ import {
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
 import axios from "axios";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 type TAuthContextValues = {
   token: string | undefined;

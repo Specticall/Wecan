@@ -26,6 +26,10 @@ model User {
   mood Mood
   streak Int?
 
+  // Keeps track of any tasks that was deleted and has not beens shown to the user yet.
+  // This data gets reset to 0 after a user is notified of the task deletion (sent manually the from client)
+  unannouncedExpiredTaskCount Int @default(0)
+
   
   diaries Diary[]
   tasks Task[]

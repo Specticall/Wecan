@@ -3,7 +3,7 @@ import { TServerSucessResponse, TUserData } from "@/types/general";
 import { ReactNode, createContext, useContext } from "react";
 import { useAuth } from "./AuthContext";
 import axios from "axios";
-import { UseQueryResult, useQuery } from "react-query";
+import { UseQueryResult, useQuery } from "@tanstack/react-query";
 
 type TUserContextValues = {
   userData: TUserData | undefined;

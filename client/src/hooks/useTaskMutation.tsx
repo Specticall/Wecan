@@ -2,43 +2,39 @@ import { useAuth } from "@/context/AuthContext";
 import { usePopup } from "@/context/PopupContext";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
 import {
-  TDeletionBatch,
   TPoint,
   TServerSucessResponse,
   TTaskRequest,
   TUserTask,
 } from "@/types/general";
 import axios, { AxiosError } from "axios";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useUser } from "@/context/UserContext";
 
 export default function useTaskMutation() {
   const { userId, token } = useAuth();
+  const { userData } = useUser();
   const queryClient = useQueryClient();
   const { notify } = usePopup();
 
   const taskQuery = useQuery({
     queryKey: ["userTask", userId, token],
     queryFn: async () => {
-      const response = await axios.get<
-        TServerSucessResponse<TUserTask[] | TDeletionBatch>
-      >(`${BASE_URL}${BASE_ENDPOINT}/v1/task?id=${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get<TServerSucessResponse<TUserTask[]>>(
+        `${BASE_URL}${BASE_ENDPOINT}/v1/task?id=${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       return response.data.data;
     },
+    enabled: userId && token && userData ? true : false,
   });
 
-  const taskHasExpired = taskQuery.data && "count" in taskQuery.data;
-  console.log(taskQuery.data);
-
   // Typescript was not able to infer taskQuery.data as TUserTask[] because we seperated the check into a different variable `taskHasExpired` which why is have to manually assert to type.
-  const userTask = taskHasExpired ? [] : (taskQuery.data as TUserTask[]);
-
-  const expiredTaskCount = taskHasExpired
-    ? (taskQuery.data as TDeletionBatch).count
-    : 0;
+  const userTask = taskQuery.data;
 
   const onGoingTask = userTask?.filter((data) => data.status === "OnGoing");
 
@@ -124,6 +120,5 @@ export default function useTaskMutation() {
     onGoingTask,
     deleteMutation,
     completeTaskMutation,
-    expiredTaskCount,
   };
 }

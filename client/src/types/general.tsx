@@ -21,6 +21,7 @@ export type TUserData = {
   token: string;
   hasCreatedDiaryToday: boolean;
   point: TPoint;
+  unannouncedExpiredTaskCount: number;
 };
 
 export type TPoint = {

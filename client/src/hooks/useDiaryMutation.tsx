@@ -6,7 +6,7 @@ import { usePopup } from "@/context/PopupContext";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
 import { TServerSucessResponse } from "@/types/general";
 import axios, { AxiosError } from "axios";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function useDiaryMutation() {
   const { token, userId } = useAuth();

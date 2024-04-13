@@ -1,9 +1,7 @@
 import Button from "@/components/general/Button";
-import { useGlobalDialog } from "@/context/GlobalDialogContext";
-import useTaskMutation from "@/hooks/useTaskMutation";
+import useTaskDetail from "@/hooks/useTaskDetail";
 import { cn } from "@/lib/utils";
 import { TTask } from "@/types/general";
-import { MouseEvent, useEffect, useState } from "react";
 
 export default function TaskCard({
   task,
@@ -20,26 +18,9 @@ export default function TaskCard({
   onDelete?: () => void;
   onComplete?: (taskId: string) => void;
 }) {
-  const [isDeleting, setIsDeleting] = useState(false);
-  const { deleteMutation } = useTaskMutation();
-
-  const { showDialog } = useGlobalDialog();
-
-  const handleDelete = () => {
-    if (!task?.id) return;
-    deleteMutation.mutate(task.id);
-    setIsDeleting(true);
-  };
-
-  const handleOpenDetailDialog = (e: MouseEvent) => {
-    console.log((e.target as HTMLDivElement).classList);
-    if ((e.target as HTMLDivElement).classList.contains("bx-trash")) return;
-    showDialog("taskDetail", task);
-  };
-
-  useEffect(() => {
-    if (deleteMutation.status === "error") setIsDeleting(false);
-  }, [deleteMutation.status]);
+  const { handleDelete, handleOpenDetailDialog, isDeleting } = useTaskDetail({
+    task,
+  });
 
   return (
     <article
@@ -48,7 +29,7 @@ export default function TaskCard({
         className,
         isDeleting && "opacity-50"
       )}
-      onClick={handleOpenDetailDialog}
+      onClick={(e) => handleOpenDetailDialog(e)}
     >
       <div className="flex gap-6 justify-between items-center">
         <div>

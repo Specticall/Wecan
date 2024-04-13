@@ -1,15 +1,10 @@
-import AcceptedTask from "@/components/app/task/AcceptedTask";
-import TaskGenerator from "@/components/app/task/TaskGenerator";
 import {
   Dropdown,
   DropdownContent,
-  DropdownDecoration,
   DropdownItem,
   DropdownTrigger,
 } from "@/components/general/Dropdown";
 import { useUser } from "@/context/UserContext";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 export default function Task() {
@@ -20,7 +15,7 @@ export default function Task() {
   if (!userData) return;
 
   return (
-    <main className="grid grid-cols-[1fr_1fr] grid-rows-[6.5rem_1fr] items-start dotted-grid gap-y-8">
+    <main className="grid grid-cols-[1fr_1fr] grid-rows-[6.5rem_1fr] items-start dotted-grid gap-y-4">
       <div className="col-span-2 self-start justify-self-start pt-12 pb-6 mb-4 flex items-center gap-3">
         <h1 className="text-lg font-semibold">Tasks</h1>
         <div className="text-lg font-semibold">/</div>

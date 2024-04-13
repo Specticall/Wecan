@@ -54,7 +54,9 @@ export default function useTaskMutation() {
       onMutate: () => {},
       onSuccess: () => {
         notify("Successfuly added a new task");
-        queryClient.invalidateQueries(["userTask", userId, token]);
+        queryClient.invalidateQueries({
+          queryKey: ["userTask"],
+        });
       },
       onError: (error: AxiosError) => {
         console.error({ ...error, stack: "" });
@@ -79,6 +81,7 @@ export default function useTaskMutation() {
       onSuccess: () => {
         notify("Successfuly deleted new task");
         queryClient.invalidateQueries(["userTask", userId, token]);
+        queryClient.invalidateQueries(["paginatedTask"]);
       },
       onError: (error: AxiosError) => {
         console.error({ ...error, stack: "" });

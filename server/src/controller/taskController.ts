@@ -5,6 +5,8 @@ import { AppError } from "../utils/AppError";
 import { getRandomNumber, isToday } from "../utils/helper";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
+const DEFAULT_PAGINATION_SIZE = 5;
+
 /**
  * Checks for expired tasks and returns the number task that has been deleted. This function also deletes the expired task automatically from the database.
  * @param task
@@ -129,18 +131,35 @@ export const getUserTask: RequestHandler = async (request, response, next) => {
     if (!userId)
       throw new AppError("`id` is missing from the URL query string", 400);
 
-    const status = query.status as TaskStatus;
+    const status = query.status as TaskStatus | undefined;
     if (status && status !== "Completed" && status !== "OnGoing")
       throw new AppError(
         "The query string `status` can only be `Completed` or 'OnGoing`",
         400
       );
 
+    const page = Number(query.page || "1");
+    const size = query.size ? Number(query.size) : DEFAULT_PAGINATION_SIZE;
+
+    console.log(page, size);
     const userTask = await prisma.task.findMany({
       where: {
         userId,
-        // Only apply the status query if it exists.
-        ...(status ? { status } : {}),
+        status,
+      },
+      skip: query.page ? (page - 1) * size : undefined,
+      take: query.page ? size : undefined,
+
+      // Latest comes first
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    const totalTaskCount = await prisma.task.count({
+      where: {
+        userId,
+        status,
       },
     });
 
@@ -150,6 +169,7 @@ export const getUserTask: RequestHandler = async (request, response, next) => {
       Since tasks only last for a day each, if one tasks expires, every other task also expires.
       */
       data: userTask,
+      totalTaskCount,
     });
   } catch (error) {
     next(error);

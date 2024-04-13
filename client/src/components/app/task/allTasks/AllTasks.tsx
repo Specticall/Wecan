@@ -1,4 +1,3 @@
-import { useState } from "react";
 import AllTasksFilterCTA from "./AllTasksFilterCTA";
 import usePaginatedTaskMutation from "@/hooks/usePaginatedTaskMutation";
 import Button from "@/components/general/Button";
@@ -8,15 +7,30 @@ import TaskItem from "./TaskItem";
 const PAGE_SIZE = 5;
 
 export default function AllTasks() {
-  const { paginatedTask, taskCount, page, nextPage, prevPage } =
-    usePaginatedTaskMutation({
-      paginationSize: PAGE_SIZE,
-    });
-  const [filter, setFilter] = useState<"all" | "ongoing" | "completed">("all");
+  const {
+    paginatedTask,
+    taskCount,
+    page,
+    nextPage,
+    prevPage,
+    setFilter,
+    filter,
+    onFirstPage,
+    onLastPage,
+    setDate,
+  } = usePaginatedTaskMutation({
+    paginationSize: PAGE_SIZE,
+  });
+
+  const taskExist = Boolean(taskCount);
 
   return (
-    <div className="rounded-md col-span-2 mr-8 h-[calc(100vh-10rem)] flex flex-col gap-3">
-      <AllTasksFilterCTA filter={filter} setFilter={setFilter} />
+    <div className="rounded-md col-span-2 mr-8 h-[calc(100vh-10rem)] flex flex-col gap-4">
+      <AllTasksFilterCTA
+        filter={filter}
+        setFilter={setFilter}
+        setDate={setDate}
+      />
       <div className="px-8 py-8 rounded-md border-lighter border-[1px] h-full flex flex-col">
         <div className="grid grid-cols-[5fr_4fr_2fr_2fr_1fr] w-full pb-2 gap-12 px-8">
           <p>Name</p>
@@ -40,25 +54,30 @@ export default function AllTasks() {
         </ScrollArea>
         <div className="flex items-center mt-6">
           <p className="flex justify-between items-center w-full">
-            {taskCount &&
-              `Showing ${(page - 1) * PAGE_SIZE || 1} -
-              ${Math.min(page * PAGE_SIZE, taskCount)} of ${taskCount} tasks`}
+            {taskExist
+              ? `Showing ${(page - 1) * PAGE_SIZE || 1} -
+              ${Math.min(page * PAGE_SIZE, taskCount)} of ${taskCount} tasks`
+              : "No tasks to be shown"}
           </p>
           <div className="flex gap-4">
-            <Button
-              onClick={prevPage}
-              variant="dark"
-              className="rounded-sm p-2 flex items-center justify-center"
-            >
-              <i className="bx bx-chevron-left text-md"></i>
-            </Button>
-            <Button
-              onClick={nextPage}
-              variant="dark"
-              className="rounded-sm p-2 flex items-center justify-center"
-            >
-              <i className="bx bx-chevron-right text-md"></i>
-            </Button>
+            {taskExist && !onFirstPage && (
+              <Button
+                onClick={prevPage}
+                variant="dark"
+                className="rounded-sm p-2 flex items-center justify-center"
+              >
+                <i className="bx bx-chevron-left text-md"></i>
+              </Button>
+            )}
+            {taskExist && !onLastPage && (
+              <Button
+                onClick={nextPage}
+                variant="dark"
+                className="rounded-sm p-2 flex items-center justify-center"
+              >
+                <i className="bx bx-chevron-right text-md"></i>
+              </Button>
+            )}
           </div>
         </div>
       </div>

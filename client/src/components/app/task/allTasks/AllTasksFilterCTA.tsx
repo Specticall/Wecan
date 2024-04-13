@@ -1,39 +1,45 @@
 import Button from "@/components/general/Button";
+import DatePicker from "@/components/general/DatePicker";
 import { cn } from "@/lib/utils";
 
 const CTAList = [
-  { display: "All Task", value: "all" },
-  { display: "On Going", value: "ongoing" },
-  { display: "Completed", value: "completed" },
+  { display: "All Task", value: "All" },
+  { display: "On Going", value: "OnGoing" },
+  { display: "Completed", value: "Completed" },
 ] as const;
 
 export default function AllTasksFilterCTA({
   filter,
   setFilter,
+  setDate,
 }: {
-  filter: "all" | "ongoing" | "completed";
+  filter: "All" | "OnGoing" | "Completed";
   setFilter: React.Dispatch<
-    React.SetStateAction<"all" | "ongoing" | "completed">
+    React.SetStateAction<"All" | "OnGoing" | "Completed">
   >;
+  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
 }) {
   return (
-    <div className="grid grid-cols-3 max-w-[20rem] [&>button]:py-2">
-      {CTAList.map((item) => (
-        <Button
-          key={`${item.value}${item.display}`}
-          variant="clean"
-          className={cn(
-            "rounded-sm",
-            filter === item.value && "bg-white shadow-lg shadow-slate-100"
-          )}
-          onClick={(e) => {
-            e.preventDefault();
-            setFilter(item.value);
-          }}
-        >
-          {item.display}
-        </Button>
-      ))}
+    <div className="w-full flex justify-between items-center">
+      <div className="flex [&>button]:py-2 [&>button]:px-4 gap-2">
+        {CTAList.map((item) => (
+          <Button
+            key={`${item.value}${item.display}`}
+            variant="clean"
+            className={cn(
+              "rounded-sm",
+              filter === item.value && "bg-white shadow-lg shadow-slate-100"
+            )}
+            onClick={(e) => {
+              e.preventDefault();
+              setFilter(item.value);
+            }}
+          >
+            {item.display}
+          </Button>
+        ))}
+      </div>
+      <DatePicker onSelect={setDate} />
     </div>
   );
 }

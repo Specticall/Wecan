@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import { prisma } from "../../prisma/prisma";
 import { Mood, Prisma, TaskStatus, User } from "@prisma/client";
 import { AppError } from "../utils/AppError";
-import { getRandomNumber, isToday } from "../utils/helper";
+import { getRandomNumber, getTimeSpan, isToday } from "../utils/helper";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 const DEFAULT_PAGINATION_SIZE = 5;
@@ -131,7 +131,7 @@ export const getUserTask: RequestHandler = async (request, response, next) => {
     if (!userId)
       throw new AppError("`id` is missing from the URL query string", 400);
 
-    const status = query.status as TaskStatus | undefined;
+    const status = query.status ? (query.status as TaskStatus) : undefined;
     if (status && status !== "Completed" && status !== "OnGoing")
       throw new AppError(
         "The query string `status` can only be `Completed` or 'OnGoing`",
@@ -141,11 +141,18 @@ export const getUserTask: RequestHandler = async (request, response, next) => {
     const page = Number(query.page || "1");
     const size = query.size ? Number(query.size) : DEFAULT_PAGINATION_SIZE;
 
-    console.log(page, size);
+    const timespan = query.date
+      ? getTimeSpan(new Date(+(query.date as string)))
+      : undefined;
+
     const userTask = await prisma.task.findMany({
       where: {
         userId,
         status,
+        createdAt: timespan && {
+          gte: timespan.startOfDay,
+          lt: timespan.endOfDay,
+        },
       },
       skip: query.page ? (page - 1) * size : undefined,
       take: query.page ? size : undefined,
@@ -160,6 +167,10 @@ export const getUserTask: RequestHandler = async (request, response, next) => {
       where: {
         userId,
         status,
+        createdAt: timespan && {
+          gte: timespan.startOfDay,
+          lt: timespan.endOfDay,
+        },
       },
     });
 

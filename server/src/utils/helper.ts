@@ -46,3 +46,26 @@ export function buildPrismaSelectQueryObject(fields: string[]) {
     return options;
   }, {});
 }
+
+/**
+ * Calculates the start and end timestamp of a given day.
+ * @param date
+ * @returns
+ */
+export function getTimeSpan(date: Date) {
+  // Start of the day
+  const startOfDay = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
+  );
+
+  // End of the day
+  const endOfDay = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate() + 1
+  );
+
+  return { startOfDay, endOfDay };
+}

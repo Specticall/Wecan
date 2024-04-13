@@ -8,22 +8,22 @@ const routes = [
   {
     text: "Dashboard",
     icon: <i className="bx bx-home"></i>,
-    route: "/app/dashboard",
+    route: ["/app/dashboard"],
   },
   {
     text: "My Diary",
     icon: <i className="bx bx-book-open"></i>,
-    route: "/app/diary",
+    route: ["/app/diary"],
   },
   {
     text: "Task",
     icon: <i className="bx bx-task"></i>,
-    route: "/app/task",
+    route: ["/app/task/generator", "/app/task", "/app/task/all"],
   },
   {
     text: "Statistics",
     icon: <i className="bx bx-line-chart"></i>,
-    route: "/app/statistics",
+    route: ["/app/statistics"],
   },
 ];
 
@@ -36,11 +36,12 @@ export default function AppNavbar() {
       <ul className="pt-12 pb-6 max-w-[18rem] h-full bg-white flex flex-col justify-start pr-6">
         <div className="pl-8">
           <Icons icon="logo" />
-          <DateDisplay className="justify-start mt-5 mb-12" />
-          <p className="text-lighter mb-2">All Menu</p>
+          <p className="text-lighter mb-2 mt-12">All Menu</p>
         </div>
         {routes.map((route) => {
-          const isOnPath = route.route.includes(pathname);
+          const isOnPath = route.route.some((route) =>
+            pathname.includes(route)
+          );
           return (
             <li
               key={`${route.route}`}
@@ -48,7 +49,7 @@ export default function AppNavbar() {
                 "rounded-r-full pr-5 pl-8 py-3 flex gap-4 cursor-pointer transition-all duration-100 items-center justify-start hover:bg-black hover:text-white",
                 isOnPath && "bg-accent text-white"
               )}
-              onClick={() => navigate(route.route)}
+              onClick={() => navigate(route.route[0])}
             >
               <div className="[&>i]:text-md">{route.icon}</div>
               <p>{route.text}</p>

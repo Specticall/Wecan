@@ -82,7 +82,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("id", userData.id);
 
     //4. Redirect the user to `/app/dashboard`
-    navigate("/app/dashboard");
+    navigate("/onboarding/step-1");
   };
 
   return (

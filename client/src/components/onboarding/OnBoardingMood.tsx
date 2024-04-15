@@ -1,13 +1,9 @@
 import { useUser } from "@/context/UserContext";
 import happyArtwork from "/assets/dashboard-default.png";
 import MoodSelector from "../app/moodModal/MoodSelector";
-import useMoodMutation from "@/hooks/useMoodMutation";
-import { useMood } from "@/context/MoodContext";
 
 export default function OnBoardingMood() {
   const { userData } = useUser();
-  const { updateMutation } = useMoodMutation();
-  const { currentMood } = useMood();
 
   if (!userData) return;
 

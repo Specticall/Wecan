@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { prisma } from "../../prisma/prisma";
-import { Mood, Prisma, TaskStatus, User } from "@prisma/client";
+import { Mood, Prisma, Status, User } from "@prisma/client";
 import { AppError } from "../utils/AppError";
 import { getRandomNumber, getTimeSpan, isToday } from "../utils/helper";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
@@ -131,7 +131,7 @@ export const getUserTask: RequestHandler = async (request, response, next) => {
     if (!userId)
       throw new AppError("`id` is missing from the URL query string", 400);
 
-    const status = query.status ? (query.status as TaskStatus) : undefined;
+    const status = query.status ? (query.status as Status) : undefined;
     if (status && status !== "Completed" && status !== "OnGoing")
       throw new AppError(
         "The query string `status` can only be `Completed` or 'OnGoing`",
@@ -312,7 +312,7 @@ export const completedUserTask: RequestHandler = async (
       );
 
     // Make sure the task was not previously completed
-    const taskStatus = await prisma.task.findUnique({
+    const Status = await prisma.task.findUnique({
       where: {
         id: taskId,
       },
@@ -320,7 +320,7 @@ export const completedUserTask: RequestHandler = async (
         status: true,
       },
     });
-    if (taskStatus?.status === "Completed")
+    if (Status?.status === "Completed")
       throw new AppError("Task is already completed", 400);
 
     // Update the task document

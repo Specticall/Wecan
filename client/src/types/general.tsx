@@ -82,3 +82,25 @@ export type TTaskRequest = {
 export type TDeletionBatch = {
   count: number;
 };
+/*
+id String  @id @default(auto()) @map("_id") @db.ObjectId
+
+  target Int @default(0)
+  earned Int @default(0)
+
+  createdAt DateTime @default(now())
+  status Status @default(OnGoing)
+
+  user User @relation(fields: [userId], references: [id])
+  userId String @unique @db.ObjectId
+}
+*/
+
+export type TGoal = {
+  id: string;
+  target: number;
+  earned: number;
+  createdAt: string;
+  status: "OnGoing" | "Completed";
+  userId: string;
+};

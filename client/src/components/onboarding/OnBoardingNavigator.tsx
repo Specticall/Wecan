@@ -23,8 +23,8 @@ export default function OnboardingNavigator() {
   const handlePrevStep = () => {
     navigate(`/onboarding/step-${currentStep - 1}`);
   };
+
   const handleComplete = () => {};
-  const handleSkip = () => {};
 
   return (
     <div className="section w-full grid grid-cols-[10rem_1fr_10rem] pb-12">
@@ -35,22 +35,15 @@ export default function OnboardingNavigator() {
           Previous
         </Button>
       )}
+      <div></div>
       {pathname === "/onboarding/step-3" ? (
         <>
-          <Button
-            className="shadow-none justify-self-end px-12 text-accent hover:text-slate-900 mr-8"
-            onClick={handleSkip}
-            variant="clean"
-          >
-            Skip
-          </Button>
           <Button className="shadow-none" onClick={handleComplete}>
             Complete
           </Button>
         </>
       ) : (
         <>
-          <div></div>
           <Button className="shadow-none" onClick={handleNextStep}>
             Next
           </Button>

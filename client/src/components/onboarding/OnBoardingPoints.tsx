@@ -1,14 +1,9 @@
 import WellnessPointInfographic from "./WellnessPointInfographic";
 import GoalSlider from "./GoalSlider";
 import useUserMutation from "@/hooks/useUserMutation";
+import useGoalMutation from "@/hooks/useGoalMutation";
 
 export default function OnBoardingPoints() {
-  const { updateMutation } = useUserMutation();
-
-  const handleSetPoint = (value: number) => {
-    updateMutation.mutate();
-  };
-
   return (
     <main className="section flex-1 grid grid-cols-2 place-items-center py-12 gap-12">
       <article>

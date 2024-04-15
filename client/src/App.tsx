@@ -61,7 +61,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/onboarding",
-        element: <OnBoarding />,
+        element: (
+          <ProtectRoute>
+            <OnBoarding />
+          </ProtectRoute>
+        ),
         children: [
           { path: "step-1", element: <OnBoardingMood /> },
           {

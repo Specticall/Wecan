@@ -26,6 +26,7 @@ model User {
   mood Mood
   streak Int?
 
+  // DEPRECATED
   // Keeps track of any tasks that was deleted and has not beens shown to the user yet.
   // This data gets reset to 0 after a user is notified of the task deletion (sent manually the from client)
   unannouncedExpiredTaskCount Int @default(0)
@@ -33,6 +34,9 @@ model User {
   
   diaries Diary[]
   tasks Task[]
+
+
+  goals Goal[]
   
 }
 
@@ -41,9 +45,22 @@ model Point {
 
   earnedToday Int @default(0)
   targetToday Int @default(0)
-  
+
   earnedOverall Int @default(0)
   
+  user User @relation(fields: [userId], references: [id])
+  userId String @unique @db.ObjectId
+}
+
+model Goal {
+  id String  @id @default(auto()) @map("_id") @db.ObjectId
+
+  target Int @default(0)
+  earned Int @default(0)
+
+  createdAt DateTime @default(now())
+  status Status @default(OnGoing)
+
   user User @relation(fields: [userId], references: [id])
   userId String @unique @db.ObjectId
 }
@@ -54,7 +71,7 @@ model Task {
   title String
   description String
   mood Mood
-  status TaskStatus @default(OnGoing)
+  status Status @default(OnGoing)
   
   user User @relation(fields: [userId], references: [id])
   userId  String @db.ObjectId
@@ -73,10 +90,12 @@ model Diary {
   mood Mood
 }
 
-enum TaskStatus {
+enum Status {
   Completed
   OnGoing
 }
+
+
 
 enum Mood {
   Ecstatic

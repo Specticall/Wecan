@@ -9,13 +9,14 @@ import taskRouter from "./routes/taskRouter";
 import { BASE_ENDPOINT } from "./utils/config";
 import { handleErrorDevelopment } from "./controller/errorController";
 import { AppError } from "./utils/AppError";
+import goalRouter from "./routes/goalRouter";
 
 const app = express();
 
 // Enable fetching from localhost
 app.use(cors());
 
-// Middle to parse body request
+// Middleware to parse body request
 app.use(express.json());
 
 // Main Endpoints
@@ -23,6 +24,7 @@ app.use(`${BASE_ENDPOINT}/v1/user`, userRouter);
 app.use(`${BASE_ENDPOINT}/v1/auth`, authRouter);
 app.use(`${BASE_ENDPOINT}/v1/diary`, diaryRouter);
 app.use(`${BASE_ENDPOINT}/v1/task`, taskRouter);
+app.use(`${BASE_ENDPOINT}/v1/goal`, goalRouter);
 
 // Handle invalid routes
 app.use("*", (request, response, next) => {
@@ -30,10 +32,5 @@ app.use("*", (request, response, next) => {
 });
 
 app.use(handleErrorDevelopment);
-// app.use(
-//   process.env.NODE_ENV === "production"
-//     ? handleErrorProduction
-//     : handleErrorDevelopment
-// );
 
 export default app;

@@ -39,39 +39,17 @@ export const createUserDiary: RequestHandler = async (
 ) => {
   try {
     // 1. Retrieve data from the body
-    const { content, mood, id: userId } = request.body;
-    if (!content || !mood || !userId)
+    const { content, id: userId } = request.body;
+    if (!content || !userId)
       throw new AppError(
         "Either content, mood or userId are missing in the request body",
         400
       );
 
-    // 1.5 Typecheck the incoming mood value
-    const containsValidMoodValue = [
-      "Ecstatic",
-      "Happy",
-      "Sad",
-      "Depressed",
-      "Neutral",
-    ].some((moodItem) => mood === moodItem);
-
-    if (!containsValidMoodValue) {
-      throw new AppError(
-        '"mood" must have the following values: "Ecstatic", "Happy", "Sad", "Depressed", "Neutral"',
-        401
-      );
-    }
-
-    // 2. Determine the task points needed
-    const generatedTargetPoints = getPointsByMood(mood);
-
     // 3. Create the document using prisma
     const newDiary = await prisma.diary.create({
       data: {
         content,
-        mood,
-        earnedPoints: 0,
-        targetPoints: generatedTargetPoints,
         authorId: userId,
       },
     });
@@ -88,13 +66,6 @@ export const createUserDiary: RequestHandler = async (
       },
       data: {
         hasCreatedDiaryToday: true,
-        mood: mood,
-        point: {
-          update: {
-            earnedToday: 0,
-            targetToday: generatedTargetPoints,
-          },
-        },
       },
     });
 

@@ -85,9 +85,6 @@ model Diary {
 
   dateCreated DateTime @default(now())
   content String
-  earnedPoints Int @default(0)
-  targetPoints Int @default(0)
-  mood Mood
 }
 
 enum Status {

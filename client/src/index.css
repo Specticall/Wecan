@@ -52,7 +52,7 @@ body #g_a11y_announcement {
     --darkest: 6 6 6;
     --white: 255 255 255;
 
-    --background: 0 0% 100%;
+    /* --background: 0 0% 100%; */
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;

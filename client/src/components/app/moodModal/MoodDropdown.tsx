@@ -7,6 +7,7 @@ import {
 } from "@/components/general/Dropdown";
 import { TMood } from "@/context/MoodContext";
 import { getMoodColor } from "@/lib/utils";
+import { cva } from "class-variance-authority";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -38,14 +39,25 @@ const triggerVariant = {
   light: "border-white text-white hover:bg-white/10",
 };
 
+const styles = cva("", {
+  variants: {
+    trigger: {
+      clean: "border-none bg-lightest text-dark",
+      accent: "border-white text-white",
+    },
+  },
+});
+
 export default function MoodDropdown({
   triggerColor,
   onSetMood,
   defaultValue,
+  variant = "accent",
 }: {
   triggerColor?: keyof typeof triggerVariant;
   onSetMood: (selectedMood: TMood | undefined) => void;
   defaultValue?: TMood;
+  variant?: "accent" | "clean";
 }) {
   return (
     <Dropdown
@@ -55,7 +67,8 @@ export default function MoodDropdown({
       <DropdownTrigger
         className={twMerge(
           clsx(
-            "px-6 py-2 border-white border-[1px] rounded-full text-white flex items-center justify-center gap-2 cursor-pointer  transition-bg duration-75",
+            "px-6 py-2 border-[1px] rounded-full flex items-center justify-center gap-2 cursor-pointer  transition-bg duration-75",
+            styles({ trigger: variant }),
             triggerColor && triggerVariant[triggerColor]
           )
         )}

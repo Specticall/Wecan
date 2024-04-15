@@ -23,6 +23,10 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AcceptedTask from "./components/app/task/AcceptedTask";
 import TaskGenerator from "./components/app/task/TaskGenerator";
 import AllTasks from "./components/app/task/allTasks/AllTasks";
+import OnBoarding from "./pages/OnBoarding";
+import OnBoardingMood from "./components/onboarding/OnBoardingMood";
+import OnBoardingPoints from "./components/onboarding/OnBoardingPoints";
+import OnBoardingDiary from "./components/onboarding/OnBoardingDiary";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +58,21 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/onboarding",
+        element: <OnBoarding />,
+        children: [
+          { path: "step-1", element: <OnBoardingMood /> },
+          {
+            path: "step-2",
+            element: <OnBoardingPoints />,
+          },
+          {
+            path: "step-3",
+            element: <OnBoardingDiary />,
+          },
+        ],
       },
       {
         path: "/app",

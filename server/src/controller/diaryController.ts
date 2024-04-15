@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import { RequestHandler } from "express";
-import { getPointsByMood } from "../model/pointsDataReference";
 import { AppError } from "../utils/AppError";
 
 const prisma = new PrismaClient();
@@ -46,7 +45,7 @@ export const createUserDiary: RequestHandler = async (
         400
       );
 
-    // 3. Create the document using prisma
+    // 2. Create the document using prisma
     const newDiary = await prisma.diary.create({
       data: {
         content,
@@ -59,7 +58,7 @@ export const createUserDiary: RequestHandler = async (
         500
       );
 
-    // 4. Update the user's `hasCreatedDiaryToday` and `Point` field
+    // 4. Update the user's `hasCreatedDiaryToday` field
     await prisma.user.update({
       where: {
         id: userId,

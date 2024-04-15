@@ -1,16 +1,15 @@
 import useDiaryMutation from "@/hooks/useDiaryMutation";
 import DateDisplay from "../general/DateDisplay";
-import { TDiary } from "@/context/DiaryContext";
-import { create } from "domain";
 import { useState } from "react";
 import Button from "../general/Button";
+import LoadingSpinner from "../general/loadingSpinner";
 
 export default function OnBoardingDiary() {
-  const [diaryValue, setDiaryValue] = useState("");
-  const { createMutation } = useDiaryMutation();
+  const { createMutation, diaryMadeToday } = useDiaryMutation();
+  const [diaryValue, setDiaryValue] = useState(diaryMadeToday?.content || "");
 
   const handleCreateDiary = () => {
-    createMutation.mutate();
+    createMutation.mutate({ content: diaryValue });
   };
 
   return (
@@ -25,15 +24,21 @@ export default function OnBoardingDiary() {
           placeholder="Dear Diary..."
           className="resize-none w-full rounded-md shadow-xl shadow-accent/5 p-8 h-[20rem]"
           onChange={(e) => setDiaryValue(e.target.value)}
+          defaultValue={diaryMadeToday?.content || diaryValue}
+          disabled={Boolean(diaryMadeToday)}
         ></textarea>
         <div className="flex items-center justify-end">
-          <Button
-            variant="dark"
-            className="mt-4 px-8 ml-auto"
-            onClick={handleCreateDiary}
-          >
-            Create
-          </Button>
+          {!diaryMadeToday && (
+            <Button
+              variant="dark"
+              className="mt-4 px-8 ml-auto flex items-center justify-center gap-2"
+              onClick={handleCreateDiary}
+              disabled={createMutation.isLoading}
+            >
+              Create
+              {createMutation.isLoading && <LoadingSpinner />}
+            </Button>
+          )}
         </div>
       </div>
       <div>

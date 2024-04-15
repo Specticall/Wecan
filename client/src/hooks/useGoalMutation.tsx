@@ -16,8 +16,6 @@ The fetch function are using higher order functions to return a query function w
 */
 
 const fetchGoalData = (id?: string, token?: string) => async () => {
-  if (!id || !token) return;
-
   const response = await axios.get<TServerSucessResponse<TGoal>>(
     `${BASE_URL}${BASE_ENDPOINT}/v1/goal?id=${id}`,
     {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 import useGoalMutation from "@/hooks/useGoalMutation";
 import Skeleton from "react-loading-skeleton";
@@ -24,7 +24,6 @@ const findDifficulty = (point: number) => {
 };
 
 export default function GoalSlider() {
-  // const debouncedValue = useDebounce();
   const { goalData, updateMutation, goalQuery } = useGoalMutation();
 
   /*
@@ -32,7 +31,10 @@ export default function GoalSlider() {
   */
   const [value, setValue] = useState(goalData?.target || DEFAULT_POINTS);
   const debouncedValue = useDebounce(value, 300);
+
   useEffect(() => {
+    // Prevents the effect from running when no data has been fetched yet.
+    if (!goalData) return;
     updateMutation.mutate({ target: debouncedValue });
   }, [debouncedValue]);
 

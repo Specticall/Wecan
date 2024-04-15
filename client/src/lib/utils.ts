@@ -58,3 +58,14 @@ export function hasLoggedInToday(lastLogin: Date) {
     lastLoginDate.getDate() === currentDate.getDate()
   );
 }
+
+/**
+ * Checks if the input date is today.
+ */
+export function isToday(inputDate: Date) {
+  return (
+    inputDate.getDate() === new Date().getDate() &&
+    inputDate.getFullYear() === new Date().getFullYear() &&
+    inputDate.getMonth() === new Date().getMonth()
+  );
+}

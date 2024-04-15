@@ -1,7 +1,5 @@
 import WellnessPointInfographic from "./WellnessPointInfographic";
 import GoalSlider from "./GoalSlider";
-import useUserMutation from "@/hooks/useUserMutation";
-import useGoalMutation from "@/hooks/useGoalMutation";
 
 export default function OnBoardingPoints() {
   return (

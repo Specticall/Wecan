@@ -44,7 +44,6 @@ export const googleLogin: RequestHandler = async (request, response, next) => {
           mood: Mood.Unknown,
           pictureURL: dataFromGoogle.picture || "",
           hasCreatedDiaryToday: false,
-          lastLogin: new Date(Date.now()),
         },
       });
 
@@ -57,7 +56,7 @@ export const googleLogin: RequestHandler = async (request, response, next) => {
           point: true,
         },
       });
-      if (!userData || !userData.point)
+      if (!userData)
         throw new AppError(
           "Something went wrong while trying to retrieve the user data",
           500

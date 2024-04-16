@@ -20,6 +20,9 @@ type TAuthContextValues = {
 
 const AuthContext = createContext<TAuthContextValues | null>(null);
 
+type TODO = any;
+// Clear local storage if user is not found in the database!
+
 export const reloadSavedLoginDataLoader = async () => {
   //1. Retrieve user id and token from local storage
   const token = localStorage.getItem("token");
@@ -81,9 +84,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("token", token);
     localStorage.setItem("id", userData.id);
 
-    type TODO = any;
-    //4. Redirect the user to `on-boarding`
-    navigate("/onboarding/step-1");
+    // If the has already completed the on boarding then redirect to the dashboard.
+    navigate(userData.hasOnboarded ? "/app/dashboard" : "/onboarding/step-1");
   };
 
   return (

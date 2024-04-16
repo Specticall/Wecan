@@ -1,5 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../general/Button";
+import useUserMutation from "@/hooks/useUserMutation";
+import { usePopup } from "@/context/PopupContext";
 
 /**
  * Returns the number indicating current step of the multistep form.
@@ -12,6 +14,8 @@ const parseStepURL = (URL: string) => {
 };
 
 export default function OnboardingNavigator() {
+  const { updateMutation } = useUserMutation();
+  const { notify } = usePopup();
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -25,7 +29,17 @@ export default function OnboardingNavigator() {
   };
 
   const handleComplete = () => {
-    navigate(`/app/dashboard`);
+    updateMutation.mutate(
+      { hasOnboarded: true },
+      {
+        onSuccess: () => {
+          navigate(`/app/dashboard`);
+        },
+        onError: () => {
+          notify("Oops, Something went wrong!");
+        },
+      }
+    );
   };
 
   return (

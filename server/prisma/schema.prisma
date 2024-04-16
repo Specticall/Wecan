@@ -32,6 +32,12 @@ model User {
   // This data gets reset to 0 after a user is notified of the task deletion (sent manually the from client)
   unannouncedExpiredTaskCount Int @default(0)
 
+  // Checks if the user has created a goal that's on going (in progress). This is used to notify a user if they should / can create a new goal.
+  hasOnGoingGoal Boolean @default(false)
+
+  // Checks if the user has completed the onboarding form 
+  hasOnboarded Boolean @default(false)
+
   
   diaries Diary[]
   tasks Task[]

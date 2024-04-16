@@ -1,4 +1,7 @@
+import animate from "tailwindcss-animate";
+
 /** @type {import('tailwindcss').Config} */
+
 export default {
   darkMode: ["class"],
   content: [
@@ -47,6 +50,7 @@ export default {
         background: "rgb(var(--background) / <alpha-value>)",
 
         white: "rgb(var(--white) / <alpha-value>)",
+        "white-soft": "rgb(var(--white-soft) / <alpha-value>)",
         lightest: "rgb(var(--lightest) / <alpha-value>)",
         lighter: "rgb(var(--lighter) / <alpha-value>)",
         light: "rgb(var(--light) / <alpha-value>)",
@@ -109,5 +113,5 @@ export default {
     },
   },
   // eslint-disable-next-line
-  plugins: [require("tailwindcss-animate")],
+  plugins: [animate],
 };

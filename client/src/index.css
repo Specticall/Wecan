@@ -9,10 +9,18 @@ body {
   color: rgba(55, 55, 55, 1);
   font-size: 0.875rem;
 
-  /* background: #f5f3f0; */
+  /* background: #f5f3f0; #f9f9ff */
+  /* F2F3FC */
 
-  background: #f9f9ff;
+  background: #f2f3fc;
   min-height: 100vh;
+}
+
+line-clamp {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
 }
 
 body #g_a11y_announcement {
@@ -45,10 +53,12 @@ body #g_a11y_announcement {
 
     --background: 249 249 255;
 
+    --white-soft: 247 247 250;
+
     --lightest: 229 229 243;
     --lighter: 161 161 161;
     --light: 89 89 89;
-    --dark: 67 77 97;
+    --dark: 44 44 44;
     --darkest: 6 6 6;
     --white: 255 255 255;
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 import useGoalMutation from "@/hooks/useGoalMutation";
 import Skeleton from "react-loading-skeleton";
@@ -39,7 +39,8 @@ export default function GoalSlider() {
   }, [debouncedValue]);
 
   // Finds the difficulty value and color for a given target point data
-  const difficultyRange = goalData && findDifficulty(goalData.target);
+  const difficultyRange =
+    goalData && findDifficulty(goalData.target || DEFAULT_POINTS);
 
   const handleValueChange = (val: number[]) => {
     const value = val[0];

@@ -24,7 +24,9 @@ export default function OnboardingNavigator() {
     navigate(`/onboarding/step-${currentStep - 1}`);
   };
 
-  const handleComplete = () => {};
+  const handleComplete = () => {
+    navigate(`/app/dashboard`);
+  };
 
   return (
     <div className="section w-full grid grid-cols-[10rem_1fr_10rem] pb-12">

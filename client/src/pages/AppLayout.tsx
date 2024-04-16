@@ -18,7 +18,7 @@ export default function AppLayout() {
 
   return (
     <DiaryProvider>
-      <div className="grid grid-cols-[20rem_1fr] min-h-screen">
+      <div className="">
         <AppNavbar />
         <Outlet />
       </div>

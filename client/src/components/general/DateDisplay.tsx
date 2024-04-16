@@ -15,11 +15,13 @@ export default function DateDisplay({
   date,
   variant = "dark",
   fallback,
+  hideIcon = false,
 }: {
   className?: string;
   date?: Date;
   variant?: VariantProps<typeof styles>["variant"];
   fallback?: string;
+  hideIcon?: boolean;
 }) {
   const formattedDate = date?.toLocaleDateString("en-US", {
     weekday: "long",
@@ -30,7 +32,7 @@ export default function DateDisplay({
 
   return (
     <p className={twMerge(styles({ variant }), className)}>
-      <i className="bx bx-calendar text-light text-md"></i>
+      {hideIcon || <i className="bx bx-calendar text-light text-md"></i>}
       {formattedDate || fallback}
     </p>
   );

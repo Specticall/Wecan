@@ -81,7 +81,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("token", token);
     localStorage.setItem("id", userData.id);
 
-    //4. Redirect the user to `/app/dashboard`
+    type TODO = any;
+    //4. Redirect the user to `on-boarding`
     navigate("/onboarding/step-1");
   };
 

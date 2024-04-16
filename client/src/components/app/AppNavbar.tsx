@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useLocation, useNavigate } from "react-router-dom";
-import Icons from "../general/Icon";
-import Button from "../general/Button";
+import { useUser } from "@/context/UserContext";
+import Skeleton from "react-loading-skeleton";
 
 const routes = [
   {
@@ -29,36 +29,54 @@ const routes = [
 export default function AppNavbar() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { userData } = useUser();
 
   return (
-    <nav className="">
-      <ul className="pt-12 pb-6 max-w-[18rem] h-full bg-white flex flex-col justify-start pr-6">
-        <div className="pl-8">
-          <Icons icon="logo" />
-          <p className="text-lighter mb-2 mt-12">All Menu</p>
+    <nav className="flex gap-6 px-4 py-4">
+      <h2 className="bg-white px-8 py-3 rounded-xl text-lg flex items-center justify-center">
+        Wecan
+      </h2>
+      <ul className="rounded-xl flex-1 bg-white items-center justify-between  px-3 py-3 flex">
+        <div className="flex bg-white-soft justify-start w-fit rounded-lg px-2 py-2 gap-4">
+          {routes.map((route) => {
+            const isOnPath = route.route.some((route) =>
+              pathname.includes(route)
+            );
+            return (
+              <li
+                key={`${route.route}`}
+                className={clsx(
+                  "flex px-4 py-2 items-center justify-center gap-2 cursor-pointer transition-all duration-200",
+                  isOnPath && "bg-white shadow-lg shadow-accent/10 rounded-md"
+                )}
+                onClick={() => navigate(route.route[0])}
+              >
+                <div className="[&>i]:text-md [&>*]:flex [&>*]:items-center [&>*]:justify-center">
+                  {route.icon}
+                </div>
+                <p>{route.text}</p>
+              </li>
+            );
+          })}
         </div>
-        {routes.map((route) => {
-          const isOnPath = route.route.some((route) =>
-            pathname.includes(route)
-          );
-          return (
-            <li
-              key={`${route.route}`}
-              className={clsx(
-                "rounded-r-full pr-5 pl-8 py-3 flex gap-4 cursor-pointer transition-all duration-100 items-center justify-start hover:bg-black hover:text-white",
-                isOnPath && "bg-accent text-white"
-              )}
-              onClick={() => navigate(route.route[0])}
-            >
-              <div className="[&>i]:text-md">{route.icon}</div>
-              <p>{route.text}</p>
-            </li>
-          );
-        })}
-        <div className="flex-1 "></div>
-        <Button variant="dark" className="ml-6">
-          Logout
-        </Button>
+        <div className="flex items-center gap-4">
+          <p>{userData?.name || <Skeleton />}</p>
+          <div className="h-10 aspect-square rounded-full bg-red-200 overflow-hidden mr-3">
+            {userData && userData.pictureURL ? (
+              <img
+                src={userData?.pictureURL}
+                alt=""
+                referrerPolicy="no-referrer"
+              />
+            ) : (
+              <Skeleton
+                width={"100%"}
+                height={"100%"}
+                className="translate-y-[-3px]"
+              />
+            )}
+          </div>
+        </div>
       </ul>
     </nav>
   );

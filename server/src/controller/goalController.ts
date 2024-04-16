@@ -2,6 +2,8 @@ import { RequestHandler } from "express";
 import { AppError } from "../utils/AppError";
 import { prisma } from "../../prisma/prisma";
 
+const DEFAULT_USER_GOAL = 150_000;
+
 export const updateUserGoal: RequestHandler = async (
   request,
   response,
@@ -61,6 +63,7 @@ export const getUserGoal: RequestHandler = async (request, response, next) => {
       userGoal = await prisma.goal.create({
         data: {
           userId,
+          target: DEFAULT_USER_GOAL,
           // NOTE : Altough 'target', 'earned' and 'status' can technically be updated, if we're following the planned usage of this endpoint then a create operation will only be done on the onboarding route which userId are supplied and status will default to onGoing (already defined in the schema)
         },
       });

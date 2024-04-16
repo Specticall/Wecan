@@ -33,8 +33,7 @@ export default function ProgressBar({
     durationMs: number;
   };
 }) {
-  const [progress, setProgress] = useState(() => progressPercent / 100);
-
+  const [progress, setProgress] = useState(progressPercent / 100);
   useEffect(() => {
     if (!animate) return;
 

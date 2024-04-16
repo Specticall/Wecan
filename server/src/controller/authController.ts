@@ -42,15 +42,9 @@ export const googleLogin: RequestHandler = async (request, response, next) => {
           email: dataFromGoogle.email,
           name: dataFromGoogle.name,
           mood: Mood.Unknown,
+          pictureURL: dataFromGoogle.picture || "",
           hasCreatedDiaryToday: false,
           lastLogin: new Date(Date.now()),
-          point: {
-            create: {
-              earnedOverall: 0,
-              earnedToday: 0,
-              targetToday: 0,
-            },
-          },
         },
       });
 

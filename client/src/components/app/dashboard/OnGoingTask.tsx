@@ -1,56 +1,61 @@
-import TaskCard from "../task/TaskCard";
 import Button from "@/components/general/Button";
+import { TMood } from "@/context/MoodContext";
 import useTaskMutation from "@/hooks/useTaskMutation";
+import { getMoodColor } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 export default function OnGoingTask() {
   const { userTask } = useTaskMutation();
+  const navigate = useNavigate();
 
   const onGoingTask = userTask
-    ? userTask.find((task) => task.status === "OnGoing")
+    ? userTask.filter((task) => task.status === "OnGoing")
     : undefined;
 
   return (
-    <article className="px-10 pt-8 pb-4 bg-accent rounded-md flex-1">
-      <div className="flex gap text-lightest mb-6 items-start justify-between">
-        <div className="flex gap-2 items-center justify-center">
-          <i className="bx bx-calendar-check text-md"></i>
-          <p>On Going Task</p>
+    <article className="bg-white-soft mt-4 p-10 rounded-xl">
+      <header className="mb-8 flex justify-between items-center gap-6">
+        <div>
+          <h2 className="text-lg text-darkest flex items-center justify-start gap-2">
+            <i className="bx bx-clipboard text-[2rem] text-dark"></i>
+            Your On Going Tasks
+          </h2>
+          <p className="text-lighter mt-2">
+            Looks like you've got things to do, what are you waiting for?
+          </p>
         </div>
         <Button
-          className="text-lightest underline hover:text-white cursor-pointer p-0"
-          to="/app/task"
+          variant="clean"
+          className="bg-white px-6 py-2 rounded-full flex items-center justify-center gap-2 hover:bg-border"
+          onClick={() => navigate("/app/task/all")}
         >
-          Get More
+          View All
+          <i className="bx bx-chevron-right text-md"></i>
         </Button>
-      </div>
-      <div className="shadow-lg relative w-full isolate">
-        {onGoingTask ? (
-          <TaskCard
-            task={onGoingTask}
-            enableCompleteButton
-            className="z-[3] relative"
-          />
-        ) : (
-          <div className=" relative bg-white p-8 rounded-md hover:scale-[97.5%] transition-all duration-200 cursor-pointer z-[3] py-12">
-            <h2 className="text-lg text-center ">
-              You have no on going tasks!
-            </h2>
-            <p className="text-center mt-1 text-lighter">
-              Complete tasks and earn wellness points
-            </p>
-            <div className="flex items-center justify-center">
-              <Button className="shadow-none px-12 mt-8" to="/app/task">
-                Get Task
-              </Button>
-            </div>
-          </div>
-        )}
-        <div className="bg-slate-200 inset-0 translate-y-4 absolute z-[2] rounded-md scale-[97.5%] card-2 transition-all duration-100"></div>
-        <div className="bg-slate-300 inset-0 translate-y-7 absolute rounded-md scale-[95%] z-[1] card-3"></div>
-      </div>
-      <div className="flex items-center justify-center gap-2 text-lightest mt-12">
-        <i className="bx bx-chevron-down text-md"></i>
-        <p>Next</p>
+      </header>
+      <div className="grid grid-cols-2 gap-8">
+        {onGoingTask?.slice(0, 2).map((task) => {
+          return (
+            <article className="grid grid-cols-[auto_1fr] bg-white rounded-xl p-8 grid-rows-[12rem_4rem] gap-x-4">
+              <div
+                className="row-span-3 w-2 h-2 rounded-full mt-3"
+                style={{ background: getMoodColor(task.mood as TMood) }}
+              ></div>
+              <div className="overflow-hidden">
+                <h3 className="text-md">{task.title}.</h3>
+                <p className="text-lighter mt-6 leading-[175%] line-clamp-3 ">
+                  {task.description}
+                </p>
+              </div>
+              <div className="text-lighter">
+                <p className="mb-2">On Completion</p>
+                <div className="bg-accent px-4 py-1 text-white w-fit rounded-full">
+                  +{task.points} Points
+                </div>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </article>
   );

@@ -39,10 +39,6 @@ export function DiaryProvider({ children }: { children: ReactNode }) {
     );
   };
 
-  // const appendNewDiary = (newDiary: TDiary) => {
-  //   setDiaryList((current) => [...current, newDiary]);
-  // };
-
   return (
     <DiaryContext.Provider
       value={{ diaryList, selectDiaryById, selectedDiary }}

@@ -27,8 +27,10 @@ const styles = cva("", {
 
 export default function MoodSelector({
   variant = "accent",
+  className,
 }: {
   variant: "clean" | "accent";
+  className?: string;
 }) {
   const { updateMutation } = useMoodMutation();
   const { currentMood: mood } = useMood();
@@ -37,7 +39,8 @@ export default function MoodSelector({
     <article
       className={cn(
         "bg-accent px-6 py-6 rounded-lg flex items-center justify-center gap-6 transition-all duration-100",
-        styles({ background: variant })
+        styles({ background: variant }),
+        className
       )}
       style={
         mood && variant === "accent"

@@ -31,15 +31,6 @@ export const refreshUserData = async (userData: User) => {
 
       // Checks for any expired task
       unannouncedExpiredTaskCount,
-
-      point: {
-        update: isANewDay
-          ? {
-              earnedToday: 0,
-              targetToday: 0,
-            }
-          : {},
-      },
     },
     include: {
       point: true,

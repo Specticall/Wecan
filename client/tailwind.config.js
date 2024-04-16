@@ -26,12 +26,20 @@ export default {
       xl: "2.25rem",
       "2xl": "4rem",
     },
+    // screens: {
+    //   sm: { max: "450px" },
+    //   md: { max: "600px" },
+    //   lg: { max: "900px" },
+    //   xl: { max: "1080px" },
+    //   "2xl": { max: "1200px" },
+    // },
     screens: {
-      sm: { max: "450px" },
-      md: { max: "600px" },
-      lg: { max: "900px" },
-      xl: { max: "1080px" },
+      "3xl": { max: "1400px" },
       "2xl": { max: "1200px" },
+      xl: { max: "1080px" },
+      lg: { max: "900px" },
+      md: { max: "600px" },
+      sm: { max: "450px" },
     },
 
     extend: {

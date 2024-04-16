@@ -26,7 +26,7 @@ const routes = [
   },
 ];
 
-export default function AppNavbar() {
+export default function DesktopNavbar() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { userData } = useUser();

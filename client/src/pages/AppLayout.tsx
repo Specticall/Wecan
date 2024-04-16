@@ -1,4 +1,4 @@
-import AppNavbar from "@/components/app/AppNavbar";
+import AppNavbar from "@/components/app/navbar/AppNavbar";
 import { DiaryProvider } from "@/context/DiaryContext";
 import { useGlobalDialog } from "@/context/GlobalDialogContext";
 import { useUser } from "@/context/UserContext";

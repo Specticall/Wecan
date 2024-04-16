@@ -2,7 +2,7 @@ import { useAuth } from "@/context/AuthContext";
 import { usePopup } from "@/context/PopupContext";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
 import {
-  TPoint,
+  TGoal,
   TServerSucessResponse,
   TTaskRequest,
   TUserTask,
@@ -92,7 +92,7 @@ export default function useTaskMutation() {
 
   const completeTaskMutation = useMutation(
     (taskId: string) => {
-      return axios.post<TServerSucessResponse<TPoint>>(
+      return axios.post<TServerSucessResponse<TGoal>>(
         `${BASE_URL}${BASE_ENDPOINT}/v1/task/completed?taskId=${taskId}&userId=${userId}`,
         {},
         {

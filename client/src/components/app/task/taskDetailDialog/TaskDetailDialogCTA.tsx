@@ -1,27 +1,27 @@
 import Button from "@/components/general/Button";
 import LoadingSpinner from "@/components/general/loadingSpinner";
 import { useGlobalDialog } from "@/context/GlobalDialogContext";
-import { useUser } from "@/context/UserContext";
+import useGoalMutation from "@/hooks/useGoalMutation";
 import useTaskMutation from "@/hooks/useTaskMutation";
 import { TUserTask } from "@/types/general";
 
 export default function TaskDetailDialogCTA() {
   const { contextData, closeDialog, showDialog } = useGlobalDialog();
   const { completeTaskMutation, deleteMutation } = useTaskMutation();
-  const { userData } = useUser();
+  const { goalData } = useGoalMutation();
 
   if (!contextData) return;
   const userTaskData = contextData as TUserTask;
 
   const handleCompleteTask = () => {
     // Making use of closure's behavior to save the previous data.
-    const oldUserPoints = userData?.point;
+    const oldUserPoints = goalData;
 
     completeTaskMutation.mutate(userTaskData.id, {
       onSuccess: (data) => {
         showDialog("taskComplete", {
-          newData: data.data.data,
-          oldData: oldUserPoints,
+          newUserGoal: data.data.data,
+          oldUserGoal: oldUserPoints,
         });
       },
     });

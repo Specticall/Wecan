@@ -20,7 +20,6 @@ export type TUserData = {
   streak: number;
   token: string;
   hasCreatedDiaryToday: boolean;
-  point: TPoint;
   unannouncedExpiredTaskCount: number;
   pictureURL?: string;
 };

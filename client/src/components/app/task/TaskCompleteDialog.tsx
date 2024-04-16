@@ -1,6 +1,6 @@
-import { useGlobalDialog } from "@/context/GlobalDialogContext";
+import { DialogCollapse, useGlobalDialog } from "@/context/GlobalDialogContext";
 import celebrationArt from "/assets/task-complete.png";
-import { TPoint } from "@/types/general";
+import { TGoal } from "@/types/general";
 import { useUser } from "@/context/UserContext";
 import ConfettiExplosion from "react-confetti-explosion";
 import ProgressBar from "@/components/general/ProgressBar";
@@ -12,20 +12,20 @@ export default function TaskCompleteDialog() {
   const { userData } = useUser();
 
   if (!contextData || !userData) return;
-  const { newData, oldData } = contextData as {
-    newData: TPoint;
-    oldData: TPoint;
+  const { newUserGoal, oldUserGoal } = contextData as {
+    newUserGoal: TGoal;
+    oldUserGoal: TGoal;
   };
 
   const oldProgressPercent =
-    oldData.targetToday === 0
+    oldUserGoal.target === 0
       ? 0
-      : (oldData.earnedToday * 100) / oldData.targetToday;
+      : (oldUserGoal.earned * 100) / oldUserGoal.target;
 
   const newProgressPercent =
-    newData.targetToday === 0
+    newUserGoal.target === 0
       ? 0
-      : (newData.earnedToday * 100) / newData.targetToday;
+      : (newUserGoal.earned * 100) / newUserGoal.target;
   return (
     <>
       <ConfettiExplosion
@@ -56,8 +56,8 @@ export default function TaskCompleteDialog() {
             <p className="mt-8 text-lighter">Wellness Points Earned Today</p>
             <h3 className="text-lg mt-1">
               <AnimatedCounter
-                from={oldData.earnedToday}
-                to={newData.earnedToday}
+                from={oldUserGoal.earned}
+                to={newUserGoal.earned}
                 speedMultiplier={200}
               />{" "}
               Points
@@ -83,13 +83,15 @@ export default function TaskCompleteDialog() {
               />
               <p className="text-lighter">Your Progress</p>
               <p className="text-lighter justify-self-end">
-                {newData.targetToday.toLocaleString("de-DE")} Points
+                {newUserGoal.target.toLocaleString("de-DE")} Points
               </p>
             </div>
             <div className="flex items-center justify-end">
-              <Button variant="primary" className="shadow-none mt-12 px-16">
-                Done
-              </Button>
+              <DialogCollapse>
+                <Button variant="primary" className="shadow-none mt-12 px-16">
+                  Done
+                </Button>
+              </DialogCollapse>
             </div>
           </div>
         </div>

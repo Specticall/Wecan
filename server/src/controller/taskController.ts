@@ -338,21 +338,28 @@ export const completedUserTask: RequestHandler = async (
         500
       );
 
-    // Update the user's point value
-    const updatedUserPoints = await prisma.point.update({
+    // Find the the user's current ongoing task
+    const onGoingGoals = await prisma.goal.findFirst({
       where: {
+        status: "OnGoing",
         userId,
       },
+    });
+    if (!onGoingGoals)
+      throw new AppError("There are not on going goals right now!", 404);
+
+    // Update the user's point value
+    const updatedUserGoal = await prisma.goal.update({
+      where: {
+        id: onGoingGoals.id,
+      },
       data: {
-        earnedToday: {
-          increment: updatedTask.points,
-        },
-        earnedOverall: {
+        earned: {
           increment: updatedTask.points,
         },
       },
     });
-    if (!updatedUserPoints)
+    if (!updatedUserGoal)
       throw new AppError(
         "Something went wrong while trying to update the user data",
         500
@@ -360,7 +367,7 @@ export const completedUserTask: RequestHandler = async (
 
     response.status(200).send({
       status: "success",
-      data: updatedUserPoints,
+      data: updatedUserGoal,
     });
   } catch (error) {
     next(error);

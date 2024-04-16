@@ -10,15 +10,15 @@ export default function EarnedPoints() {
 
   const progressPercent = target === 0 ? 0 : (earned * 100) / target;
   return (
-    <article className="bg-white rounded-xl p-8">
-      <div className="flex justify-between items-center mb-8">
+    <article className="bg-white rounded-xl p-8 3xl:order-3">
+      <div className="flex justify-between items-center mb-8 sm:flex-col-reverse sm:items-start">
         <div>
           <p>Wellness Points Earned</p>
           <h3 className="text-xl font-semibold">
             {earned.toLocaleString("de-DE")} points
           </h3>
         </div>
-        <i className="bx bx-coin-stack text-xl bg-white-soft p-4 rounded-lg text-dark"></i>
+        <i className="bx bx-coin-stack text-xl bg-white-soft p-4 rounded-lg text-dark sm:mb-4"></i>
       </div>
       <div>
         <div className="flex justify-between items-center mb-2">

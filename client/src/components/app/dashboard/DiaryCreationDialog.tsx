@@ -7,6 +7,7 @@ import { useState } from "react";
 import Button from "@/components/general/Button";
 import { useMood } from "@/context/MoodContext";
 import { getMoodColor } from "@/lib/utils";
+import useGoalMutation from "@/hooks/useGoalMutation";
 
 const pages = [<IntroPage />, <EncouragementPage />, <PointPage />];
 
@@ -102,9 +103,9 @@ function EncouragementPage() {
 }
 
 function PointPage() {
-  const { userData } = useUser();
+  const { goalData } = useGoalMutation();
 
-  if (!userData) return;
+  if (!goalData) return;
 
   return (
     <>
@@ -112,7 +113,7 @@ function PointPage() {
       <div className="flex flex-col items-start justify-center">
         <p className="mb-1">Today's Goal</p>
         <h3 className="text-xl mb-4">
-          {userData.point.targetToday.toLocaleString("de-DE")} points
+          {/* {goalData.point.targetToday.toLocaleString("de-DE")} points */}
         </h3>
         <p className="text-lighter leading-[200%]">
           Do you know that doing certain activies will boost your overall mood

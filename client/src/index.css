@@ -147,7 +147,7 @@ html {
   }
 
   .dotted-grid {
-    background-image: radial-gradient(rgb(234, 228, 228) 2px, transparent 0);
+    background-image: radial-gradient(rgb(224, 220, 233) 2px, transparent 0);
     background-size: 40px 40px;
   }
 }

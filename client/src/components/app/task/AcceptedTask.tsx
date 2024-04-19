@@ -10,38 +10,24 @@ export default function AcceptedTask() {
   const { onGoingTask } = useTaskMutation();
 
   return (
-    <div className="pr-8">
+    <ScrollArea className="bg-white-soft rounded-xl h-full">
       <Skeleton isLoading={!onGoingTask}>
         {onGoingTask && (
-          <Tooltip
-            text="Accepted Task"
-            count={onGoingTask.length}
-            className="mb-4"
-          />
+          <div className=" flex flex-col gap-8 py-8">
+            {onGoingTask.map((task) => {
+              return (
+                <li className="px-8" key={task.id}>
+                  <TaskCard
+                    badgeColor={getMoodColor(task.mood as TMood)}
+                    task={task}
+                    className="shadow-xl shadow-accent/5"
+                  />
+                </li>
+              );
+            })}
+          </div>
         )}
       </Skeleton>
-
-      <ul className="rounded-md border-[1px] border-lighter">
-        <ScrollArea className="h-[calc(100vh-12rem)]">
-          <Skeleton isLoading={!onGoingTask}>
-            {onGoingTask && (
-              <div className=" flex flex-col gap-8 py-8">
-                {onGoingTask.map((task) => {
-                  return (
-                    <li className="px-8" key={task.id}>
-                      <TaskCard
-                        badgeColor={getMoodColor(task.mood as TMood)}
-                        task={task}
-                        className="shadow-xl shadow-accent/5"
-                      />
-                    </li>
-                  );
-                })}
-              </div>
-            )}
-          </Skeleton>
-        </ScrollArea>
-      </ul>
-    </div>
+    </ScrollArea>
   );
 }

@@ -2,8 +2,7 @@ import DateDisplay from "@/components/general/DateDisplay";
 import { TDiary, useDiary } from "@/context/DiaryContext";
 import { cn } from "@/lib/utils";
 
-const SELECTED_GRADIENT =
-  "linear-gradient(180deg, rgba(235,237,255,1) 0%, rgba(245,246,255,1) 100%)";
+const SELECTED_GRADIENT = "linear-gradient(180deg, #E7E7F8 0%, #E8EAFF 100%)";
 
 export default function DiaryPreviewItem({ diary }: { diary: TDiary }) {
   const { selectDiaryById, selectedDiary } = useDiary();
@@ -38,7 +37,7 @@ export default function DiaryPreviewItem({ diary }: { diary: TDiary }) {
           )}
         ></i>
       </h3>
-      <p className="line-clamp-3 text-lighter leading-[200%] justify-self-start max-w-[20rem]">
+      <p className="line-clamp-3 text-light leading-[200%] justify-self-start max-w-[20rem]">
         {diary.content}
       </p>
     </article>

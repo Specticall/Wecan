@@ -1,7 +1,24 @@
 import { useState } from "react";
 import Button from "../general/Button";
 
-const navbarItem = ["Home", "About", "Flow", "FAQ"];
+const navbarItem = [
+  {
+    text: "Home",
+    link: "#hero",
+  },
+  {
+    text: "About",
+    link: "#about-us",
+  },
+  {
+    text: "Flow",
+    link: "#how-it-works",
+  },
+  {
+    text: "FAQ",
+    link: "#FAQ",
+  },
+] as const;
 
 export default function MobileNavbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,12 +43,13 @@ export default function MobileNavbar() {
         style={{ scale: isOpen ? "1" : "0" }}
       >
         {navbarItem.map((item) => (
-          <li
+          <a
             className="relative text-sm text-dark hover:text-black hover:font-medium cursor-pointer"
-            key={item}
+            key={item.text}
+            href={item.link}
           >
-            {item}
-          </li>
+            {item.text}
+          </a>
         ))}
         <div className="w-full h-[1px] bg-lighter mt-4"></div>
         <Button

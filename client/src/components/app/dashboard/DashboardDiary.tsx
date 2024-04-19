@@ -1,14 +1,34 @@
 import Button from "@/components/general/Button";
 import DateDisplay from "@/components/general/DateDisplay";
 import LoadingSpinner from "@/components/general/loadingSpinner";
+import { usePopup } from "@/context/PopupContext";
 import useDiaryMutation from "@/hooks/useDiaryMutation";
-import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { useRef, useState } from "react";
 
 export default function DashboardDiary() {
   const { createMutation, diaryMadeToday } = useDiaryMutation();
   const [diaryValue, setDiaryValue] = useState(diaryMadeToday?.content || "");
 
+  const { notify } = usePopup();
+  const [isError, setIsError] = useState(false);
+  // Save a reference to the previous timeout so we can clear it when a new one is being called.
+  const previousTimeout = useRef<NodeJS.Timeout | undefined>();
+
   const handleCreateDiary = () => {
+    // Make sures the diary value is not empty.
+    if (!diaryValue) {
+      notify("Diary Can't be Empty");
+      setIsError(true);
+
+      // Clears the previous timeout before setting up a new one to prevent race conditions.
+      clearTimeout(previousTimeout.current);
+
+      previousTimeout.current = setTimeout(() => {
+        setIsError(false);
+      }, 2000);
+      return;
+    }
     createMutation.mutate({ content: diaryValue });
   };
 
@@ -26,11 +46,15 @@ export default function DashboardDiary() {
       </div>
       <textarea
         placeholder="Dear Diary..."
-        className="resize-none w-full rounded-xl  p-8 flex-1 bg-white-soft "
+        className={cn(
+          "resize-none w-full rounded-xl  p-8 flex-1 bg-white-soft",
+          isError && "border-[1px] border-red-400"
+        )}
         onChange={(e) => setDiaryValue(e.target.value)}
         defaultValue={diaryMadeToday?.content || diaryValue}
         disabled={Boolean(diaryMadeToday)}
       ></textarea>
+      {isError && <p className="text-red-400 mt-2">Diary Can't be Empty</p>}
       <div className="flex items-center justify-between mt-4">
         <p className=" text-lighter self-start">
           You can create a diary once per day at any time*

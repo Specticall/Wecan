@@ -2,9 +2,9 @@ import graph from "/assets/about-us-graph.png";
 
 export default function AboutUs() {
   return (
-    <section className="bg-white">
-      <div className="section flex gap-12 items-center justify-center pb-32 py-48">
-        <article className="flex flex-col items-start">
+    <section className="bg-white" id="about-us">
+      <div className="section flex gap-12 items-center justify-center pb-32 py-48 md:pt-24 md:mt-16 lg:flex-col md:pb-24">
+        <article className="flex flex-col items-start ">
           <div className="bg-white-soft px-8 py-2 rounded-full text-dark">
             About Us
           </div>
@@ -19,7 +19,7 @@ export default function AboutUs() {
             mission to enhancing your mental health through our application.
           </p>
         </article>
-        <img src={graph} alt="Graph" className="w-[35rem]" />
+        <img src={graph} alt="Graph" className="w-[35rem] lg:w-full" />
       </div>
     </section>
   );

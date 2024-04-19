@@ -1,5 +1,3 @@
-import Icons from "@/components/general/Icon";
-
 export const footerList = [
   {
     title: "Product",

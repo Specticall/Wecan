@@ -1,50 +1,38 @@
-import {
-  Dropdown,
-  DropdownContent,
-  DropdownItem,
-  DropdownTrigger,
-} from "@/components/general/Dropdown";
+import TaskGenerator from "@/components/app/task/TaskGenerator";
+import TaskProgressBanner from "@/components/app/task/TaskProgressBanner";
+
 import { useUser } from "@/context/UserContext";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 export default function Task() {
   const { userData } = useUser();
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
 
   if (!userData) return;
 
   return (
-    <main className="grid grid-cols-[1fr_1fr] grid-rows-[6.5rem_1fr] items-start dotted-grid gap-y-4">
-      <div className="col-span-2 self-start justify-self-start pt-12 pb-6 mb-4 flex items-center gap-3">
-        <h1 className="text-lg font-semibold">Tasks</h1>
-        <div className="text-lg font-semibold">/</div>
-        <Dropdown
-          canUnselect={false}
-          onSelect={(selection) => {
-            if (!selection) return;
-            navigate(`${selection?.toLowerCase()}`);
-          }}
-          defaultValue={pathname.includes("all") ? "All" : "Generator"}
-        >
-          <DropdownTrigger
-            className="text-md font-semibold text-lighter flex gap-2 items-center justify-center"
-            render={(selection) => {
-              return (
-                <>
-                  <p className="">{selection}</p>
-                  <i className="text-lg bx bx-chevron-down"></i>
-                </>
-              );
-            }}
-          ></DropdownTrigger>
-          <DropdownContent className="[&>*]:pr-8">
-            <DropdownItem itemValue="Generator">Generator</DropdownItem>
-            <DropdownItem itemValue="All">All</DropdownItem>
-          </DropdownContent>
-        </Dropdown>
+    <main className="grid grid-cols-[3fr_5fr] gap-4 px-4 pb-4">
+      <div className="">
+        <article className="bg-white rounded-xl p-8">
+          <h2 className="text-lg text-dark font-semibold mb-4">
+            Get Your Tasks
+          </h2>
+          <p className="text-light mb-6 pb-6 border-b-[1px] border-border">
+            Participate in tasks, complete them, and accumulate wellness points
+            towards reaching your goals.
+          </p>
+          <TaskGenerator />
+        </article>
+        <TaskProgressBanner />
       </div>
-      <Outlet />
+      <div className="bg-white rounded-xl p-8 flex flex-col">
+        <h1 className="text-lg font-semibold">Your Tasks</h1>
+        <p className="text-light mt-2 mb-6">
+          The tasks you accepted on this goal period will appear below
+        </p>
+        <div className="w-full h-full ">
+          <Outlet />
+        </div>
+      </div>
     </main>
   );
 }

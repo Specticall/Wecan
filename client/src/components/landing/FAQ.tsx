@@ -47,14 +47,14 @@ const questions = [
 
 export default function FAQ() {
   return (
-    <div className="bg-white py-32">
-      <section className="section grid grid-cols-2 gap-24">
-        <Accordion className="gap-4">
+    <div className="bg-white py-32 md:py-16" id="FAQ">
+      <section className="section grid grid-cols-2 gap-24 lg:gap-12 lg:grid-cols-1">
+        <Accordion className="gap-4 lg:order-1 lg:max-w-full">
           {questions.map((question) => (
             <AccordionItem
               key={question.question}
               itemKey={question.question}
-              className="rounded-lg overflow-hidden border-[1px] border-white-soft px-8 hover:bg-white-soft transition-all duration-200"
+              className="rounded-lg overflow-hidden border-[1px] border-white-soft px-8 hover:bg-white-soft transition-all duration-200 md:px-6"
             >
               <AccordionHeading>
                 <div className="[&>i]:text-md text-light mr-4">
@@ -62,7 +62,7 @@ export default function FAQ() {
                 </div>
                 <p className="flex-1">{question.question}</p>
               </AccordionHeading>
-              <AccordionContent className="pr-16 text-light leading-md">
+              <AccordionContent className="pr-16 text-light leading-md md:pr-0">
                 {question.answer}
               </AccordionContent>
             </AccordionItem>

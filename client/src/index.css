@@ -27,6 +27,10 @@ body #g_a11y_announcement {
   display: none;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .section {
   max-width: 1200px;
   margin-inline: auto;

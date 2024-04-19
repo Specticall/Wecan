@@ -1,6 +1,8 @@
+import { ACCENT_GRADIENT } from "@/lib/config";
 import { VariantProps, cva } from "class-variance-authority";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import { twMerge } from "tailwind-merge";
 
 const styles = cva("", {
@@ -18,12 +20,12 @@ const styles = cva("", {
 
 export default function ProgressBar({
   thicknessPx = 6,
-  progressPercent = 50,
+  progressPercent,
   variant = "light",
   animate,
   className,
 }: {
-  progressPercent: number;
+  progressPercent?: number;
   thicknessPx?: number;
   variant?: VariantProps<typeof styles>["bar"];
   className?: string;
@@ -33,7 +35,12 @@ export default function ProgressBar({
     durationMs: number;
   };
 }) {
-  const [progress, setProgress] = useState(progressPercent / 100);
+  // Since progress can become '0' (and can lead to potential type coercion issues) we explicitly say that loading state will only trigger when the `progressPercent` is undefined, not 0 or any other falsy values.
+  const progressExist = progressPercent !== undefined;
+
+  const [progress, setProgress] = useState(
+    progressExist ? progressPercent / 100 : 0
+  );
   useEffect(() => {
     if (!animate) return;
 
@@ -54,18 +61,23 @@ export default function ProgressBar({
         )
       )}
     >
-      <div
-        className={twMerge(
-          clsx(
-            "w-full h-full bg-accent origin-left transition-scale duration-200",
-            styles({ track: variant })
-          )
-        )}
-        style={{
-          scale: `${progress} 1`,
-          ...(animate ? { transition: `${animate.durationMs}ms scale` } : {}),
-        }}
-      ></div>
+      {progressExist ? (
+        <div
+          className={twMerge(
+            clsx(
+              "w-full h-full bg-accent origin-left transition-scale duration-200",
+              styles({ track: variant })
+            )
+          )}
+          style={{
+            scale: `${progress} 1`,
+            background: ACCENT_GRADIENT,
+            ...(animate ? { transition: `${animate.durationMs}ms scale` } : {}),
+          }}
+        ></div>
+      ) : (
+        <Skeleton width={"100%"} height={"100%"} />
+      )}
     </div>
   );
 }

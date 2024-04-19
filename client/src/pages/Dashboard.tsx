@@ -4,7 +4,7 @@ import OnGoingTask from "@/components/app/dashboard/OnGoingTask";
 import { useUser } from "@/context/UserContext";
 import DashboardHeader from "@/components/app/dashboard/DashboardHeader";
 import MoodSelector from "@/components/app/moodModal/MoodSelector";
-import DashboardDiary from "@/components/app/dashboard/DashboardDiary";
+import DiaryForm from "@/components/app/diary/DiaryForm";
 
 export default function Dashboard() {
   const { userData } = useUser();
@@ -21,7 +21,7 @@ export default function Dashboard() {
         <div className="flex flex-col 3xl:grid 3xl:grid-cols-2 3xl:gap-4 lg:grid-cols-1">
           <EarnedPoints />
           <MoodSelector variant="clean" className="mt-4" />
-          <DashboardDiary />
+          <DiaryForm className=" 3xl:order-2 3xl:row-span-2 3xl:mt-0 lg:h-[25rem] md:p-6 sm:p-4" />
         </div>
       </main>
     </ScrollArea>

@@ -1,5 +1,6 @@
 import ProgressBar from "@/components/general/ProgressBar";
 import useGoalMutation from "@/hooks/useGoalMutation";
+import { ACCENT_GRADIENT } from "@/lib/config";
 
 export default function EarnedPoints() {
   const { goalData } = useGoalMutation();
@@ -18,7 +19,12 @@ export default function EarnedPoints() {
             {earned.toLocaleString("de-DE")} points
           </h3>
         </div>
-        <i className="bx bx-coin-stack text-xl bg-white-soft p-4 rounded-lg text-dark sm:mb-4"></i>
+        <i
+          className="bx bx-coin-stack text-xl bg-white-soft p-4 rounded-lg sm:mb-4 text-white"
+          style={{
+            background: ACCENT_GRADIENT,
+          }}
+        ></i>
       </div>
       <div>
         <div className="flex justify-between items-center mb-2">

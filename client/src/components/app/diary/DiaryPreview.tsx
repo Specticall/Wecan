@@ -13,7 +13,7 @@ export default function DiaryPreview() {
         <p className="mb-3">Date Range Filter</p>
         <DatePickerWithRange />
       </div>
-      <div className="bg-white-soft flex-1 flex flex-col items-center justify-center">
+      <div className="bg-[#F7F7FA] flex-1 flex flex-col items-center justify-center rounded-lg ">
         {diaryList?.length === 0 ? (
           <EmptyDiaryList />
         ) : (

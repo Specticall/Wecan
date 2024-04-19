@@ -3,8 +3,8 @@ import dashboardUI from "/assets/banner-dashboard.png";
 
 export default function Banner() {
   return (
-    <section className="bg-white pt-32">
-      <div className="section bg-white-soft rounded-t-xl px-16 pt-20 flex flex-col items-center justify-center relative pb-40 overflow-hidden rounded-xl">
+    <section className="bg-white pt-32 md:pt-12" id="#banner">
+      <div className="section bg-white-soft px-16 pt-20 flex flex-col items-center justify-center relative pb-40 overflow-hidden rounded-t-2xl md:pb-24">
         <div className="bg-[#CED3FF] text-accent px-8 py-2 rounded-full">
           Let's Start
         </div>

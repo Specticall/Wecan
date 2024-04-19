@@ -5,7 +5,6 @@ import {
 } from "react-router-dom";
 import FirstRouterChild from "./pages/FirstRouterChild";
 import Landing from "./pages/Landing";
-import FAQ from "./pages/FAQ";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AppLayout from "./pages/AppLayout";
@@ -44,10 +43,6 @@ const router = createBrowserRouter([
           {
             path: "landing",
             element: <Landing />,
-          },
-          {
-            path: "faq",
-            element: <FAQ />,
           },
         ],
       },
@@ -100,12 +95,7 @@ const router = createBrowserRouter([
             children: [
               {
                 path: "generator",
-                element: (
-                  <>
-                    <TaskGenerator />
-                    <AcceptedTask />
-                  </>
-                ),
+                element: <AcceptedTask />,
               },
               {
                 path: "all",

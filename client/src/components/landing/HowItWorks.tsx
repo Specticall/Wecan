@@ -32,7 +32,7 @@ export default function HowItWorks() {
   const [selected, setSelected] = useState(1);
 
   return (
-    <section className="py-32 section overflow-x-hidden">
+    <section className="py-32 section overflow-x-hidden" id="how-it-works">
       <div className="flex flex-col items-center justify-center mb-20 ">
         <div className="bg-[#CED3FF] text-accent px-8 py-2 rounded-full">
           How Our App Works
@@ -45,7 +45,7 @@ export default function HowItWorks() {
           you earn them through completing tasks that we provide to you.
         </p>
       </div>
-      <div className="grid grid-cols-[8fr_10fr] gap-32  mt-32">
+      <div className="grid grid-cols-[8fr_10fr] gap-32 mt-32 lg:grid-cols-1 md:mt-8">
         <div className="row-span-3 flex flex-col gap-6">
           {items.map((item, i) => {
             return (
@@ -58,7 +58,7 @@ export default function HowItWorks() {
             );
           })}
         </div>
-        <div className="relative row-span-3">
+        <div className="relative row-span-3 lg:hidden">
           <img
             src={items[selected].image}
             className="absolute bottom-[-4rem] top-[6rem] right-[-12rem] scale-[185%]"
@@ -81,7 +81,7 @@ function PointItem({
   return (
     <article
       className={cn(
-        "grid grid-cols-[auto_1fr]  rounded-xl px-8 py-8 place-items-center gap-x-4 gap-y-5 cursor-pointer",
+        "grid grid-cols-[auto_1fr]  rounded-xl px-8 py-8 place-items-center gap-x-4 gap-y-5 cursor-pointer md:p-6",
         !selected && "hover:bg-white/80 transition-all duration-200",
         selected && "bg-white"
       )}

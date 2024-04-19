@@ -45,7 +45,7 @@ export default function OnGoingTask() {
         ) : (
           <article
             className={cn(
-              "grid grid-cols-[auto_1fr] bg-white rounded-xl p-8 grid-rows-[12rem_auto] gap-x-4 hover:scale-[97.5%] trasition-all duration-200 cursor-pointer"
+              "grid grid-cols-[auto_1fr] bg-white rounded-xl p-8 grid-rows-[12rem_auto] gap-x-4 trasition-all duration-200 cursor-pointer"
             )}
           >
             <div className="bg-accent row-span-3 w-2 h-2 rounded-full mt-3"></div>

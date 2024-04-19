@@ -2,12 +2,26 @@ import Button from "@/components/general/Button";
 import useTaskGenerator from "@/hooks/useTaskGenerator";
 import useTaskMutation from "@/hooks/useTaskMutation";
 import { TTaskRequest } from "@/types/general";
+import { useRef } from "react";
 
-export default function TaskGeneratorCTA() {
+export default function TaskGeneratorCTA({
+  setShuffling,
+}: {
+  setShuffling: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const { generatedTask, generatedTaskQuery } = useTaskGenerator();
   const { addMutation } = useTaskMutation();
+  const timer = useRef<NodeJS.Timeout | undefined>();
 
   const shuffleTask = () => {
+    clearTimeout(timer.current);
+
+    setShuffling(true);
+
+    timer.current = setTimeout(() => {
+      setShuffling(false);
+    }, 1000);
+
     generatedTaskQuery.refetch();
   };
 

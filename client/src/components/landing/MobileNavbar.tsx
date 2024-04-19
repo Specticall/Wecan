@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../general/Button";
-import { NavbarNavigator } from "./Navbar";
+
+const navbarItem = ["Home", "About", "Flow", "FAQ"];
 
 export default function MobileNavbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,8 +25,14 @@ export default function MobileNavbar() {
         className="fixed right-8 top-8 px-8 w-full max-w-[15rem] py-12 rounded-lg bg-white flex flex-col items-start gap-4 pt-12 transition-[scale] origin-top-right duration-300"
         style={{ scale: isOpen ? "1" : "0" }}
       >
-        <NavbarNavigator activeOn="/home/landing">Home</NavbarNavigator>
-        <NavbarNavigator activeOn="/home/faq">FAQ</NavbarNavigator>
+        {navbarItem.map((item) => (
+          <li
+            className="relative text-sm text-dark hover:text-black hover:font-medium cursor-pointer"
+            key={item}
+          >
+            {item}
+          </li>
+        ))}
         <div className="w-full h-[1px] bg-lighter mt-4"></div>
         <Button
           variant="secondary"

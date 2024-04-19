@@ -41,6 +41,11 @@ export default {
       md: { max: "600px" },
       sm: { max: "450px" },
     },
+    lineHeight: {
+      normal: "150%",
+      md: "175%",
+      lg: "200%",
+    },
 
     extend: {
       transitionTimingFunction: {

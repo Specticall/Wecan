@@ -156,7 +156,7 @@ export function AccordionContent({
         clsx(isOpen === key ? "grid-rows-[1fr]" : "grid-rows-[0fr]")
       )}
       style={{
-        transition: "grid 400ms cubic-bezier(0.75, 0, 0.25, 1)",
+        transition: "grid 400ms",
       }}
     >
       <div className="overflow-hidden">

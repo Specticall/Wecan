@@ -2,7 +2,7 @@ import Icons from "@/components/general/Icon";
 
 export const footerList = [
   {
-    title: "PRODUCT",
+    title: "Product",
     links: [
       {
         display: "Dashboard",
@@ -19,7 +19,7 @@ export const footerList = [
     ],
   },
   {
-    title: "GET HELP",
+    title: "Get Help",
     links: [
       {
         display: "About Us",
@@ -32,7 +32,7 @@ export const footerList = [
     ],
   },
   {
-    title: "DETAILS",
+    title: "Details",
     links: [
       {
         display: "Executive Summary",
@@ -52,18 +52,20 @@ export const footerList = [
 
 export function Footer() {
   return (
-    <footer className="h-[20rem] bg-black w-full xl:h-full xl:grid xl:place-items-center py-6 mt-auto">
+    <footer className="h-[20rem] bg-white w-full xl:h-full xl:grid xl:place-items-center py-6 mt-auto">
       <div className="section pt-20 grid-cols-5 grid xl:gap-16 xl:grid-cols-3 lg:[&&]:grid-cols-2 sm:[&&&]:grid-cols-1 gap-y-12">
         <div className="sm:flex sm:items-center sm:flex-col">
-          <Icons icon="logo" color="white" />
-          <p className="text-lighters max-w-[10rem] mt-6 leading-[200%] sm:text-center">
+          <p className="text-xl text-dark">
+            We<span className="font-normal italic">can.</span>
+          </p>
+          <p className="text-light max-w-[10rem] mt-6 leading-[200%] sm:text-center">
             © Copyright 2024. All Rights Reserved
           </p>
         </div>
         {footerList.map((footer) => {
           return (
             <ul className="text-light flex flex-col gap-4" key={footer.title}>
-              <h3 className="text-white text-[1rem] sm:text-center">
+              <h3 className="text-dark text-[1rem] sm:text-center">
                 {footer.title}
               </h3>
               {footer.links.map((item) => {
@@ -81,7 +83,7 @@ export function Footer() {
           );
         })}
         <ul className="text-light flex flex-col gap-4 sm:items-center">
-          <h3 className="text-white text-[1rem]">SOCIALS</h3>
+          <h3 className="text-dark text-[1rem]">Socials</h3>
           <div className="flex gap-4">
             <i className="bx bxl-instagram text-light hover:text-lighter text-lg cursor-pointer"></i>
             <i className="bx bxl-youtube text-light hover:text-lighter text-lg cursor-pointer"></i>

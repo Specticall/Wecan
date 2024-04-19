@@ -5,14 +5,12 @@ import { DOMAttributes } from "react";
 import { useNavigate } from "react-router-dom";
 
 const variants = cva(
-  "text-sm px-6 py-3 rounded-full font-medium transition-all duration-200",
+  "text-sm px-8 py-3 rounded-full font-medium transition-all duration-200",
   {
     variants: {
       variant: {
-        primary:
-          "bg-accent text-white shadow-lg shadow-accent/30 shadow-lg hover:bg-accent/90",
-        secondary:
-          "bg-white text-darkest hover:opacity-80 shadow-accent/10 shadow-lg",
+        primary: "bg-accent text-white hover:bg-accent/90",
+        secondary: "bg-white text-darkest hover:opacity-80",
         transparent:
           "bg-transparent border-[1px] text-darkest border-darkest hover:bg-black/5",
         dark: "bg-black text-white hover:bg-black hover:opacity-70",

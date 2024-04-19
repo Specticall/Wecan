@@ -1,50 +1,11 @@
 import { RequestHandler } from "express";
 import { prisma } from "../../prisma/prisma";
-import { Mood, Prisma, Status, User } from "@prisma/client";
+import { Mood, Prisma, Status } from "@prisma/client";
 import { AppError } from "../utils/AppError";
-import { getRandomNumber, getTimeSpan, isToday } from "../utils/helper";
+import { getRandomNumber } from "../utils/helper";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 const DEFAULT_PAGINATION_SIZE = 5;
-
-/**
- * Checks for expired tasks and returns the number task that has been deleted. This function also deletes the expired task automatically from the database.
- * @param task
- * @param userId
- * @returns
- */
-export const getUnannouncedExpiredTaskCount = async (userData: User) => {
-  const userId = userData.id;
-  const currentUnannouncedExpiredTaskCount =
-    userData.unannouncedExpiredTaskCount;
-
-  // Retrieve the user's ongoing task data
-  const userTaskData = await prisma.task.findMany({
-    where: {
-      userId,
-      status: "OnGoing",
-    },
-  });
-
-  // Checks if any tasks even exist in the array
-  if (!userTaskData || userTaskData.length === 0)
-    return currentUnannouncedExpiredTaskCount;
-
-  const dateCreated = userTaskData[0].createdAt;
-
-  // Checks if the ongoing task's creation date is NOT today
-  if (isToday(dateCreated)) return currentUnannouncedExpiredTaskCount;
-
-  // Deletes any ongoing thak that has expired (not created today)
-  const deletedTask = await prisma.task.deleteMany({
-    where: {
-      userId,
-      status: "OnGoing",
-    },
-  });
-
-  return deletedTask.count;
-};
 
 export const generateAvailableTask: RequestHandler = async (
   request,
@@ -82,7 +43,8 @@ export const generateAvailableTask: RequestHandler = async (
     };
 
     if (mood) {
-      queryOptions.where = { mood: mood as Mood };
+      // NOTE : Not sure why TS thinks `queryOptions.where` can become undefined when it is clearly declared at the top
+      queryOptions.where!.mood = mood as Mood;
     }
 
     // 3. Query the ids of task that are available to the user
@@ -126,11 +88,16 @@ export const generateAvailableTask: RequestHandler = async (
 
 export const getUserTask: RequestHandler = async (request, response, next) => {
   try {
+    //1. Retrieve query data and userId
     const query = request.query;
     const userId = query.id as string;
     if (!userId)
       throw new AppError("`id` is missing from the URL query string", 400);
 
+    //2. Retrieve goalId if it exist, this is used to get tasks from a specific goal period. Usually used when user's viewing history. We're using `let` here because if user does not specify the goal then we have to query the ongoing one from the database
+    let goalId = query.goalId as string | undefined;
+
+    //3. Checks for if the user is asking for a certain status and making sure the data passed in is correct.
     const status = query.status ? (query.status as Status) : undefined;
     if (status && status !== "Completed" && status !== "OnGoing")
       throw new AppError(
@@ -138,21 +105,31 @@ export const getUserTask: RequestHandler = async (request, response, next) => {
         400
       );
 
+    //4. Checks for pagination query if they exist.
     const page = Number(query.page || "1");
     const size = query.size ? Number(query.size) : DEFAULT_PAGINATION_SIZE;
 
-    const timespan = query.date
-      ? getTimeSpan(new Date(+(query.date as string)))
-      : undefined;
+    //5. If the user does not specify a specific goal then take the current ongoing goal.
+    const onGoingGoal = await prisma.goal.findFirst({
+      where: {
+        status: "OnGoing",
+      },
+      select: {
+        id: true,
+      },
+    });
 
+    //6. Take the id field from the current ongoing goal.
+    goalId = onGoingGoal?.id;
+    if (!goalId)
+      throw new AppError("Failed to query goalId when retrieve tasks", 500);
+
+    //7. Query the requested goal
     const userTask = await prisma.task.findMany({
       where: {
         userId,
         status,
-        createdAt: timespan && {
-          gte: timespan.startOfDay,
-          lt: timespan.endOfDay,
-        },
+        goalId,
       },
       skip: query.page ? (page - 1) * size : undefined,
       take: query.page ? size : undefined,
@@ -163,22 +140,17 @@ export const getUserTask: RequestHandler = async (request, response, next) => {
       },
     });
 
+    // 8. Retrieves the current task count (usually used for pagination purposes).
     const totalTaskCount = await prisma.task.count({
       where: {
         userId,
         status,
-        createdAt: timespan && {
-          gte: timespan.startOfDay,
-          lt: timespan.endOfDay,
-        },
+        goalId,
       },
     });
 
     response.status(200).send({
       status: "success",
-      /*
-      Since tasks only last for a day each, if one tasks expires, every other task also expires.
-      */
       data: userTask,
       totalTaskCount,
     });
@@ -201,6 +173,16 @@ export const addUserTask: RequestHandler = async (request, response, next) => {
         400
       );
 
+    // Find onGoing goal
+    const onGoingGoal = await prisma.goal.findFirst({
+      where: {
+        status: "OnGoing",
+      },
+    });
+
+    if (!onGoingGoal)
+      throw new AppError("There are currently no ongoing goals", 400);
+
     const newTask = await prisma.task.create({
       data: {
         description,
@@ -209,6 +191,7 @@ export const addUserTask: RequestHandler = async (request, response, next) => {
         status,
         userId,
         mood,
+        goalId: onGoingGoal.id,
       },
     });
     if (!newTask)
@@ -285,7 +268,7 @@ export const updateUserTask: RequestHandler = async (
     if (!updatedUserTask)
       throw new AppError(
         "Something went wrong while trying to update the user id",
-        500
+        404
       );
 
     response.status(200).send({
@@ -330,6 +313,7 @@ export const completedUserTask: RequestHandler = async (
       },
       data: {
         status: "Completed",
+        completedAt: new Date(),
       },
     });
     if (!updatedTask)

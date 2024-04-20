@@ -74,6 +74,8 @@ type TaskCardProps = {
 export default function OnGoingTaskCard({ task }: TaskCardProps) {
   const { handleOpenDetailDialog, isDeleting } = useTaskDetail({ task });
 
+  const isOnGoing = task.status === "OnGoing";
+
   return (
     <article
       className={cn(
@@ -92,12 +94,18 @@ export default function OnGoingTaskCard({ task }: TaskCardProps) {
           {task.description}
         </p>
       </div>
-      <div className="text-lighter">
-        <p className="mb-2">On Completion</p>
-        <div className="bg-accent px-4 py-1 text-white w-fit rounded-full">
-          +{task.points} Points
+      {isOnGoing ? (
+        <div className="text-lighter">
+          <p className="mb-2">On Completion</p>
+          <div className="bg-accent px-4 py-1 text-white w-fit rounded-full">
+            +{task.points} Points
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex items-end ">
+          <div className="bg-white-soft rounded-full px-4 py-1">Completed</div>
+        </div>
+      )}
     </article>
   );
 }

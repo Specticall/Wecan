@@ -13,7 +13,7 @@ export default function TaskDetailDialog() {
 
   return (
     <>
-      <article className="bg-white rounded-md px-12 pb-12 py-8 w-full max-w-[37.5rem]">
+      <article className="bg-white rounded-xl px-12 pb-12 py-8 w-full max-w-[37.5rem]">
         <div
           className="flex items-center justify-end mb-1"
           onClick={() => closeDialog()}

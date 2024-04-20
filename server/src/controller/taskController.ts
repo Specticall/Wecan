@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import { prisma } from "../../prisma/prisma";
 import { Mood, Prisma, Status } from "@prisma/client";
 import { AppError } from "../utils/AppError";
-import { getRandomNumber } from "../utils/helper";
+import { getRandomNumber, getTimeSpan } from "../utils/helper";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 const DEFAULT_PAGINATION_SIZE = 5;
@@ -28,6 +28,7 @@ export const generateAvailableTask: RequestHandler = async (
         id: true,
       },
     });
+
     // 2. Optionally filter for certain moods if the API user provided the required query string
     const queryOptions: Prisma.AvailableTaskFindManyArgs = {
       where: {
@@ -109,10 +110,19 @@ export const getUserTask: RequestHandler = async (request, response, next) => {
     const page = Number(query.page || "1");
     const size = query.size ? Number(query.size) : DEFAULT_PAGINATION_SIZE;
 
+    //5. Check for time filter
+    const timeSpan = query.date
+      ? getTimeSpan(new Date(query.data as string))
+      : undefined;
+
     //5. If the user does not specify a specific goal then take the current ongoing goal.
     const onGoingGoal = await prisma.goal.findFirst({
       where: {
         status: "OnGoing",
+        createdAt: {
+          gte: timeSpan?.startOfDay,
+          lt: timeSpan?.endOfDay,
+        },
       },
       select: {
         id: true,
@@ -146,6 +156,10 @@ export const getUserTask: RequestHandler = async (request, response, next) => {
         userId,
         status,
         goalId,
+        createdAt: {
+          gte: timeSpan?.startOfDay,
+          lt: timeSpan?.endOfDay,
+        },
       },
     });
 

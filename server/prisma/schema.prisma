@@ -21,11 +21,15 @@ model User {
   pictureURL String?
   
   lastLogin DateTime @default(now())
-  hasCreatedDiaryToday Boolean
+
+  // DEPRECATED
+  // hasCreatedDiaryToday Boolean
 
   point Point?
   mood Mood
   streak Int?
+
+  diaryStreak Int @default(0)
 
   // DEPRECATED
   // Keeps track of any tasks that was deleted and has not beens shown to the user yet.
@@ -41,8 +45,6 @@ model User {
   
   diaries Diary[]
   tasks Task[]
-
-
   goals Goal[]
   
 }

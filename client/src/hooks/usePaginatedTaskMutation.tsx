@@ -5,7 +5,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-const DEFAULT_PAGINATION_SIZE = 5;
+const DEFAULT_PAGINATION_SIZE = 7;
 
 type TServerSuccessTaskResponse = TServerSucessResponse<TUserTask[]> & {
   totalTaskCount: number;

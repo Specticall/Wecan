@@ -18,9 +18,13 @@ export default function TaskDetailDialogHeading() {
         </div>
       </header>
       <div className="text-dark mt-6">
-        Valid Until
+        {userTaskData.status === "OnGoing" ? "Valid Until" : "Completed At"}
         <span className="px-4 py-2 rounded-full bg-slate-100 text-dark ml-4">
-          {new Date().toLocaleDateString("en-US", {
+          {new Date(
+            userTaskData.status === "OnGoing"
+              ? userTaskData.createdAt
+              : userTaskData.completedAt!
+          ).toLocaleDateString("en-US", {
             weekday: "long",
             day: "numeric",
             month: "long",

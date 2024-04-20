@@ -4,7 +4,7 @@ import Button from "@/components/general/Button";
 import { ScrollArea } from "@/components/ui/scrollable";
 import TaskItem from "./TaskItem";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 7;
 
 export default function AllTasks() {
   const {
@@ -25,22 +25,22 @@ export default function AllTasks() {
   const taskExist = Boolean(taskCount);
 
   return (
-    <div className="rounded-md col-span-2 mr-8 h-[calc(100vh-10rem)] flex flex-col gap-4">
+    <div className="rounded-md col-span-2 mr-8 min-h-full h-0 flex flex-col gap-4">
       <AllTasksFilterCTA
         filter={filter}
         setFilter={setFilter}
         setDate={setDate}
       />
-      <div className="px-8 py-8 rounded-md border-lighter border-[1px] h-full flex flex-col">
-        <div className="grid grid-cols-[5fr_4fr_2fr_2fr_1fr] w-full pb-2 gap-12 px-8">
+      <div className="px-8 py-8 rounded-xl border-border border-[1px] h-full flex flex-col ">
+        <div className="grid grid-cols-[5fr_4fr_2fr_2fr_1fr] w-full gap-12 px-8 text-light border-b-[1px] border-white-soft pb-6">
           <p>Name</p>
           <p>Date Completed</p>
           <p>Points</p>
           <p>Status</p>
           <div></div>
         </div>
-        <ScrollArea className="h-[calc(100vh-23.5rem)]  mt-4">
-          <div className=" flex-1 flex flex-col gap-2">
+        <ScrollArea className="h-full">
+          <div className=" flex-1 flex flex-col divide-y-[1px] divide-white-soft">
             {paginatedTask
               ?.sort(
                 (a, b) =>
@@ -56,7 +56,7 @@ export default function AllTasks() {
           <p className="flex justify-between items-center w-full">
             {taskExist
               ? `Showing ${(page - 1) * PAGE_SIZE || 1} -
-              ${Math.min(page * PAGE_SIZE, taskCount)} of ${taskCount} tasks`
+              ${Math.min(page * PAGE_SIZE, taskCount!)} of ${taskCount} tasks`
               : "No tasks to be shown"}
           </p>
           <div className="flex gap-4">

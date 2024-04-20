@@ -20,8 +20,8 @@ export default function AllTasksFilterCTA({
   setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
 }) {
   return (
-    <div className="w-full flex justify-between items-center">
-      <div className="flex [&>button]:py-2 [&>button]:px-4 gap-2">
+    <div className="w-full flex justify-between items-center ">
+      <div className="flex [&>button]:py-2 [&>button]:px-4 gap-2 bg-white-soft rounded-md p-2">
         {CTAList.map((item) => (
           <Button
             key={`${item.value}${item.display}`}

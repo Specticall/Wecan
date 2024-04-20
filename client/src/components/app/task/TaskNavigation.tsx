@@ -17,10 +17,10 @@ export default function TaskNavigation() {
         if (!selection) return;
         navigate(`${selection?.toLowerCase()}`);
       }}
-      defaultValue={pathname.includes("all") ? "All" : "Generator"}
+      defaultValue={pathname.includes("list") ? "List" : "Board"}
     >
       <DropdownTrigger
-        className="text-md font-semibold text-lighter flex gap-2 items-center justify-center"
+        className="bg-white-soft rounded-full text-dark flex gap-2 items-center justify-center px-6 py-2 hover:bg-slate-200 transition-all duration-200"
         render={(selection) => {
           return (
             <>
@@ -31,8 +31,8 @@ export default function TaskNavigation() {
         }}
       ></DropdownTrigger>
       <DropdownContent className="[&>*]:pr-8">
-        <DropdownItem itemValue="Generator">Generator</DropdownItem>
-        <DropdownItem itemValue="All">All</DropdownItem>
+        <DropdownItem itemValue="Board">Board</DropdownItem>
+        <DropdownItem itemValue="List">List</DropdownItem>
       </DropdownContent>
     </Dropdown>
   );

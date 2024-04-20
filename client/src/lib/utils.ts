@@ -69,3 +69,15 @@ export function isToday(inputDate: Date) {
     inputDate.getMonth() === new Date().getMonth()
   );
 }
+
+/**
+ * Formats date into [Date] [Month], [Year]
+ * e.g. 24 April, 2024
+ */
+export function formatDate(date: Date) {
+  return date.toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}

@@ -1,6 +1,9 @@
+import { useUser } from "@/context/UserContext";
 import personReachingOutArt from "/assets/person-reaching-out.png";
 
 export default function DiaryStreak() {
+  const { userData } = useUser();
+
   return (
     <div className="bg-white mt-4 p-6 rounded-xl">
       <div
@@ -12,7 +15,7 @@ export default function DiaryStreak() {
       >
         <div>
           <h2 className="text-lg max-w-[16rem] font-semibold">
-            Great Job! You Have A 12 Diary Streak 🔥
+            Great Job! You Have A {userData?.diaryStreak || 0} Diary Streak 🔥
           </h2>
           <p className="mt-6 text-lighter max-w-[17.5rem] leading-6">
             You have been noting down things happening in your life for diaries

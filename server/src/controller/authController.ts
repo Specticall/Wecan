@@ -43,7 +43,6 @@ export const googleLogin: RequestHandler = async (request, response, next) => {
           name: dataFromGoogle.name,
           mood: Mood.Unknown,
           pictureURL: dataFromGoogle.picture || "",
-          hasCreatedDiaryToday: false,
         },
       });
 

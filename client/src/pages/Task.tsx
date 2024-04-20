@@ -1,4 +1,5 @@
 import TaskGenerator from "@/components/app/task/TaskGenerator";
+import TaskNavigation from "@/components/app/task/TaskNavigation";
 import TaskProgressBanner from "@/components/app/task/TaskProgressBanner";
 
 import { useUser } from "@/context/UserContext";
@@ -25,10 +26,13 @@ export default function Task() {
         <TaskProgressBanner />
       </div>
       <div className="bg-white rounded-xl p-8 flex flex-col">
-        <h1 className="text-lg font-semibold">Your Tasks</h1>
-        <p className="text-light mt-2 mb-6">
-          The tasks you accepted on this goal period will appear below
-        </p>
+        <div className="grid grid-cols-[1fr_auto]">
+          <h1 className="text-lg font-semibold">Your Tasks</h1>
+          <TaskNavigation />
+          <p className="text-light mt-2 mb-6 col-span-2">
+            The tasks you accepted on this goal period will appear below
+          </p>
+        </div>
         <div className="w-full h-full ">
           <Outlet />
         </div>

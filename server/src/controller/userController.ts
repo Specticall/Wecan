@@ -1,5 +1,9 @@
 import { RequestHandler } from "express";
-import { buildPrismaSelectQueryObject, isToday } from "../utils/helper";
+import {
+  buildPrismaSelectQueryObject,
+  isToday,
+  isYesterday,
+} from "../utils/helper";
 import { Prisma, PrismaClient, User } from "@prisma/client";
 import { AppError } from "../utils/AppError";
 
@@ -11,7 +15,7 @@ const prisma = new PrismaClient();
  */
 export const refreshUserData = async (userData: User) => {
   // Check if the last time user logged is today or not, if not then the diary should be renewed
-  const isANewDay = !isToday(userData.lastLogin);
+  // const isANewDay = !isToday(userData.lastLogin);
 
   // Checks if there are  any ongoing goals
   const hasOngoingGoal = await prisma.goal.findFirst({
@@ -21,16 +25,32 @@ export const refreshUserData = async (userData: User) => {
     },
   });
 
+  // Checks if user should keep diary streak or not by quering the most recent diary checking its createion date
+  const mostRecentDiary = await prisma.diary.findFirst({
+    orderBy: {
+      dateCreated: "desc",
+    },
+    where: {
+      authorId: userData.id,
+    },
+  });
+
+  // If a diary was made either today or yesterday then the user should keep their diary streak
+  const shouldKeepDiaryStreak =
+    mostRecentDiary &&
+    (isYesterday(mostRecentDiary.dateCreated) ||
+      isToday(mostRecentDiary.dateCreated));
+
   const updatedUser = await prisma.user.update({
     where: {
       id: userData.id,
     },
     data: {
-      // Reset the diary and point data if its a new day.
-      hasCreatedDiaryToday: isANewDay ? false : userData.hasCreatedDiaryToday,
-
       // Checks for any expired task
       hasOnGoingGoal: Boolean(hasOngoingGoal),
+
+      // Undefined means that this change will be ignored. So we're essentially keeping the data.
+      diaryStreak: shouldKeepDiaryStreak ? undefined : 0,
     },
     include: {
       point: true,

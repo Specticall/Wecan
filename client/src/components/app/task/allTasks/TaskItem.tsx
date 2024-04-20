@@ -1,7 +1,6 @@
-import DateDisplay from "@/components/general/DateDisplay";
 import { TMood } from "@/context/MoodContext";
 import useTaskDetail from "@/hooks/useTaskDetail";
-import { cn, getMoodColor } from "@/lib/utils";
+import { cn, formatDate, getMoodColor } from "@/lib/utils";
 import { TUserTask } from "@/types/general";
 
 export default function TaskItem({ task }: { task: TUserTask }) {
@@ -12,25 +11,29 @@ export default function TaskItem({ task }: { task: TUserTask }) {
   return (
     <div
       className={cn(
-        "grid grid-cols-[5fr_4fr_2fr_2fr_1fr] py-5 bg-white rounded-md shadow-lg shadow-slate-100 px-8 gap-12 items-center hover:scale-[99%] transition-all duration-100 cursor-pointer",
+        "grid grid-cols-[5fr_4fr_2fr_2fr_1fr] py-5 bg-white rounded-md px-8 gap-12 items-center hover:bg-slate-50 transition-all duration-100 cursor-pointer",
         isDeleting && "opacity-60"
       )}
       onClick={handleOpenDetailDialog}
     >
       <h3 className=" text-light truncate flex items-center gap-4">
+        {/* Title */}
         <div
           className="w-2 aspect-square rounded-full"
           style={{ backgroundColor: getMoodColor(task.mood as TMood) }}
         ></div>
         {task.title}
       </h3>
-      <DateDisplay
-        date={
-          task.status === "Completed" ? new Date(task.createdAt) : undefined
-        }
-        fallback="-"
-      />
+      {/* Date */}
+      <p>
+        {task.status === "Completed"
+          ? formatDate(new Date(task.createdAt))
+          : "-"}
+      </p>
+      {/* Points */}
       <p>{task.points.toLocaleString("de-DE")}</p>
+
+      {/* Status */}
       <div>
         <p
           className={cn(
@@ -41,6 +44,8 @@ export default function TaskItem({ task }: { task: TUserTask }) {
           {task.status}
         </p>
       </div>
+
+      {/* Delete Button */}
       {task.status === "OnGoing" ? (
         <i
           className="bx bx-trash text-md text-lighter cursor-pointer hover:text-dark"

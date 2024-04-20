@@ -19,8 +19,7 @@ import { reloadSavedLoginDataLoader } from "./context/AuthContext";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import AcceptedTask from "./components/app/task/AcceptedTask";
-import TaskGenerator from "./components/app/task/TaskGenerator";
+import TaskBoard from "./components/app/task/TaskBoard";
 import AllTasks from "./components/app/task/allTasks/AllTasks";
 import OnBoarding from "./pages/OnBoarding";
 import OnBoardingMood from "./components/onboarding/OnBoardingMood";
@@ -94,11 +93,11 @@ const router = createBrowserRouter([
             element: <Task />,
             children: [
               {
-                path: "generator",
-                element: <AcceptedTask />,
+                path: "board",
+                element: <TaskBoard />,
               },
               {
-                path: "all",
+                path: "list",
                 element: <AllTasks />,
               },
             ],
@@ -106,6 +105,10 @@ const router = createBrowserRouter([
           {
             path: "statistics",
             element: <Statistics />,
+          },
+          {
+            path: "result",
+            element: <div>(Optional)</div>,
           },
         ],
       },

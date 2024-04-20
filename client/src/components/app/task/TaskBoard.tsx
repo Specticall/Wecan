@@ -28,7 +28,7 @@ function groupTaskByStatus(task?: TUserTask[]) {
   );
 }
 
-export default function AcceptedTask() {
+export default function TaskBoard() {
   const { taskQuery } = useTaskMutation();
   const groupedTask = groupTaskByStatus(taskQuery.data);
   return (

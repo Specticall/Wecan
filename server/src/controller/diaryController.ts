@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { RequestHandler } from "express";
 import { AppError } from "../utils/AppError";
+import { isYesterday } from "../utils/helper";
 
 const prisma = new PrismaClient();
 
@@ -41,34 +42,49 @@ export const createUserDiary: RequestHandler = async (
     const { content, id: userId } = request.body;
     if (!content || !userId)
       throw new AppError(
-        "Either content, mood or userId are missing in the request body",
+        "Either content or userId are missing in the request body",
         400
       );
 
-    // 2. Create the document using prisma
+    // 2. We need to check whether the user is currently on a streak. To do that we get the most recent diary created.
+    // Note: if this is the user's first diary then this whole process should be ignored.
+    const mostRecentDiary = await prisma.diary.findFirst({
+      orderBy: {
+        dateCreated: "desc",
+      },
+      where: {
+        authorId: userId,
+      },
+    });
+
+    // 3. Create the document using prisma
     const newDiary = await prisma.diary.create({
       data: {
         content,
         authorId: userId,
       },
     });
-    if (!newDiary)
-      throw new AppError(
-        "Something wen't wrong while trying to create the diary",
-        500
-      );
 
-    // 4. Update the user's `hasCreatedDiaryToday` field
+    // If the diary way created yesterday, then we can increase the user's current streak.
+    const lastMadeYesterday =
+      mostRecentDiary && isYesterday(mostRecentDiary.dateCreated);
+
+    // 5. Update the user's `hasCreatedDiaryToday` field
     await prisma.user.update({
       where: {
         id: userId,
       },
       data: {
-        hasCreatedDiaryToday: true,
+        // If a last diary made was yesterday then increase the streak count else set to 0
+        diaryStreak: lastMadeYesterday
+          ? {
+              increment: 1,
+            }
+          : 1,
       },
     });
 
-    // 4. Send back the newly created Diary object to the client
+    // 6. Send back the newly created Diary object to the client
     response.status(200).send({
       data: newDiary,
       status: "success",

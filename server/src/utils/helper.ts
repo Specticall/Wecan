@@ -69,3 +69,18 @@ export function getTimeSpan(date: Date) {
 
   return { startOfDay, endOfDay };
 }
+
+export function isYesterday(date: Date) {
+  const startOfYesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).setHours(
+    0,
+    0,
+    0,
+    0
+  );
+
+  const startOfToday = new Date().setHours(0, 0, 0, 0);
+
+  const currentTimeSpan = date.getTime();
+
+  return startOfYesterday <= currentTimeSpan && currentTimeSpan <= startOfToday;
+}

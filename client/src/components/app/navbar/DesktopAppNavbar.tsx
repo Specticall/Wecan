@@ -17,7 +17,7 @@ const routes = [
   {
     text: "Task",
     icon: <i className="bx bx-task"></i>,
-    route: ["/app/task/generator", "/app/task", "/app/task/all"],
+    route: ["/app/task/board", "/app/task", "/app/task/list"],
   },
   {
     text: "Statistics",

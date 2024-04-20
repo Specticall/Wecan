@@ -19,11 +19,11 @@ export type TUserData = {
   password: string | null;
   streak: number;
   token: string;
-  hasCreatedDiaryToday: boolean;
   unannouncedExpiredTaskCount: number;
   pictureURL?: string;
   hasOnGoingGoal: boolean;
   hasOnboarded: boolean;
+  diaryStreak: number;
 };
 
 export type TPoint = {
@@ -64,6 +64,7 @@ export type TUserTask = {
   status: "Completed" | "OnGoing";
   mood: TMood | "Unknown";
   createdAt: string;
+  completedAt?: string;
 };
 
 export type TTask = {

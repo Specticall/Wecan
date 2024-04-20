@@ -1,34 +1,25 @@
-import ProgressBar from "@/components/general/ProgressBar";
 import StatisticsCard from "./StatisticsCard";
 
 export default function StatisticsCardList() {
   return (
-    <ul className="grid grid-cols-3 gap-8">
+    <ul className="grid grid-cols-3 mt-4 gap-4">
       <StatisticsCard
-        title="Wellness Points"
-        subtitle="Earned This Week"
-        variant="accent"
-      >
-        <div className="flex items-baseline justify-between mb-2">
-          <h3 className="text-md text-white">
-            {(650000).toLocaleString("de-DE")} Points
-          </h3>
-          <p className="text-lightest">
-            {(500000).toLocaleString("de-DE")} Points
-          </p>
-        </div>
-        <ProgressBar progressPercent={100} variant="dark" thicknessPx={4} />
-      </StatisticsCard>
-      <StatisticsCard title="Task Completed" subtitle="All Task" variant="dark">
-        <h3 className="text-lg text-white">126 Tasks</h3>
-      </StatisticsCard>
+        heading="Task Completed"
+        value="160"
+        change="+3"
+        icon={<i className="bx bx-task"></i>}
+      />
       <StatisticsCard
-        title="Task Completed"
-        subtitle="This Week"
-        variant="light"
-      >
-        <h3 className="text-lg text-darkest">32 Tasks</h3>
-      </StatisticsCard>
+        heading="Average Mood"
+        value="Happy"
+        icon={<i className="bx bx-task"></i>}
+      />
+      <StatisticsCard
+        heading="Completion Rate"
+        value="32%"
+        change="+5%"
+        icon={<i className="bx bx-task"></i>}
+      />
     </ul>
   );
 }

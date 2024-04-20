@@ -2,7 +2,7 @@ import Button from "@/components/general/Button";
 import DateDisplay from "@/components/general/DateDisplay";
 import LoadingSpinner from "@/components/general/loadingSpinner";
 import { usePopup } from "@/context/PopupContext";
-import { useUser } from "@/context/UserContext";
+
 import useDiaryMutation from "@/hooks/useDiaryMutation";
 import { cn } from "@/lib/utils";
 import { useRef, useState } from "react";

@@ -81,3 +81,9 @@ export function formatDate(date: Date) {
     year: "numeric",
   });
 }
+
+export function formatNumber(data?: number) {
+  if (!data) return undefined;
+
+  return data.toLocaleString("de-DE");
+}

@@ -6,6 +6,7 @@ import {
 } from "../utils/helper";
 import { Prisma, PrismaClient, User } from "@prisma/client";
 import { AppError } from "../utils/AppError";
+import { refreshUserHistory } from "./historyController";
 
 const prisma = new PrismaClient();
 
@@ -18,7 +19,7 @@ export const refreshUserData = async (userData: User) => {
   // const isANewDay = !isToday(userData.lastLogin);
 
   // Checks if there are  any ongoing goals
-  const hasOngoingGoal = await prisma.goal.findFirst({
+  const onGoingGoal = await prisma.goal.findFirst({
     where: {
       userId: userData.id,
       status: "OnGoing",
@@ -41,13 +42,14 @@ export const refreshUserData = async (userData: User) => {
     (isYesterday(mostRecentDiary.dateCreated) ||
       isToday(mostRecentDiary.dateCreated));
 
+  // Update User Data
   const updatedUser = await prisma.user.update({
     where: {
       id: userData.id,
     },
     data: {
       // Checks for any expired task
-      hasOnGoingGoal: Boolean(hasOngoingGoal),
+      hasOnGoingGoal: Boolean(onGoingGoal),
 
       // Undefined means that this change will be ignored. So we're essentially keeping the data.
       diaryStreak: shouldKeepDiaryStreak ? undefined : 0,
@@ -56,6 +58,10 @@ export const refreshUserData = async (userData: User) => {
       point: true,
     },
   });
+
+  // Check the most recent history creation date, if it is not made from today that means the user last logged a while ago so we need to create a new instance. This action will only happen if an ongoing goal exists.
+  if (!onGoingGoal) return updatedUser;
+  await refreshUserHistory(onGoingGoal, userData);
 
   return updatedUser;
 };
@@ -96,11 +102,13 @@ export const getUser: RequestHandler = async (request, response, next) => {
     const shouldRefreshUserData = Object.keys(queries).every(
       (item) => item === "id"
     );
+
+    // A refresh will happen frequently to make sure a user data is not outsynced with the date.
     const refreshedUserData = shouldRefreshUserData
       ? await refreshUserData(userData)
       : userData;
 
-    if (!refreshUserData)
+    if (!refreshedUserData)
       throw new AppError(
         "Something went wrong while trying to refresh the user data",
         500

@@ -84,3 +84,7 @@ export function isYesterday(date: Date) {
 
   return startOfYesterday <= currentTimeSpan && currentTimeSpan <= startOfToday;
 }
+
+export function calcPercentage(numerator: number, denominator: number) {
+  return denominator !== 0 ? Math.round((numerator * 100) / denominator) : 0;
+}

@@ -2,17 +2,8 @@ import ProgressBar from "@/components/general/ProgressBar";
 import useGoalMutation from "@/hooks/useGoalMutation";
 import Skeleton from "react-loading-skeleton";
 
-// top / bottom
-function calcPercentage(numerator?: number, denomiator?: number) {
-  if (!numerator || !denomiator) return undefined;
-  return denomiator === 0 ? 0 : (numerator * 100) / denomiator;
-}
-
 export default function TaskProgressBanner() {
-  const { goalData } = useGoalMutation();
-
-  // This variable will be used in the `ProgressBar` component which has a `progressPercent` prop that triggers a loading skeleton state when the value passed in is `undefined`. As such this calc percentage function is catered around that behavior by returning undefined when goalData does not exist.
-  const progressPercent = calcPercentage(goalData?.earned, goalData?.target);
+  const { goalData, progressPercent } = useGoalMutation();
 
   return (
     <article className="bg-white mt-4 rounded-lg p-8">

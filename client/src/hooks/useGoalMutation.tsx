@@ -4,6 +4,11 @@ import { TGoal, TServerSucessResponse } from "@/types/general";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
+function calcPercentage(numerator?: number, denomiator?: number) {
+  if (!numerator || !denomiator) return undefined;
+  return denomiator === 0 ? 0 : (numerator * 100) / denomiator;
+}
+
 // These are the only fields that the API will accept when updating user goal
 type TAllowedToUpdate = {
   earned?: number;
@@ -87,5 +92,8 @@ export default function useGoalMutation() {
     },
   });
 
-  return { updateMutation, goalData, goalQuery };
+  // This variable will be used in the `ProgressBar` component which has a `progressPercent` prop that triggers a loading skeleton state when the value passed in is `undefined`. As such this calc percentage function is catered around that behavior by returning undefined when goalData does not exist.
+  const progressPercent = calcPercentage(goalData?.earned, goalData?.target);
+
+  return { updateMutation, goalData, goalQuery, progressPercent };
 }

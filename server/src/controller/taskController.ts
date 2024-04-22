@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import { prisma } from "../../prisma/prisma";
 import { Mood, Prisma, Status } from "@prisma/client";
 import { AppError } from "../utils/AppError";
-import { getRandomNumber, getTimeSpan } from "../utils/helper";
+import { calcPercentage, getRandomNumber, getTimeSpan } from "../utils/helper";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 const DEFAULT_PAGINATION_SIZE = 5;
@@ -208,6 +208,7 @@ export const addUserTask: RequestHandler = async (request, response, next) => {
         goalId: onGoingGoal.id,
       },
     });
+
     if (!newTask)
       throw new AppError("Something went wrong while adding user task", 500);
 
@@ -320,7 +321,7 @@ export const completedUserTask: RequestHandler = async (
     if (Status?.status === "Completed")
       throw new AppError("Task is already completed", 400);
 
-    // Update the task document
+    // Update the task document status to complete and at completion date
     const updatedTask = await prisma.task.update({
       where: {
         id: taskId,
@@ -346,18 +347,58 @@ export const completedUserTask: RequestHandler = async (
     if (!onGoingGoals)
       throw new AppError("There are not on going goals right now!", 404);
 
-    // Update the user's point value
-    const updatedUserGoal = await prisma.goal.update({
+    // Update the user's point value on their goal and history instances
+    const pointsEarned = updatedTask.points;
+
+    // Calculates the new total completion rate percent
+    const newCompletionPercent = calcPercentage(
+      onGoingGoals.earned,
+      onGoingGoals.target
+    );
+
+    // Calculates the completion rated earned from this task (will be incremented wih the history's current completionPercent)
+    const completionPercentEarned = calcPercentage(
+      pointsEarned,
+      onGoingGoals.target
+    );
+
+    const updatedUserGoalAndHistory = await prisma.goal.update({
       where: {
         id: onGoingGoals.id,
       },
       data: {
         earned: {
-          increment: updatedTask.points,
+          increment: pointsEarned,
+        },
+        taskCompleted: {
+          increment: 1,
+        },
+        completionPercent: newCompletionPercent,
+
+        // Updates the history after updating the goal (also called database transactions)
+        history: {
+          update: {
+            where: {
+              status: "OnGoing",
+              goalId: onGoingGoals.id,
+            },
+            data: {
+              pointsEarned: {
+                increment: pointsEarned,
+              },
+              taskCompleted: {
+                increment: 1,
+              },
+              completionPercent: {
+                increment: completionPercentEarned,
+              },
+            },
+          },
         },
       },
     });
-    if (!updatedUserGoal)
+
+    if (!updatedUserGoalAndHistory)
       throw new AppError(
         "Something went wrong while trying to update the user data",
         500
@@ -365,7 +406,7 @@ export const completedUserTask: RequestHandler = async (
 
     response.status(200).send({
       status: "success",
-      data: updatedUserGoal,
+      data: updatedUserGoalAndHistory,
     });
   } catch (error) {
     next(error);

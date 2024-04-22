@@ -34,7 +34,7 @@ model User {
   // DEPRECATED
   // Keeps track of any tasks that was deleted and has not beens shown to the user yet.
   // This data gets reset to 0 after a user is notified of the task deletion (sent manually the from client)
-  unannouncedExpiredTaskCount Int @default(0)
+  // unannouncedExpiredTaskCount Int @default(0)
 
   // Checks if the user has created a goal that's on going (in progress). This is used to notify a user if they should / can create a new goal.
   hasOnGoingGoal Boolean @default(false)
@@ -46,7 +46,6 @@ model User {
   diaries Diary[]
   tasks Task[]
   goals Goal[]
-  
 }
 
 model Point {
@@ -74,6 +73,30 @@ model Goal {
   userId String @unique @db.ObjectId
 
   task Task[]
+  history History[]
+
+  taskCompleted Int @default(0)
+  averageMood Mood @default(Unknown)
+  completionPercent Int @default(0)
+
+  points Int @default(0)
+}
+
+// Displays the user's activty on a certain day (points earned, mood, etc...). Used to display data on the statistics page. Will be reset every new day.
+model History {
+  id String  @id @default(auto()) @map("_id") @db.ObjectId
+  
+  goal Goal @relation(fields: [goalId], references: [id])
+  goalId String @unique @db.ObjectId
+
+  date DateTime @default(now()) 
+  status Status @default(OnGoing)
+
+  pointsEarned Int @default(0)
+  taskCompleted Int @default(0)
+  mood Mood @default(Unknown)
+
+  completionPercent Int @default(0)
 }
 
 model Task {

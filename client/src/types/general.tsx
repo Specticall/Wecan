@@ -1,5 +1,7 @@
 import { TMood } from "@/context/MoodContext";
 
+export type TStatus = "OnGoing" | "Completed";
+
 //eslint-disable-next-line
 export type ExtractCVAVariants<T extends (...args: any) => unknown> =
   NonNullable<NonNullable<Parameters<T>[0]>["variant"]>;
@@ -61,7 +63,7 @@ export type TUserTask = {
   points: number;
   title: string;
   description: string;
-  status: "Completed" | "OnGoing";
+  status: TStatus;
   mood: TMood | "Unknown";
   createdAt: string;
   completedAt?: string;
@@ -78,26 +80,13 @@ export type TTaskRequest = {
   description: string;
   points: number;
   title: string;
-  status: "OnGoing" | "Completed";
+  status: TStatus;
   mood: TMood | "Unknown";
 };
 
 export type TDeletionBatch = {
   count: number;
 };
-/*
-id String  @id @default(auto()) @map("_id") @db.ObjectId
-
-  target Int @default(0)
-  earned Int @default(0)
-
-  createdAt DateTime @default(now())
-  status Status @default(OnGoing)
-
-  user User @relation(fields: [userId], references: [id])
-  userId String @unique @db.ObjectId
-}
-*/
 
 export type TGoal = {
   id: string;
@@ -106,4 +95,16 @@ export type TGoal = {
   createdAt: string;
   status: "OnGoing" | "Completed";
   userId: string;
+  taskCompleted: number;
+  completionPercent: number;
+};
+
+export type THistory = {
+  id: string;
+  date: string;
+  status: TStatus;
+  pointsEarned: number;
+  taskCompleted: number;
+  mood: TMood | "Unknown";
+  completionPercent: number;
 };

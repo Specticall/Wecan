@@ -10,7 +10,7 @@ export default function BarChart<
   const [hovering, setHovering] = useState<V | undefined>();
 
   const [shouldAnimate, setShouldAnimate] = useState(false);
-  const width = "5.5rem";
+  const width = "10rem";
   const maxValue = yAxis[0];
 
   useEffect(() => {

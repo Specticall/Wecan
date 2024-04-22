@@ -1,12 +1,31 @@
+import useHistoryMutation from "@/hooks/useHistoryMutation";
 import StatisticsCard from "./StatisticsCard";
+import useGoalMutation from "@/hooks/useGoalMutation";
+import { formatNumber } from "@/lib/utils";
 
 export default function StatisticsCardList() {
+  const { historyData } = useHistoryMutation();
+  const { goalData } = useGoalMutation();
+
+  const completedTaskToday =
+    historyData && historyData?.taskCompleted > 0
+      ? `+ ${formatNumber(historyData.taskCompleted)}`
+      : undefined;
+
+  const completionPercent = goalData
+    ? `${goalData.completionPercent}%`
+    : undefined;
+
+  const completionPercentToday = historyData
+    ? `${historyData.completionPercent}%`
+    : undefined;
+
   return (
     <ul className="grid grid-cols-3 mt-4 gap-4">
       <StatisticsCard
         heading="Task Completed"
-        value="160"
-        change="+3"
+        value={formatNumber(goalData?.taskCompleted)}
+        change={completedTaskToday}
         icon={<i className="bx bx-task"></i>}
       />
       <StatisticsCard
@@ -16,8 +35,8 @@ export default function StatisticsCardList() {
       />
       <StatisticsCard
         heading="Completion Rate"
-        value="32%"
-        change="+5%"
+        value={completionPercent}
+        change={completionPercentToday}
         icon={<i className="bx bx-task"></i>}
       />
     </ul>

@@ -1,31 +1,23 @@
 import { PrismaClient } from "@prisma/client";
-import fs from "fs/promises";
 
-/*
-Used to seed the available task that will be given to the user
-*/
 const prisma = new PrismaClient();
 
-async function startSeed() {
+async function seed() {
   try {
-    const jsonTaskData = await fs.readFile(
-      `./data/availableTask.json`,
-      "utf-8"
-    );
-    if (!jsonTaskData)
-      throw new Error(
-        "Something went wrong while trying to read the json seed data"
-      );
+    console.log("Seeding data, Please Wait...");
 
-    const parsedJsonData = JSON.parse(jsonTaskData);
-    await prisma.availableTask.deleteMany();
-
-    await prisma.availableTask.createMany({
-      data: parsedJsonData,
+    await prisma.history.updateMany({
+      data: {
+        completionPercent: 0,
+      },
     });
+    console.log("Seeding completed");
   } catch (err) {
-    console.dir(err);
+    console.log(
+      "On no! something went wrong while trying to seed your data",
+      err
+    );
   }
 }
 
-startSeed();
+seed();

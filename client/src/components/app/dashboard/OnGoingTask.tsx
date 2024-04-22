@@ -31,7 +31,7 @@ export default function OnGoingTask() {
         <Button
           variant="clean"
           className="bg-white px-6 py-2 rounded-full flex items-center justify-center gap-2 hover:bg-border whitespace-nowrap"
-          onClick={() => navigate("/app/task/all")}
+          onClick={() => navigate("/app/task/list")}
         >
           View All
           <i className="bx bx-chevron-right text-md"></i>
@@ -57,7 +57,7 @@ export default function OnGoingTask() {
             </div>
             <Button
               className="py-3 px-12 h-fit w-fit shadow-none"
-              onClick={() => navigate("/app/task/generator")}
+              onClick={() => navigate("/app/task/board")}
             >
               Get Task
             </Button>

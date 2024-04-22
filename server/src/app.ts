@@ -5,11 +5,12 @@ import authRouter from "./routes/authRouter";
 import diaryRouter from "./routes/diaryRouter";
 import userRouter from "./routes/userRouter";
 import taskRouter from "./routes/taskRouter";
+import goalRouter from "./routes/goalRouter";
+import historyRouter from "./routes/historyRouter";
 
 import { BASE_ENDPOINT } from "./utils/config";
 import { handleErrorDevelopment } from "./controller/errorController";
 import { AppError } from "./utils/AppError";
-import goalRouter from "./routes/goalRouter";
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(`${BASE_ENDPOINT}/v1/auth`, authRouter);
 app.use(`${BASE_ENDPOINT}/v1/diary`, diaryRouter);
 app.use(`${BASE_ENDPOINT}/v1/task`, taskRouter);
 app.use(`${BASE_ENDPOINT}/v1/goal`, goalRouter);
+app.use(`${BASE_ENDPOINT}/v1/history`, historyRouter);
 
 // Handle invalid routes
 app.use("*", (request, response, next) => {

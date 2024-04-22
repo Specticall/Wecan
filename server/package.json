@@ -7,7 +7,8 @@
     "start": "nodemon",
     "lint": "eslint . --ext .ts",
     "dev": "SET NODE_ENV=development&&nodemon",
-    "prod": "SET NODE_ENV=production&&nodemon"
+    "prod": "SET NODE_ENV=production&&nodemon",
+    "seed": "ts-node ./src/model/seed.ts"
   },
   "keywords": [],
   "author": "",

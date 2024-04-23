@@ -3,6 +3,7 @@ import GoalCompletedDialog from "@/components/app/task/GoalCompleteDialog";
 import TaskCompleteDialog from "@/components/app/task/TaskCompleteDialog";
 import TaskExpiredDialog from "@/components/app/task/TaskExpiredDialog";
 import TaskDetailDialog from "@/components/app/task/taskDetailDialog/TaskDetailDialog";
+import NewDayDialog from "@/components/general/NewDayDialog";
 import TitleWatcher, { TitleConfig } from "@/components/service/TitleWatcher";
 import { AuthProvider } from "@/context/AuthContext";
 import {
@@ -61,6 +62,10 @@ const dialogComponents: DialogComponentProps = [
     options: {
       collapseWhenClickOutside: true,
     },
+  },
+  {
+    name: "newDay",
+    component: <NewDayDialog />,
   },
 ];
 

@@ -11,9 +11,8 @@ export default function AppLayout() {
   const { showDialog } = useGlobalDialog();
 
   useEffect(() => {
-    if (!userData) return;
-    // if (userData.unannouncedExpiredTaskCount > 0)
-    // showDialog("goalCompleted");
+    if (!userData || (userData && userData.hasSetMoodToday)) return;
+    showDialog("newDay");
   }, [showDialog, userData]);
 
   return (

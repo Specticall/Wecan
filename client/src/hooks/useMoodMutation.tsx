@@ -53,6 +53,7 @@ export default function useMoodMutation() {
         It is important to have the query refetch again after the optimistic mutation process finished to make sure our UI contains the most recent and up to date data.
         */
         queryClient.invalidateQueries({ queryKey: ["userMood", token] });
+        queryClient.invalidateQueries({ queryKey: ["userData"] });
       },
     }
   );

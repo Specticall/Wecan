@@ -42,6 +42,8 @@ model User {
   // Checks if the user has completed the onboarding form 
   hasOnboarded Boolean @default(false)
 
+  // Checks if the user has set their mood for the current day (this is used to prompt the user to set their mood on the first log of the day)
+  hasSetMoodToday Boolean @default(false)
   
   diaries Diary[]
   tasks Task[]

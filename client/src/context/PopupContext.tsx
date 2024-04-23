@@ -49,7 +49,7 @@ export default function PopupProvider({
   return (
     <PopupContext.Provider value={{ notify }}>
       <div
-        className="fixed bottom-0 left-[50%] translate-x-[-50%] z-[100] translate-y-[-2rem] text-body bg-main px-12 py-3 rounded-md font-body shadow-lg shadow-main/30 transition-all duration-500"
+        className="fixed bottom-0 left-[50%] translate-x-[-50%] z-[100] translate-y-[-2rem] text-body bg-white px-12 py-3 rounded-md font-body shadow-lg shadow-main/30 transition-all duration-500"
         style={{
           translate: show ? "0 0" : "0 300%",
         }}

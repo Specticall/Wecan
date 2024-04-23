@@ -3,7 +3,6 @@ import TaskGeneratorCTA from "./TaskGeneratorCTA";
 import GeneratorTaskCard from "./GeneratorTaskCard";
 import { useState } from "react";
 import useGoalMutation from "@/hooks/useGoalMutation";
-import personTinkering from "/assets/goals-erase-anxiety.png";
 
 export default function TaskGenerator() {
   // State to make sure a load takes at least one second so that the transition animation can play without getting interupted in the case of a very fast response.

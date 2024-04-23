@@ -15,17 +15,22 @@ export type TGoogleLoginResponse = {
 export type TUserData = {
   email: string;
   id: string;
+  pictureURL?: string;
+  password: string | null;
+  token: string;
   lastLogin: Date;
   mood: "Ecstatic" | "Happy" | "Neutral" | "Sad" | "Depressed" | "Unknown";
   name: string;
-  password: string | null;
+
+  diaryStreak: number;
+
+  // DEPRECATED
   streak: number;
-  token: string;
-  unannouncedExpiredTaskCount: number;
-  pictureURL?: string;
+
+  // Flags
   hasOnGoingGoal: boolean;
   hasOnboarded: boolean;
-  diaryStreak: number;
+  hasSetMoodToday: boolean;
 };
 
 export type TPoint = {

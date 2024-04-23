@@ -6,9 +6,9 @@ async function seed() {
   try {
     console.log("Seeding data, Please Wait...");
 
-    await prisma.history.updateMany({
+    await prisma.user.updateMany({
       data: {
-        completionPercent: 0,
+        hasSetMoodToday: false,
       },
     });
     console.log("Seeding completed");

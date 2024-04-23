@@ -130,17 +130,27 @@ export function GlobalDialogProvider({
 
 export function DialogCollapse({
   children,
+  disabled,
+  onClick = () => {},
   ...props
-}: { children: ReactNode } & React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLDivElement>,
-  HTMLDivElement
->) {
+}: {
+  children: ReactNode;
+  disabled?: boolean;
+  onClick?: (e: MouseEvent) => void;
+} & React.HTMLAttributes<HTMLButtonElement>) {
   const { closeDialog } = useGlobalDialog();
 
   return (
-    <div {...props} onClick={closeDialog}>
+    <button
+      disabled={disabled}
+      {...props}
+      onClick={(e) => {
+        closeDialog();
+        onClick(e);
+      }}
+    >
       {children}
-    </div>
+    </button>
   );
 }
 

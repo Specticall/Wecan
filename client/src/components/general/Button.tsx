@@ -5,7 +5,7 @@ import { DOMAttributes } from "react";
 import { useNavigate } from "react-router-dom";
 
 const variants = cva(
-  "text-sm px-8 py-3 rounded-full font-medium transition-all duration-200",
+  "text-sm px-8 py-3 rounded-full font-medium transition-all duration-200 disabled:opacity-50 disabled:grayscale",
   {
     variants: {
       variant: {

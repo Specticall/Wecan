@@ -58,7 +58,33 @@ export const getHistory: RequestHandler = async (request, response, next) => {
 
     // TBA -> Accepts a goal query so user can retrieve specific data from certain goals.
 
-    // TBA -> Accepts a start and end date so the API user can retrieve history from specific ranges of time (used for chart)
+    // Handles ranged base history retrieval. User can specify a specific time range of the data. For example from 15th to 20th December 2023 will be represented as startDate=00000&&startDate=000000 (the 0s will be a timestamp)
+    // Mainly used for charts
+    if (query.startDate && query.endDate) {
+      const startDateTimestamp = Number(query.startDate);
+      const endDateTimestamp = Number(query.endDate);
+      if (!startDateTimestamp || !endDateTimestamp)
+        throw new AppError("Incomplete start or end date timestamp", 400);
+
+      const histories = await prisma.history.findMany({
+        where: {
+          goal: {
+            userId,
+          },
+          date: {
+            gte: new Date(startDateTimestamp),
+            lte: new Date(endDateTimestamp),
+          },
+        },
+      });
+
+      response.status(200).send({
+        status: "success",
+        data: histories,
+      });
+
+      return;
+    }
 
     // If the user does provide any goal id to the query then we can just retrieve the current ongoing goal's ongoing history (kind of confusing, I know).
     const onGoingHistory = await prisma.history.findFirst({

@@ -1,4 +1,5 @@
 import DiaryCreationDialog from "@/components/app/dashboard/DiaryCreationDialog";
+import GoalCompletedDialog from "@/components/app/task/GoalCompleteDialog";
 import TaskCompleteDialog from "@/components/app/task/TaskCompleteDialog";
 import TaskExpiredDialog from "@/components/app/task/TaskExpiredDialog";
 import TaskDetailDialog from "@/components/app/task/taskDetailDialog/TaskDetailDialog";
@@ -50,6 +51,13 @@ const dialogComponents: DialogComponentProps = [
   {
     name: "taskExpired",
     component: <TaskExpiredDialog />,
+    options: {
+      collapseWhenClickOutside: true,
+    },
+  },
+  {
+    name: "goalCompleted",
+    component: <GoalCompletedDialog />,
     options: {
       collapseWhenClickOutside: true,
     },

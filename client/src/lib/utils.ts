@@ -87,3 +87,21 @@ export function formatNumber(data?: number) {
 
   return data.toLocaleString("de-DE");
 }
+
+/**
+ * Gets the time span of the current week start date end date in time stamp (used for the bar chart)
+ * @returns
+ */
+export const getWeekStartAndEnd = () => {
+  // const todayTimespan = new Date().
+  const currentDate = new Date().getDay();
+  const TIMESPAN_DAY = 24 * 60 * 60 * 1000;
+
+  const startDate = Date.now() - currentDate * TIMESPAN_DAY;
+  const endDate = startDate + TIMESPAN_DAY * 6;
+
+  return {
+    startDate: new Date(startDate).setHours(0, 0, 0, 0),
+    endDate: new Date(endDate).setHours(23, 59, 59, 999),
+  };
+};

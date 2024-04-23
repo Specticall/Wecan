@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "@/context/UserContext";
 import Skeleton from "react-loading-skeleton";
+import useGoalMutation from "@/hooks/useGoalMutation";
 
 const routes = [
   {
@@ -30,13 +31,16 @@ export default function DesktopNavbar() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { userData } = useUser();
+  const { goalData } = useGoalMutation();
+
+  const hasCompletedGoal = goalData?.status === "Completed";
 
   return (
     <nav className="flex gap-6 px-4 py-4">
       <h2 className="bg-white px-8 py-3 rounded-xl text-lg flex items-center justify-center">
         Wecan
       </h2>
-      <ul className="rounded-xl flex-1 bg-white items-center justify-between  px-3 py-3 flex">
+      <ul className="rounded-xl flex-1 bg-white items-center justify-between gap-6 px-3 py-3 flex">
         <div className="flex bg-white-soft justify-start w-fit rounded-lg px-2 py-2 gap-4">
           {routes.map((route) => {
             const isOnPath = route.route.some((route) =>
@@ -58,6 +62,26 @@ export default function DesktopNavbar() {
               </li>
             );
           })}
+        </div>
+        <div className="flex-1 flex items-center justify-end">
+          <li
+            className={clsx(
+              "flex px-6 py-3 items-center text-white justify-center gap-2 cursor-pointer transition-all duration-200 rounded-lg hover:opacity-70 bg-accent relative overflow-hidden",
+              !hasCompletedGoal && "grayscale"
+            )}
+            onClick={() => {
+              if (!hasCompletedGoal) return;
+              navigate("/app/result");
+            }}
+          >
+            <div className="[&>i]:text-md [&>*]:flex [&>*]:items-center [&>*]:justify-center">
+              <i className="bx bx-gift"></i>
+            </div>
+            <p>Result</p>
+            {hasCompletedGoal && (
+              <div className="absolute inset-0 shine mix-blend-screen"></div>
+            )}
+          </li>
         </div>
         <div className="flex items-center gap-4">
           <p>{userData?.name || <Skeleton />}</p>

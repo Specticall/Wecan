@@ -87,7 +87,7 @@ model History {
   id String  @id @default(auto()) @map("_id") @db.ObjectId
   
   goal Goal @relation(fields: [goalId], references: [id])
-  goalId String @unique @db.ObjectId
+  goalId String @db.ObjectId
 
   date DateTime @default(now()) 
   status Status @default(OnGoing)

@@ -23,5 +23,25 @@
 }
 
 .shuffle-exit {
-  animation: shuffle-exit 200ms ease-in;
+  animation: shuffle-exit 200ms;
+}
+
+.shine {
+  animation: shimmer 3s;
+  animation-iteration-count: infinite;
+  background: linear-gradient(
+    to right,
+    #000000 20%,
+    #8867ff6f 25%,
+    #000000 35%
+  );
+  background-size: 1000px 100%;
+}
+@keyframes shimmer {
+  from {
+    background-position: -1000px 0;
+  }
+  to {
+    background-position: 1000px 0;
+  }
 }

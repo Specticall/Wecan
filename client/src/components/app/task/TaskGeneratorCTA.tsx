@@ -6,8 +6,10 @@ import { useRef } from "react";
 
 export default function TaskGeneratorCTA({
   setShuffling,
+  hasCompletedGoal = false,
 }: {
   setShuffling: React.Dispatch<React.SetStateAction<boolean>>;
+  hasCompletedGoal?: boolean;
 }) {
   const { generatedTask, generatedTaskQuery } = useTaskGenerator();
   const { addMutation } = useTaskMutation();
@@ -43,7 +45,7 @@ export default function TaskGeneratorCTA({
   return (
     <div className="flex items-center justify-center mt-4 gap-6">
       <Button
-        disabled={addMutation.isLoading}
+        disabled={addMutation.isLoading || hasCompletedGoal}
         className="h-fit flex gap-6 px-2 py-2 pr-8 items-center justify-center group hover:opacity-80 trasition-all duration-200 bg-darkest shadow-black/120"
         onClick={shuffleTask}
       >
@@ -54,7 +56,7 @@ export default function TaskGeneratorCTA({
         Shuffle
       </Button>
       <Button
-        disabled={addMutation.isLoading}
+        disabled={addMutation.isLoading || hasCompletedGoal}
         className="h-fit flex gap-6 px-2 py-2 pr-8 items-center justify-center group hover:opacity-80 trasition-all duration-200"
         onClick={handleAddTask}
       >

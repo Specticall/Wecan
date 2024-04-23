@@ -49,16 +49,22 @@ export const getUserGoal: RequestHandler = async (request, response, next) => {
     if (!userId)
       throw new AppError("'id' does not exist in the query string", 400);
 
-    /*
-    Each user can only have one ongoing goal, as such when a request hits this endpoint it will automatically create a new ongoing goal document if none are. 
-    */
-    let userGoal = await prisma.goal.findUnique({
+    const goalId = request.query.goalId as string | undefined;
+
+    // Unless the user specifies a certain goalId then we'll simply get the most recent goal by the user.
+    let userGoal = await prisma.goal.findFirst({
+      orderBy: {
+        createdAt: "desc",
+      },
       where: {
         userId,
-        status: "OnGoing",
+
+        // If the user does not provide this field then it will be ignored.
+        id: goalId,
       },
     });
 
+    // Creates a new goal if the user has no goals yet (new accounts)
     if (!userGoal) {
       userGoal = await prisma.goal.create({
         data: {

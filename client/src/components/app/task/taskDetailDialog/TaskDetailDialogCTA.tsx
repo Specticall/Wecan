@@ -19,6 +19,14 @@ export default function TaskDetailDialogCTA() {
 
     completeTaskMutation.mutate(userTaskData.id, {
       onSuccess: (data) => {
+        if (
+          goalData &&
+          userTaskData.points + goalData.earned >= goalData.target
+        ) {
+          showDialog("goalCompleted");
+          return;
+        }
+
         showDialog("taskComplete", {
           newUserGoal: data.data.data,
           oldUserGoal: oldUserPoints,

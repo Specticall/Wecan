@@ -12,8 +12,8 @@ export default function AppLayout() {
 
   useEffect(() => {
     if (!userData) return;
-    if (userData.unannouncedExpiredTaskCount > 0)
-      showDialog("taskExpired", userData.unannouncedExpiredTaskCount);
+    // if (userData.unannouncedExpiredTaskCount > 0)
+    // showDialog("goalCompleted");
   }, [showDialog, userData]);
 
   return (

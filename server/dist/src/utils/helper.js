@@ -13,6 +13,7 @@ exports.createJWT = createJWT;
 async function verifyGoogleCredential(jtwToken) {
     const clientId = process.env.GOOGLE_ID;
     const client = new google_auth_library_1.OAuth2Client(clientId);
+    console.log(client, clientId);
     const ticket = await client.verifyIdToken({
         idToken: jtwToken,
         audience: clientId,

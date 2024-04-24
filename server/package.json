@@ -9,7 +9,7 @@
     "dev": "SET NODE_ENV=development&&nodemon",
     "prod": "SET NODE_ENV=production&&nodemon",
     "seed": "ts-node ./src/model/seed.ts",
-    "build": "rimraf dist && tsc",
+    "build": "prisma generate && rimraf dist && tsc",
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist",
     "test": "echo \"Error: no test specified\" && exit 1"

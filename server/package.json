@@ -8,7 +8,11 @@
     "lint": "eslint . --ext .ts",
     "dev": "SET NODE_ENV=development&&nodemon",
     "prod": "SET NODE_ENV=production&&nodemon",
-    "seed": "ts-node ./src/model/seed.ts"
+    "seed": "ts-node ./src/model/seed.ts",
+    "build": "rimraf dist && tsc",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
@@ -39,5 +43,10 @@
     "pre-commit": "^1.2.2",
     "prisma": "^5.12.1",
     "rimraf": "^5.0.5"
-  }
+  },
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
+  ]
 }

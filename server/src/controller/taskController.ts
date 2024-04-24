@@ -121,9 +121,11 @@ export const getUserTask: RequestHandler = async (request, response, next) => {
         createdAt: "desc",
       },
       where: {
+        userId,
+
         createdAt: {
-          gte: timeSpan?.startOfDay,
-          lt: timeSpan?.endOfDay,
+          gte: timeSpan?.startOfDay || undefined,
+          lt: timeSpan?.endOfDay || undefined,
         },
       },
       select: {

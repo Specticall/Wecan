@@ -25,11 +25,13 @@ import OnBoarding from "./pages/OnBoarding";
 import OnBoardingMood from "./components/onboarding/OnBoardingMood";
 import OnBoardingPoints from "./components/onboarding/OnBoardingPoints";
 import OnBoardingDiary from "./components/onboarding/OnBoardingDiary";
+import PageNotFound from "./pages/PageNotFound";
 
 const router = createBrowserRouter([
   {
     element: <FirstRouterChild />,
     loader: reloadSavedLoginDataLoader,
+    errorElement: <PageNotFound />,
     children: [
       {
         path: "/",

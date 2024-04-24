@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "@/context/UserContext";
 import Skeleton from "react-loading-skeleton";
 import useGoalMutation from "@/hooks/useGoalMutation";
+import { useGlobalDialog } from "@/context/GlobalDialogContext";
 
 const routes = [
   {
@@ -32,6 +33,7 @@ export default function DesktopNavbar() {
   const navigate = useNavigate();
   const { userData } = useUser();
   const { goalData } = useGoalMutation();
+  const { showDialog } = useGlobalDialog();
 
   const hasCompletedGoal = goalData?.status === "Completed";
 
@@ -83,9 +85,12 @@ export default function DesktopNavbar() {
             )}
           </li>
         </div>
-        <div className="flex items-center gap-4">
+        <div
+          className="flex items-center gap-4 hover:bg-slate-100 transition-all duration-200 cursor-pointer py-2 px-4 rounded-md mr-3"
+          onClick={() => showDialog("userProfile")}
+        >
           <p>{userData?.name || <Skeleton />}</p>
-          <div className="h-10 aspect-square rounded-full bg-red-200 overflow-hidden mr-3">
+          <div className="h-10 aspect-square rounded-full bg-red-200 overflow-hidden">
             {userData && userData.pictureURL ? (
               <img
                 src={userData?.pictureURL}

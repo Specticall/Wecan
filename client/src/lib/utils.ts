@@ -83,7 +83,7 @@ export function formatDate(date: Date) {
 }
 
 export function formatNumber(data?: number) {
-  if (!data) return undefined;
+  if (data === undefined) return undefined;
 
   return data.toLocaleString("de-DE");
 }
@@ -104,4 +104,8 @@ export const getWeekStartAndEnd = () => {
     startDate: new Date(startDate).setHours(0, 0, 0, 0),
     endDate: new Date(endDate).setHours(23, 59, 59, 999),
   };
+};
+
+export const clearLocalStorage = (...keys: string[]) => {
+  keys.forEach((key) => localStorage.removeItem(key));
 };

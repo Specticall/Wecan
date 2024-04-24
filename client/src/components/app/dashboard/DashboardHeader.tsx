@@ -1,7 +1,6 @@
 import { useUser } from "@/context/UserContext";
-import personFloatingArt from "/assets/person-floating.png";
-import Skeleton from "react-loading-skeleton";
 import dashboardBg from "/assets/dashboard-bg.jpg";
+import Clock from "@/components/general/Clock";
 
 export default function DashboardHeader() {
   const { userData } = useUser();
@@ -24,8 +23,8 @@ export default function DashboardHeader() {
           Hi There! Welcome Back 👋{" "}
         </div>
         <div className="flex-1"></div>
-        <div className="px-6 py-2 bg-dark text-white rounded-full w-fit">
-          <i className="bx bx-time-five"></i> 08:45 WIB
+        <div className="px-6 py-2 bg-dark text-white gap-2 flex items-center justify-center rounded-full w-fit">
+          <i className="bx bx-time-five text-[1rem]"></i> <Clock />
         </div>
       </div>
       {/* <img

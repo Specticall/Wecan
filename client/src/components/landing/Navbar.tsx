@@ -51,8 +51,13 @@ export default function Navbar() {
       {/* --- Used for extra padding at the top ---*/}
       <div className="box h-[1rem]" ref={boxRef}></div>
       <nav
-        className="sticky left-0 right-0 top-0 bg-white z-20 duration-200 transition-all"
-        style={{ backgroundColor: showBackground ? "white" : "transparent" }}
+        className="sticky left-0 right-0 top-0 bg-white z-20 duration-200 transition-all backdrop-blur-lg"
+        style={{
+          backgroundColor: showBackground
+            ? "rgba(255,255,255,0.5)"
+            : "transparent",
+          // borderBottom: showBackground ? "1px solid rgba(220,220,220,1)" : "",
+        }}
       >
         <ul className="py-4 section flex justify-between items-center ">
           <p className="text-xl text-dark">

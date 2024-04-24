@@ -1,8 +1,9 @@
 import { cn } from "@/lib/utils";
 import { ExtractCVAVariants } from "@/types/general";
 import { cva } from "class-variance-authority";
-import { DOMAttributes } from "react";
+import { DOMAttributes, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "./loadingSpinner";
 
 const variants = cva(
   "text-sm px-8 py-3 rounded-full font-medium transition-all duration-200 disabled:opacity-50 disabled:grayscale",
@@ -30,13 +31,17 @@ type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
   disabled?: boolean;
   onClick?: DOMAttributes<HTMLButtonElement>["onClick"];
   to?: string;
+  children: ReactNode;
+  isLoading?: boolean;
 };
 
 export default function Button({
   className = "",
   variant,
   disabled,
+  children,
   to = "",
+  isLoading = false,
   onClick = () => {},
   ...props
 }: ButtonProps) {
@@ -45,8 +50,12 @@ export default function Button({
   return (
     <button
       {...props}
-      disabled={disabled}
-      className={cn(variants({ variant }), className)}
+      disabled={disabled || isLoading}
+      className={cn(
+        variants({ variant }),
+        isLoading && "flex items-center justify-center gap-2",
+        className
+      )}
       onClick={(e) => {
         if (to) {
           e.preventDefault();
@@ -54,6 +63,9 @@ export default function Button({
         }
         onClick(e);
       }}
-    ></button>
+    >
+      {children}
+      {isLoading && <LoadingSpinner size={"sm"} />}
+    </button>
   );
 }

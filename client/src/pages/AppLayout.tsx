@@ -15,6 +15,12 @@ export default function AppLayout() {
     showDialog("newDay");
   }, [showDialog, userData]);
 
+  // // TEMP
+  // useEffect(() => {
+  //   if (!userData) return;
+  //   showDialog("userProfile");
+  // }, []);
+
   return (
     <DiaryProvider>
       <div className="">

@@ -6,16 +6,18 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate, useRouteError } from "react-router-dom";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
 import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
+import { clearLocalStorage } from "@/lib/utils";
 
 type TAuthContextValues = {
   token: string | undefined;
   handleSuccessfulLogin: (userData: TUserData, token: string) => void;
   userId: string | undefined;
   hasReloadSavedLoginData: boolean;
+  handleLogout: () => void;
 };
 
 const AuthContext = createContext<TAuthContextValues | null>(null);
@@ -88,9 +90,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     navigate(userData.hasOnboarded ? "/app/dashboard" : "/onboarding/step-1");
   };
 
+  const handleLogout = () => {
+    // Delete token and id from local storage
+    clearLocalStorage("token", "id");
+
+    // Navigate to home page
+    navigate("/home/landing");
+
+    // Clear auth user data query.
+    setToken(undefined), setUserId(undefined);
+
+    // Clear the query
+    queryClient.resetQueries();
+  };
+
   return (
     <AuthContext.Provider
-      value={{ token, handleSuccessfulLogin, userId, hasReloadSavedLoginData }}
+      value={{
+        token,
+        handleSuccessfulLogin,
+        userId,
+        hasReloadSavedLoginData,
+        handleLogout,
+      }}
     >
       {children}
     </AuthContext.Provider>

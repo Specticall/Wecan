@@ -20,6 +20,8 @@ export default function StatisticsCardList() {
     ? `${historyData.completionPercent}%`
     : undefined;
 
+  console.log(goalData?.taskCompleted);
+
   return (
     <ul className="grid grid-cols-3 mt-4 gap-4">
       <StatisticsCard

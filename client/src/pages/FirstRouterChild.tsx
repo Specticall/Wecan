@@ -4,6 +4,7 @@ import TaskCompleteDialog from "@/components/app/task/TaskCompleteDialog";
 import TaskExpiredDialog from "@/components/app/task/TaskExpiredDialog";
 import TaskDetailDialog from "@/components/app/task/taskDetailDialog/TaskDetailDialog";
 import NewDayDialog from "@/components/general/NewDayDialog";
+import UserProfile from "@/components/general/UserProfile";
 import TitleWatcher, { TitleConfig } from "@/components/service/TitleWatcher";
 import { AuthProvider } from "@/context/AuthContext";
 import {
@@ -59,6 +60,13 @@ const dialogComponents: DialogComponentProps = [
   {
     name: "goalCompleted",
     component: <GoalCompletedDialog />,
+    options: {
+      collapseWhenClickOutside: true,
+    },
+  },
+  {
+    name: "userProfile",
+    component: <UserProfile />,
     options: {
       collapseWhenClickOutside: true,
     },

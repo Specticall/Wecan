@@ -5,20 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm run dev\" ",
-    "prod": "concurrently \"cd server && npm run prod\" \"cd client && npm run prod\" ",
-    "build": "rimraf dist && tsc",
-    "ts.check": "tsc --project tsconfig.json",
-    "add-build": "git add dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prod": "concurrently \"cd server && npm run prod\" \"cd client && npm run prod\" "
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.2.2"
-  },
-  "pre-commit": [
-    "ts.check",
-    "build",
-    "add-build"
-  ]
+  }
 }

@@ -15,7 +15,14 @@ import { AppError } from "./utils/AppError";
 const app = express();
 
 // Enable fetching from localhost
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    methods: "*",
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
 // Middleware to parse body request
 app.use(express.json());

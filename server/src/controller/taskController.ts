@@ -194,7 +194,11 @@ export const addUserTask: RequestHandler = async (request, response, next) => {
     // Find onGoing goal
     const onGoingGoal = await prisma.goal.findFirst({
       where: {
+        userId,
         status: "OnGoing",
+      },
+      orderBy: {
+        status: "desc",
       },
     });
 

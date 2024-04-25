@@ -9,7 +9,6 @@ export async function verifyGoogleCredential(jtwToken: string) {
   const clientId = process.env.GOOGLE_ID;
 
   const client = new OAuth2Client(clientId);
-  console.log(client, clientId);
   const ticket = await client.verifyIdToken({
     idToken: jtwToken,
     audience: clientId,

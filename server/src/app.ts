@@ -11,6 +11,7 @@ import historyRouter from "./routes/historyRouter";
 import { BASE_ENDPOINT } from "./utils/config";
 import { handleErrorDevelopment } from "./controller/errorController";
 import { AppError } from "./utils/AppError";
+import { allowCors } from "./utils/cors";
 
 const app = express();
 
@@ -23,6 +24,8 @@ app.use(
     credentials: true,
   })
 );
+
+app.use(allowCors);
 
 // Middleware to parse body request
 app.use(express.json());

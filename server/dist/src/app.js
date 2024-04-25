@@ -16,7 +16,12 @@ const errorController_1 = require("./controller/errorController");
 const AppError_1 = require("./utils/AppError");
 const app = (0, express_1.default)();
 // Enable fetching from localhost
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)({
+    origin: "*",
+    methods: "*",
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+}));
 // Middleware to parse body request
 app.use(express_1.default.json());
 // Main Endpoints

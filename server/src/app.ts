@@ -11,21 +11,11 @@ import historyRouter from "./routes/historyRouter";
 import { BASE_ENDPOINT } from "./utils/config";
 import { handleErrorDevelopment } from "./controller/errorController";
 import { AppError } from "./utils/AppError";
-import { allowCors } from "./utils/cors";
 
 const app = express();
 
 // Enable fetching from localhost
-app.use(
-  cors({
-    origin: "*",
-    methods: "*",
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  })
-);
-
-app.use(allowCors);
+app.use(cors());
 
 // Middleware to parse body request
 app.use(express.json());

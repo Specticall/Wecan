@@ -3,13 +3,15 @@
 [V] Clock at home page
 [V] Change user's mood on new day
 [V] Clear local storage and ask to relog if fail to retrieve user data from db
-[] Select Date Range for Diary
 [V] Create Error Page
-[] Calculate Average Mood
-[] Recap Page
-[] Rewind back to previous goals
 [V] Logout
 [V] Change Name
+[V] Create Collection Page
+[V] Set Changeable backround
+[V] Get images (atleast 9, 3 for each tier)
+[] Select Date Range for Diary (MAYBE SKIPPED)
+[] Calculate Average Mood
+[] Rewind back to previous goals
 [] Responsive Diary
 [] Responsive Task
 [] Responsive Statistics
@@ -20,3 +22,7 @@
 [] Statistics +% Today
 [] Make home page different for signed in / signed out users
 [] Set Locked Result Message 
+
+<!-- TODAY -->
+[] Set Collection Background Filters
+[] Owned background counter

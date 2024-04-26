@@ -26,6 +26,7 @@ import OnBoardingMood from "./components/onboarding/OnBoardingMood";
 import OnBoardingPoints from "./components/onboarding/OnBoardingPoints";
 import OnBoardingDiary from "./components/onboarding/OnBoardingDiary";
 import PageNotFound from "./pages/PageNotFound";
+import Collection from "./pages/Collection";
 
 const router = createBrowserRouter([
   {
@@ -111,6 +112,10 @@ const router = createBrowserRouter([
           {
             path: "result",
             element: <div>(Optional)</div>,
+          },
+          {
+            path: "collections",
+            element: <Collection />,
           },
         ],
       },

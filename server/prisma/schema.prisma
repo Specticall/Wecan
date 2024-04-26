@@ -48,6 +48,30 @@ model User {
   diaries Diary[]
   tasks Task[]
   goals Goal[]
+
+  // Background stuff
+  ownedBackground UserBackground[]
+  selectedBackgroundURL String
+}
+
+// Acts as an intermediary relation table to the background and user mode. A User can have multiple backgrounds. The backgrounds are manually seeded to users share the same seeded background data. 
+model UserBackground {
+  id String  @id @default(auto()) @map("_id") @db.ObjectId
+
+  userId String @db.ObjectId
+  user User @relation(fields: [userId], references: [id])
+
+  backgroundId String @db.ObjectId
+  background Background @relation(fields: [backgroundId], references: [id])
+}
+
+model Background {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  URL   String
+  name  String
+  tier  Int
+
+  users UserBackground[]
 }
 
 model Point {

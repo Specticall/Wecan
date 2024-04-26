@@ -26,6 +26,11 @@ const routes = [
     icon: <i className="bx bx-line-chart"></i>,
     route: ["/app/statistics"],
   },
+  {
+    text: "Collections",
+    icon: <i className="bx bx-grid-alt"></i>,
+    route: ["/app/collections"],
+  },
 ];
 
 export default function DesktopNavbar() {

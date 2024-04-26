@@ -32,6 +32,7 @@
   "dependencies": {
     "@prisma/client": "^5.12.1",
     "@types/jsonwebtoken": "^9.0.6",
+    "@vercel/blob": "^0.23.2",
     "axios": "^1.6.8",
     "cors": "^2.8.5",
     "dotenv": "^16.4.1",

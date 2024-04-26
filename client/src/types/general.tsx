@@ -21,6 +21,7 @@ export type TUserData = {
   lastLogin: Date;
   mood: "Ecstatic" | "Happy" | "Neutral" | "Sad" | "Depressed" | "Unknown";
   name: string;
+  selectedBackgroundURL: string;
 
   diaryStreak: number;
 
@@ -112,4 +113,18 @@ export type THistory = {
   taskCompleted: number;
   mood: TMood | "Unknown";
   completionPercent: number;
+};
+
+export type TBackground = {
+  name: string;
+  URL: string;
+  id: string;
+  tier: 1 | 2 | 3;
+};
+
+// Junction table between background and user background
+export type TUserBackground = {
+  id: string;
+  userId: string;
+  backgroundId: string;
 };

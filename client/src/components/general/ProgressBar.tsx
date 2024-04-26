@@ -71,7 +71,6 @@ export default function ProgressBar({
           )}
           style={{
             scale: `${progress} 1`,
-            background: ACCENT_GRADIENT,
             ...(animate ? { transition: `${animate.durationMs}ms scale` } : {}),
           }}
         ></div>

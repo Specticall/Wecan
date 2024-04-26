@@ -7,7 +7,11 @@ export default function DashboardHeader() {
 
   return (
     <header className="bg-white border-border border-[1px] rounded-lg  overflow-hidden lg:grid-cols-1 relative">
-      <img src={dashboardBg} alt="" className="absolute inset-0" />
+      <img
+        src={userData?.selectedBackgroundURL}
+        alt=""
+        className="absolute inset-0 object-center h-full w-full object-cover"
+      />
       {/* <div className="py-8 px-12 flex flex-col justify-center lg:items-center sm:px-6 z-[1]">
         <h1 className="text-xl font-semibold max-w-[22rem] lg:text-center">
           Hi There! Welcome Back{" "}

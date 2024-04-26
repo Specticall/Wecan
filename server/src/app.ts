@@ -11,6 +11,7 @@ import historyRouter from "./routes/historyRouter";
 import { BASE_ENDPOINT } from "./utils/config";
 import { handleErrorDevelopment } from "./controller/errorController";
 import { AppError } from "./utils/AppError";
+import backgroundRouter from "./routes/backgroundRouter";
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(`${BASE_ENDPOINT}/v1/diary`, diaryRouter);
 app.use(`${BASE_ENDPOINT}/v1/task`, taskRouter);
 app.use(`${BASE_ENDPOINT}/v1/goal`, goalRouter);
 app.use(`${BASE_ENDPOINT}/v1/history`, historyRouter);
+app.use(`${BASE_ENDPOINT}/v1/background`, backgroundRouter);
 
 // Handle invalid routes
 app.use("*", (request, response, next) => {

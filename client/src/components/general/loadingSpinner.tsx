@@ -22,12 +22,14 @@ const styles = cva("", {
 export default function LoadingSpinner({
   size = "sm",
   color,
+  className,
 }: {
   color?: string;
   size?: VariantProps<typeof styles>["thickness"];
+  className?: string;
 }) {
   return (
-    <div className={cn("lds-ring", styles({ thickness: size }))}>
+    <div className={cn("lds-ring", styles({ thickness: size }), className)}>
       {new Array(4).fill(".").map(() => {
         return (
           <div

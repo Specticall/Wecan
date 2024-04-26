@@ -10,7 +10,7 @@ export default function Collection() {
   return (
     <main className="mx-4 mb-4 p-8 bg-white rounded-xl flex-1 h-full">
       <CollectionHeader filter={filter} setFilter={setFilter} />
-      <CollectionImages />
+      <CollectionImages filter={filter} />
     </main>
   );
 }

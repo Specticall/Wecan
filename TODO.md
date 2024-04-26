@@ -24,5 +24,6 @@
 [] Set Locked Result Message 
 
 <!-- TODAY -->
-[] Set Collection Background Filters
+[V] Set Collection Background Filters
 [] Owned background counter
+[V] Make sure user data is not stale before removing bg change loading spinner

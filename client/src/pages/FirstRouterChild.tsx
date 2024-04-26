@@ -3,6 +3,7 @@ import GoalCompletedDialog from "@/components/app/task/GoalCompleteDialog";
 import TaskCompleteDialog from "@/components/app/task/TaskCompleteDialog";
 import TaskExpiredDialog from "@/components/app/task/TaskExpiredDialog";
 import TaskDetailDialog from "@/components/app/task/taskDetailDialog/TaskDetailDialog";
+import GoalPrize from "@/components/general/GoalPrize";
 import NewDayDialog from "@/components/general/NewDayDialog";
 import UserProfile from "@/components/general/UserProfile";
 import TitleWatcher, { TitleConfig } from "@/components/service/TitleWatcher";
@@ -74,6 +75,10 @@ const dialogComponents: DialogComponentProps = [
   {
     name: "newDay",
     component: <NewDayDialog />,
+  },
+  {
+    name: "goalPrize",
+    component: <GoalPrize />,
   },
 ];
 

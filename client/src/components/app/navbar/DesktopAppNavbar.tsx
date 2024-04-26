@@ -78,7 +78,6 @@ export default function DesktopNavbar() {
             )}
             onClick={() => {
               if (!hasCompletedGoal) return;
-              navigate("/app/result");
             }}
           >
             <div className="[&>i]:text-md [&>*]:flex [&>*]:items-center [&>*]:justify-center">

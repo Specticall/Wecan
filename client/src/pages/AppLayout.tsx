@@ -18,7 +18,7 @@ export default function AppLayout() {
   // // TEMP
   // useEffect(() => {
   //   if (!userData) return;
-  //   showDialog("userProfile");
+  //   showDialog("goalPrize");
   // }, []);
 
   return (

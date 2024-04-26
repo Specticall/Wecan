@@ -1,4 +1,5 @@
-import { cn } from "@/lib/utils";
+import useBackground from "@/hooks/useBackground";
+import { cn, formatNumber } from "@/lib/utils";
 
 const collectionFilter = ["Unlocked", "Locked", "All"] as const;
 export type TCollectionFilter = (typeof collectionFilter)[number];
@@ -10,6 +11,15 @@ export default function CollectionHeader({
   filter: TCollectionFilter;
   setFilter: React.Dispatch<React.SetStateAction<TCollectionFilter>>;
 }) {
+  const { backgroundQuery, backgroundData } = useBackground();
+
+  const totalOwned = backgroundData?.reduce(
+    (count, background) => (background.owned ? count + 1 : count),
+    0
+  );
+
+  const totalBackgrounds = backgroundQuery.data?.length;
+
   return (
     <header className="flex justify-between items-center">
       <div>
@@ -17,7 +27,9 @@ export default function CollectionHeader({
           <h1 className="text-dark text-lg font-semibold">My Collection</h1>
           <div className="flex bg-accent px-4 py-1 rounded-lg text-white items-center justify-center gap-2">
             <i className="bx bx-trophy text-md"></i>
-            <p>2 / 12</p>
+            <p>
+              {formatNumber(totalOwned)} / {formatNumber(totalBackgrounds)}
+            </p>
           </div>
         </div>
         <p className="mt-2 text-light">

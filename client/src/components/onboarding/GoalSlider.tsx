@@ -55,7 +55,7 @@ export default function GoalSlider() {
 
   return (
     <>
-      <div className="flex items-center mt-8">
+      <div className="flex items-center">
         <i className="bx bx-coin-stack text-[2rem] text-dark"></i>
         <p className="text-md text-darkest ml-2 mr-4">
           {goalData?.target.toLocaleString("de-DE") || <Skeleton />} Points

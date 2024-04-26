@@ -1,7 +1,8 @@
 import LoadingSpinner from "@/components/general/loadingSpinner";
 import useBackground from "@/hooks/useBackground";
 import { cn } from "@/lib/utils";
-import { useEffect } from "react";
+import { TCollectionFilter } from "./CollectionHeader";
+import { useUser } from "@/context/UserContext";
 
 const FADE_BG =
   "linear-gradient(0deg, rgba(0,0,0,0.9) 1%, rgba(255,255,255,0) 60%)";
@@ -26,18 +27,37 @@ const getTier = (tier: 1 | 2 | 3) => {
   }
 };
 
-export default function CollectionImages() {
+function createFilterFn<T extends { owned: boolean }>() {
+  return {
+    All: (item: T) => item,
+    Locked: (item: T) => !item.owned,
+    Unlocked: (item: T) => item.owned,
+  };
+}
+
+export default function CollectionImages({
+  filter,
+}: {
+  filter: TCollectionFilter;
+}) {
   const { backgroundData, selectMutation } = useBackground();
+
+  // Getting User Query from the cache (instead of creating one)
+  const { userQuery } = useUser();
 
   if (!backgroundData) return;
 
+  // get filter function (used in `.filter()`)  based on the passed in `filter` prop. Later on this function will be used to filter things the user wants to be displayed on the screen. We're doing a function call here to satisfy some typescript generic stuff.
+  const selectedFilterFn = createFilterFn()[filter];
+
   return (
     <ul className="grid grid-cols-3 gap-8 bg-white-soft p-6 rounded-lg mt-8">
-      {backgroundData.map((background) => {
+      {/* Filter used Here VVVVVVVVV */}
+      {backgroundData.filter(selectedFilterFn).map((background) => {
         const { tier, color: tierColor } = getTier(background.tier);
         const isChangingImage =
-          selectMutation.isLoading &&
-          selectMutation.context?.backgroundId === background.id;
+          selectMutation.context?.backgroundId === background.id &&
+          (selectMutation.isLoading || userQuery.isRefetching);
 
         const handleSelect = () => {
           if (background.selected) return;

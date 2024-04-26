@@ -5,9 +5,11 @@ import { useUser } from "@/context/UserContext";
 import DashboardHeader from "@/components/app/dashboard/DashboardHeader";
 import MoodSelector from "@/components/app/moodModal/MoodSelector";
 import DiaryForm from "@/components/app/diary/DiaryForm";
+import useGoalMutation from "@/hooks/useGoalMutation";
 
 export default function Dashboard() {
   const { userData } = useUser();
+  const { goalData } = useGoalMutation();
 
   if (!userData) return;
 
@@ -16,7 +18,7 @@ export default function Dashboard() {
       <main className="grid grid-cols-[4fr_3fr] h-full pb-4 gap-4 3xl:grid-cols-1 lg:mt-4">
         <div className="bg-white rounded-xl flex flex-col h-full p-5">
           <DashboardHeader />
-          <OnGoingTask />
+          {goalData?.status === "OnGoing" && <OnGoingTask />}
         </div>
         <div className="flex flex-col 3xl:grid 3xl:grid-cols-2 3xl:gap-4 lg:grid-cols-1">
           <EarnedPoints />

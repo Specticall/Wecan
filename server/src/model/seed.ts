@@ -2,6 +2,20 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+const difficultyRange = [
+  { difficulty: "Easy", min: 50000, max: 150000, color: "rgb(42 157 143)" },
+  { difficulty: "Medium", min: 200000, max: 350000, color: "rgb(74 90 239)" },
+  { difficulty: "Hard", min: 40000, max: 500000, color: "rgb(231 111 81)" },
+] as const;
+
+const findDifficulty = (point: number) => {
+  const range = difficultyRange.find(
+    (range) => range.min <= point && point <= range.max
+  );
+  if (!range) throw new Error(`No difficulty from ${point} points was found`);
+  return range;
+};
+
 async function seed() {
   try {
     console.log("Seeding data, Please Wait...");
@@ -33,18 +47,25 @@ async function seed() {
     //     },
     //   });
     // }
-    await prisma.user.update({
-      where: {
-        email: "josephyusmita@gmail.com",
-      },
-      data: {
-        ownedBackground: {
-          create: {
-            backgroundId: defaultBackground.id,
-          },
+
+    const allGoals = await prisma.goal.findMany({});
+    if (!allGoals) {
+      console.log("No goals exist");
+      return;
+    }
+
+    for (const goal of allGoals) {
+      const difficulty = findDifficulty(goal.target);
+      await prisma.goal.update({
+        where: {
+          id: goal.id,
         },
-      },
-    });
+        data: {
+          difficulty: difficulty.difficulty,
+        },
+      });
+    }
+
     console.log("Seeding completed");
   } catch (err) {
     console.log(

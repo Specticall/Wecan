@@ -96,7 +96,7 @@ model Goal {
   status Status @default(OnGoing)
 
   user User @relation(fields: [userId], references: [id])
-  userId String @unique @db.ObjectId
+  userId String @db.ObjectId
 
   task Task[]
   history History[]
@@ -105,7 +105,16 @@ model Goal {
   averageMood Mood @default(Unknown)
   completionPercent Int @default(0)
 
+  difficulty Difficulty @default(Easy)
+
   points Int @default(0)
+
+  // This field will contain the name of a randomized background whenever the user has completed a task.
+  // Once the user has claimed the prize, this field will go back to null. 
+  backgroundRewardId String?
+
+  // This field in particular is used to tell the client to display some sort of UI effects that indicates the user that they have an unclaimed prize. The reason we split `backgroundReward` and `hasClaimedReward` is because there are cases when the user has obtained all the backgrounds which means they're not getting anything however, the UI still needs to display their "unclaimed reward".
+  hasClaimedReward Boolean @default(false)
 }
 
 // Displays the user's activty on a certain day (points earned, mood, etc...). Used to display data on the statistics page. Will be reset every new day.
@@ -159,7 +168,11 @@ enum Status {
   OnGoing
 }
 
-
+enum Difficulty {
+  Easy
+  Medium
+  Hard
+}
 
 enum Mood {
   Ecstatic

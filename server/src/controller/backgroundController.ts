@@ -1,8 +1,20 @@
-import { PrismaClient } from "@prisma/client";
+import { Difficulty, PrismaClient } from "@prisma/client";
 import { RequestHandler } from "express";
 import { AppError } from "../utils/AppError";
+import { getRandomNumber } from "../utils/helper";
 
 const prisma = new PrismaClient();
+
+const getTier = (difficulty: Difficulty) => {
+  switch (difficulty) {
+    case "Easy":
+      return 1;
+    case "Medium":
+      return 2;
+    case "Hard":
+      return 3;
+  }
+};
 
 export const getBackgrounds: RequestHandler = async (
   request,
@@ -106,4 +118,43 @@ export const setUserBackground: RequestHandler = async (
   } catch (error) {
     next(error);
   }
+};
+
+export const getBackgroundReward = async (
+  userId: string,
+  difficulty: Difficulty
+) => {
+  // 1. Retrieve the user owned backgrounds
+  const ownedBackgrounds = await prisma.userBackground.findMany({
+    where: {
+      userId,
+    },
+  });
+
+  // 2. Get an array of the user owned backgrounds. (to make sure there will be no repeats)
+  const ownedBackgroundIds = ownedBackgrounds.map(
+    (owned) => owned.backgroundId
+  );
+
+  // 3. Retrieve all the available background with the specified difficulty into an array
+  const availableBackground = await prisma.background.findMany({
+    where: {
+      tier: getTier(difficulty),
+      // Make sure to not pull user owned backgrounds
+      id: {
+        notIn: ownedBackgroundIds,
+      },
+    },
+  });
+
+  // 3.5 If there are no longer available backgrounds then return an empty array.
+  if (availableBackground.length <= 0) {
+    return undefined;
+  }
+
+  // 4. Get a random number ranging from 0 to the array's length - 1
+  const randomNumber = getRandomNumber(0, availableBackground.length - 1);
+
+  // 5. Use the random number to retrieve a background.
+  return availableBackground[randomNumber];
 };

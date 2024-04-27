@@ -110,6 +110,7 @@ export default function useTaskMutation() {
         queryClient.invalidateQueries(["userTask", userId, token]);
         queryClient.invalidateQueries(["userData", userId, token]);
         queryClient.invalidateQueries(["paginatedTask"]);
+        queryClient.invalidateQueries(["userGoal"]);
       },
       onError: (error: AxiosError) => {
         console.error({ ...error, stack: "" });

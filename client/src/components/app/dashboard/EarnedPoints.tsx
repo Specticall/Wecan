@@ -28,7 +28,7 @@ export default function EarnedPoints() {
       </div>
       <div>
         <div className="flex justify-between items-center mb-2">
-          <p className="font-semibold text-lg ml-auto text-white">{`${Math.round(
+          <p className="font-semibold text-lg ml-auto text-white">{`${Math.floor(
             progressPercent
           )}%`}</p>
         </div>

@@ -79,6 +79,9 @@ const dialogComponents: DialogComponentProps = [
   {
     name: "goalPrize",
     component: <GoalPrize />,
+    options: {
+      collapseWhenClickOutside: true,
+    },
   },
 ];
 

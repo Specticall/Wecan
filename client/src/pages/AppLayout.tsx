@@ -19,7 +19,7 @@ export default function AppLayout() {
   // useEffect(() => {
   //   if (!userData) return;
   //   showDialog("goalPrize");
-  // }, []);
+  // }, [userData]);
 
   return (
     <DiaryProvider>

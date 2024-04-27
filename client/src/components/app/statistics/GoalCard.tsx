@@ -1,7 +1,11 @@
+import useGoalMutation from "@/hooks/useGoalMutation";
 import { ACCENT_GRADIENT } from "@/lib/config";
 import { cn, formatDate } from "@/lib/utils";
+import Skeleton from "react-loading-skeleton";
 
 export default function GoalCard({ className }: { className?: string }) {
+  const { goalData } = useGoalMutation();
+
   return (
     <div
       className={cn(
@@ -11,13 +15,17 @@ export default function GoalCard({ className }: { className?: string }) {
       style={{ background: ACCENT_GRADIENT }}
     >
       <p className="bg-white text-dark rounded-full px-4 py-1 w-fit">
-        On Progress
+        {goalData?.status === "Completed" ? "Completed" : "On Progress"}
       </p>
       <i className="bx bx-trophy text-[2rem] text-white"></i>
       <div className="mt-12">
-        <h3 className="text-lg text-white mb-1">
-          {(500_000).toLocaleString("de-DE")} Point Goal
-        </h3>
+        {goalData ? (
+          <h3 className="text-lg text-white mb-1">
+            {goalData?.target.toLocaleString("de-DE")} Point Goal
+          </h3>
+        ) : (
+          <Skeleton height={"1.5rem"} className="mb-4" />
+        )}
         <p className="text-lightest">Started {formatDate(new Date())}</p>
       </div>
     </div>

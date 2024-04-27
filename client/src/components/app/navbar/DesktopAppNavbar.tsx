@@ -78,6 +78,7 @@ export default function DesktopNavbar() {
             )}
             onClick={() => {
               if (!hasCompletedGoal) return;
+              showDialog("goalPrize");
             }}
           >
             <div className="[&>i]:text-md [&>*]:flex [&>*]:items-center [&>*]:justify-center">

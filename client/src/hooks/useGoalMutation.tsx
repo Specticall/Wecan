@@ -1,4 +1,5 @@
 import { useAuth } from "@/context/AuthContext";
+import { usePopup } from "@/context/PopupContext";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
 import { TGoal, TServerSucessResponse } from "@/types/general";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -35,16 +36,29 @@ const fetchGoalData = (id?: string, token?: string) => async () => {
 
 const updateGoalData =
   (id?: string, token?: string) => (data: TAllowedToUpdate) => {
-    return axios.post(`${BASE_URL}${BASE_ENDPOINT}/v1/goal?id=${id}`, data, {
+    return axios.patch(`${BASE_URL}${BASE_ENDPOINT}/v1/goal?id=${id}`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
   };
 
+const createGoalData = (id?: string, token?: string) => (target?: number) => {
+  return axios.post(
+    `${BASE_URL}${BASE_ENDPOINT}/v1/goal?id=${id}`,
+    { target },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
 export default function useGoalMutation() {
   const { token, userId } = useAuth();
   const queryClient = useQueryClient();
+  const { notify } = usePopup();
 
   // Stores the user's goal data
   const goalQuery = useQuery({
@@ -92,8 +106,24 @@ export default function useGoalMutation() {
     },
   });
 
+  const createMutation = useMutation(createGoalData(userId, token), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["userGoal"]);
+      queryClient.invalidateQueries(["userData"]);
+    },
+    onError: () => {
+      notify("Something went wrong while trying to create a new goal");
+    },
+  });
+
   // This variable will be used in the `ProgressBar` component which has a `progressPercent` prop that triggers a loading skeleton state when the value passed in is `undefined`. As such this calc percentage function is catered around that behavior by returning undefined when goalData does not exist.
   const progressPercent = calcPercentage(goalData?.earned, goalData?.target);
 
-  return { updateMutation, goalData, goalQuery, progressPercent };
+  return {
+    updateMutation,
+    goalData,
+    goalQuery,
+    progressPercent,
+    createMutation,
+  };
 }

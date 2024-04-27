@@ -103,6 +103,9 @@ export type TGoal = {
   userId: string;
   taskCompleted: number;
   completionPercent: number;
+  difficulty: "Easy" | "Medium" | "Hard";
+  backgroundRewardId?: string;
+  hasClaimedReward: boolean;
 };
 
 export type THistory = {

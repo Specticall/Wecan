@@ -14,7 +14,7 @@ const prisma = new PrismaClient();
  *  Updates user's daily data based on the last login date.
  *  If the last login date is not today, it resets the `hasCreatedDiaryToday` field to false and some other fields on the `Point` document
  *
- * NOTE : Last login sort of got a weird mechanism here, basically if this is the first time a user's logging in today that means a dialog will show up prompting the user to enter a mood. Once this dialog gets closed that's when the last login date field is updated. This is to ensure the frontend knows that is should be showing a popup due to the last login's value.
+ * NOTE : If this is the first time a user's logging in today that means a dialog will show up prompting the user to enter a mood. Once this dialog gets closed that's when the last login date field is updated. This is to ensure the frontend knows that is should be showing a popup due to the last login's value.
  */
 export const refreshUserData = async (userData: User) => {
   // Check if the last time user logged is today or not, if not then the diary should be renewed

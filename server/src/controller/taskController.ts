@@ -4,6 +4,7 @@ import { Mood, Prisma, Status } from "@prisma/client";
 import { AppError } from "../utils/AppError";
 import { calcPercentage, getRandomNumber, getTimeSpan } from "../utils/helper";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { getBackgroundReward } from "./backgroundController";
 
 const DEFAULT_PAGINATION_SIZE = 5;
 
@@ -329,7 +330,7 @@ export const completedUserTask: RequestHandler = async (
     if (Status?.status === "Completed")
       throw new AppError("Task is already completed", 400);
 
-    // Update the task document status to complete and at completion date
+    // Update the task document status to complete and add completion date
     const updatedTask = await prisma.task.update({
       where: {
         id: taskId,
@@ -370,6 +371,15 @@ export const completedUserTask: RequestHandler = async (
       onGoingGoals.target
     );
 
+    // Checks if the user has completed their goal.
+    const hasCompletedGoal =
+      onGoingGoals.earned + pointsEarned >= onGoingGoals.target;
+
+    // If the user has completed their goal then generate a background reward for the user.
+    const backgroundReward = hasCompletedGoal
+      ? await getBackgroundReward(userId, onGoingGoals.difficulty)
+      : undefined;
+
     const updatedUserGoal = await prisma.goal.update({
       where: {
         id: onGoingGoals.id,
@@ -384,8 +394,10 @@ export const completedUserTask: RequestHandler = async (
         completionPercent: newCompletionPercent,
 
         // Set the status to completed if the user has filled the required points.
-        status:
-          onGoingGoals.earned >= onGoingGoals.target ? "Completed" : "OnGoing",
+        status: hasCompletedGoal ? "Completed" : "OnGoing",
+
+        // Set the users background reward id (if they recieved any)
+        backgroundRewardId: backgroundReward?.id,
       },
     });
 

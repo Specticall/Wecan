@@ -3,6 +3,7 @@ import GoalCompletedDialog from "@/components/app/task/GoalCompleteDialog";
 import TaskCompleteDialog from "@/components/app/task/TaskCompleteDialog";
 import TaskExpiredDialog from "@/components/app/task/TaskExpiredDialog";
 import TaskDetailDialog from "@/components/app/task/taskDetailDialog/TaskDetailDialog";
+import Dev from "@/components/general/Dev";
 import GoalPrize from "@/components/general/GoalPrize";
 import NewDayDialog from "@/components/general/NewDayDialog";
 import UserProfile from "@/components/general/UserProfile";
@@ -79,6 +80,13 @@ const dialogComponents: DialogComponentProps = [
   {
     name: "goalPrize",
     component: <GoalPrize />,
+    options: {
+      collapseWhenClickOutside: true,
+    },
+  },
+  {
+    name: "dev",
+    component: <Dev />,
     options: {
       collapseWhenClickOutside: true,
     },

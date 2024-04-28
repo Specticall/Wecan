@@ -9,9 +9,11 @@ import React, {
   useState,
 } from "react";
 
+const ANIMATION_DURATION_MS = 200;
+
 type TGlobalDialogContextValues = {
   showDialog: (dialogName: string, context?: unknown) => void;
-  closeDialog: () => void;
+  closeDialog: (options?: { persistBackground?: boolean }) => Promise<void>;
   contextData?: unknown;
 };
 
@@ -46,13 +48,19 @@ export function GlobalDialogProvider({
   }>({
     name: "",
   });
+  const [showBackground, setShowBackground] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (!options?.collapseWhenClickOutside) return;
       if (Date.now() - timeSinceOpened < 100) return;
+      // console.log({
+      //   show: isShowing.selectedComponent,
+      //   showBackground,
+      //   select: !(e.target as HTMLDivElement).closest(".dialog-content"),
+      // });
       if (
-        isShowing.selectedComponent &&
+        (isShowing.selectedComponent || showBackground) &&
         !(e.target as HTMLDivElement).closest(".dialog-content")
       ) {
         closeDialog();
@@ -65,6 +73,7 @@ export function GlobalDialogProvider({
     isShowing.selectedComponent,
     timeSinceOpened,
     options?.collapseWhenClickOutside,
+    showBackground,
   ]);
 
   const showDialog = useCallback(
@@ -90,17 +99,29 @@ export function GlobalDialogProvider({
           selectedComponent: selectedComponent.component,
         };
       });
+
+      setShowBackground(true);
     },
     [dialogComponents]
   );
 
-  const closeDialog = () => {
-    setIsShowing({
-      name: "",
+  const closeDialog = (options?: { persistBackground?: boolean }) => {
+    return new Promise<void>((resolve) => {
+      setIsShowing({
+        name: "",
+      });
+      setContextData({});
+      setOptions(undefined);
+
+      if (!options?.persistBackground) {
+        setTimeSinceOpened(0);
+        setShowBackground(false);
+      }
+
+      setTimeout(() => {
+        resolve();
+      }, ANIMATION_DURATION_MS);
     });
-    setContextData({});
-    setOptions(undefined);
-    setTimeSinceOpened(0);
   };
 
   return (
@@ -110,16 +131,20 @@ export function GlobalDialogProvider({
       <div
         className={cn(
           "fixed inset-0 z-[100] opacity-0 invisible bg-black/50 transition-all duration-400",
-          isShowing.selectedComponent && "opacity-1 visible "
+          (isShowing.selectedComponent || showBackground) &&
+            "opacity-1 visible "
         )}
       ></div>
 
       <div
         className={cn(
-          `dialog-content fixed top-[50%] left-[50%] translate-x-[-50%] invisible scale-90 translate-y-[-45%] duration-200 transition-all opacity-0 z-[102]`,
+          `dialog-content fixed top-[50%] left-[50%] translate-x-[-50%] invisible scale-90 translate-y-[-45%] transition-all opacity-0 z-[102]`,
           isShowing.selectedComponent &&
             "opacity-1 visible scale-1 translate-y-[-50%]"
         )}
+        style={{
+          transitionDuration: `${ANIMATION_DURATION_MS}ms`,
+        }}
       >
         {isShowing.selectedComponent}
       </div>

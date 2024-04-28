@@ -15,10 +15,10 @@ export default function AppLayout() {
     showDialog("newDay");
   }, [showDialog, userData]);
 
-  // // TEMP
+  // TEMP
   // useEffect(() => {
   //   if (!userData) return;
-  //   showDialog("goalPrize");
+  //   showDialog("dev");
   // }, [userData]);
 
   return (

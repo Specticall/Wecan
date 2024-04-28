@@ -18,12 +18,12 @@
 [] Responsive Recap
 [] Disable Buttons on Load
 [] Remove Login Page
-[] Start New Goal
+[] Empty Diary Page
+[V] Start New Goal
 [] Statistics +% Today
 [] Make home page different for signed in / signed out users
 [] Set Locked Result Message 
-
-<!-- TODAY -->
+[] Statistics Bar Chart incorrect data (BUG)
 [V] Set Collection Background Filters
-[] Owned background counter
+[V] Owned background counter
 [V] Make sure user data is not stale before removing bg change loading spinner

@@ -4,6 +4,8 @@ import { useUser } from "@/context/UserContext";
 import Skeleton from "react-loading-skeleton";
 import useGoalMutation from "@/hooks/useGoalMutation";
 import { useGlobalDialog } from "@/context/GlobalDialogContext";
+import useClaimReward from "@/hooks/useClaimReward";
+import Button from "@/components/general/Button";
 
 const routes = [
   {
@@ -39,8 +41,10 @@ export default function DesktopNavbar() {
   const { userData } = useUser();
   const { goalData } = useGoalMutation();
   const { showDialog } = useGlobalDialog();
+  const { claimMutation } = useClaimReward();
 
   const hasCompletedGoal = goalData?.status === "Completed";
+  const hasReward = goalData?.backgroundRewardId;
 
   return (
     <nav className="flex gap-6 px-4 py-4">
@@ -71,24 +75,27 @@ export default function DesktopNavbar() {
           })}
         </div>
         <div className="flex-1 flex items-center justify-end">
-          <li
-            className={clsx(
-              "flex px-6 py-3 items-center text-white justify-center gap-2 cursor-pointer transition-all duration-200 rounded-lg hover:opacity-70 bg-accent relative overflow-hidden",
-              !hasCompletedGoal && "grayscale"
-            )}
-            onClick={() => {
-              if (!hasCompletedGoal) return;
-              showDialog("goalPrize");
-            }}
-          >
-            <div className="[&>i]:text-md [&>*]:flex [&>*]:items-center [&>*]:justify-center">
-              <i className="bx bx-gift"></i>
-            </div>
-            <p>Result</p>
-            {hasCompletedGoal && (
-              <div className="absolute inset-0 shine mix-blend-screen"></div>
-            )}
-          </li>
+          {!goalData?.hasClaimedReward && hasReward && (
+            <Button
+              className={clsx(
+                "flex px-6 py-3 items-center text-white justify-center gap-2 cursor-pointer transition-all duration-200 rounded-lg hover:opacity-70 bg-accent relative overflow-hidden",
+                !hasCompletedGoal && "grayscale"
+              )}
+              onClick={() => {
+                if (!hasCompletedGoal) return;
+                claimMutation.mutate();
+              }}
+              isLoading={claimMutation.isLoading}
+            >
+              <div className="[&>i]:text-md [&>*]:flex [&>*]:items-center [&>*]:justify-center">
+                <i className="bx bx-gift"></i>
+              </div>
+              <p>Reward</p>
+              {hasCompletedGoal && (
+                <div className="absolute inset-0 shine mix-blend-screen"></div>
+              )}
+            </Button>
+          )}
         </div>
         <div
           className="flex items-center gap-4 hover:bg-slate-100 transition-all duration-200 cursor-pointer py-2 px-4 rounded-md mr-3"

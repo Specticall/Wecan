@@ -50,8 +50,15 @@ export default function UserProfile() {
           />
         </div>
         <form>
-          <TextField value={userData.email} disabled={true} className="mb-12">
-            <TextFieldLabel>Email</TextFieldLabel>
+          <TextField
+            value={userData.email}
+            disabled={true}
+            className="mb-12 text-lighter"
+          >
+            <TextFieldLabel>
+              Email
+              <span className="text-lighter"> (Can't Change)</span>
+            </TextFieldLabel>
           </TextField>
           <TextField
             defaultValue={userData.name}

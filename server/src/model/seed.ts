@@ -31,23 +31,6 @@ async function seed() {
       return;
     }
 
-    // const users = await prisma.user.findMany({});
-
-    // for (const user of users) {
-    //   await prisma.user.update({
-    //     where: {
-    //       id: user.id,
-    //     },
-    //     data: {
-    //       ownedBackground: {
-    //         create: {
-    //           backgroundId: defaultBackground.id,
-    //         },
-    //       },
-    //     },
-    //   });
-    // }
-
     const allGoals = await prisma.goal.findMany({});
     if (!allGoals) {
       console.log("No goals exist");
@@ -55,13 +38,12 @@ async function seed() {
     }
 
     for (const goal of allGoals) {
-      const difficulty = findDifficulty(goal.target);
       await prisma.goal.update({
         where: {
           id: goal.id,
         },
         data: {
-          difficulty: difficulty.difficulty,
+          hasClaimedReward: false,
         },
       });
     }

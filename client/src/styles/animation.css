@@ -45,3 +45,19 @@
     background-position: 1000px 0;
   }
 }
+
+.float {
+  animation: float 4s ease-in-out infinite !important;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0%);
+  }
+  50% {
+    transform: translateY(5%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}

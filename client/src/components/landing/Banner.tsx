@@ -1,3 +1,4 @@
+import GoogleLoginButton from "../auth/GoogleLoginButton";
 import Button from "../general/Button";
 import dashboardUI from "/assets/banner-dashboard.png";
 
@@ -15,7 +16,7 @@ export default function Banner() {
           Investing time in your mental health will prove the be the best
           decision of your life
         </p>
-        <Button className="mt-6">Get Started</Button>
+        <GoogleLoginButton className="mt-6">Get Started</GoogleLoginButton>
         <img
           src={dashboardUI}
           className="absolute botom-0 translate-y-[28rem]"

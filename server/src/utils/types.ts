@@ -1,3 +1,5 @@
+import { Prisma, PrismaClient } from "@prisma/client";
+
 export type TGoogleResponse = {
   iss: string;
   azp: string;
@@ -13,3 +15,7 @@ export type TGoogleResponse = {
   exp: number;
   jti: string;
 };
+
+export type PrismaTransactionalClient = Parameters<
+  Parameters<PrismaClient["$transaction"]>[0]
+>[0];

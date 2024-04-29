@@ -109,3 +109,8 @@ export const getWeekStartAndEnd = () => {
 export const clearLocalStorage = (...keys: string[]) => {
   keys.forEach((key) => localStorage.removeItem(key));
 };
+
+export const toReversed = <T>(arr: T[]) => {
+  const reversed = [...arr].reverse();
+  return reversed;
+};

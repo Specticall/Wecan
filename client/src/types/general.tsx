@@ -106,6 +106,7 @@ export type TGoal = {
   difficulty: "Easy" | "Medium" | "Hard";
   backgroundRewardId?: string;
   hasClaimedReward: boolean;
+  completedAt?: string;
 };
 
 export type THistory = {

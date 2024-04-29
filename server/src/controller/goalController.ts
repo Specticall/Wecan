@@ -144,9 +144,42 @@ export const createUserGoal: RequestHandler = async (
     if (!target)
       throw new AppError("'target' is not provided in the body!", 400);
 
-    const newGoal = await createGoal({ userId, target });
+    const newGoal = await prisma.$transaction(async (prisma) => {
+      const onGoingGoal = await prisma.goal.findFirst({
+        where: {
+          userId,
+          status: "OnGoing",
+        },
+      });
+      if (onGoingGoal)
+        throw new AppError("There is still an ongoing goal", 400);
 
-    response.status(200).send({
+      // Create a new goal
+      const newGoal = await createGoal({ userId, target });
+
+      const userData = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      });
+      if (!userData) throw new AppError("User does not exist", 400);
+
+      // Complete the current ongoing history  an create a new on based on the newly created goal.
+
+      await prisma.history.create({
+        data: {
+          date: new Date(),
+          goalId: newGoal.id,
+          mood: userData.mood,
+          pointsEarned: 0,
+          taskCompleted: 0,
+        },
+      });
+
+      return newGoal;
+    });
+
+    response.status(201).send({
       status: "success",
       data: newGoal,
     });
@@ -201,6 +234,31 @@ export const claimGoalReward: RequestHandler = async (
     response.status(200).send({
       status: "success",
       data: updatedGoal,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAllUserGoals: RequestHandler = async (
+  request,
+  response,
+  next
+) => {
+  try {
+    const userId = request.query.id as string | undefined;
+    if (!userId)
+      throw new AppError("id was not provided in the query string", 400);
+
+    const allGoals = await prisma.goal.findMany({
+      where: {
+        userId,
+      },
+    });
+
+    response.status(200).send({
+      status: "success",
+      data: allGoals,
     });
   } catch (error) {
     next(error);

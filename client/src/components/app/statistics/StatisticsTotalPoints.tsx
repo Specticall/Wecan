@@ -1,11 +1,13 @@
 import ProgressBar from "@/components/general/ProgressBar";
 import useGoalMutation from "@/hooks/useGoalMutation";
+import useHistoryMutation from "@/hooks/useHistoryMutation";
 import { ACCENT_GRADIENT } from "@/lib/config";
 import Skeleton from "react-loading-skeleton";
 
 export default function StatisticsTotalPoints() {
   const { goalData, progressPercent } = useGoalMutation();
-
+  const { historyData } = useHistoryMutation();
+  console.log(historyData);
   return (
     <article className="grid grid-cols-[1fr_auto] bg-white p-8 rounded-2xl">
       <p className="text-light mb-2">Total Points Earned</p>

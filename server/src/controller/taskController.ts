@@ -5,6 +5,7 @@ import { AppError } from "../utils/AppError";
 import { calcPercentage, getRandomNumber, getTimeSpan } from "../utils/helper";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { getBackgroundReward } from "./backgroundController";
+import { completeUserHistory } from "./historyController";
 
 const DEFAULT_PAGINATION_SIZE = 5;
 
@@ -380,63 +381,73 @@ export const completedUserTask: RequestHandler = async (
       ? await getBackgroundReward(userId, onGoingGoals.difficulty)
       : undefined;
 
-    const updatedUserGoal = await prisma.goal.update({
-      where: {
-        id: onGoingGoals.id,
-      },
-      data: {
-        earned: {
-          increment: pointsEarned,
+    const updatedUserGoal = await prisma.$transaction(async (prisma) => {
+      const updatedUserGoal = await prisma.goal.update({
+        where: {
+          id: onGoingGoals.id,
         },
-        taskCompleted: {
-          increment: 1,
+        data: {
+          earned: {
+            increment: pointsEarned,
+          },
+          taskCompleted: {
+            increment: 1,
+          },
+          completionPercent: newCompletionPercent,
+
+          // Set the status to completed if the user has filled the required points.
+          status: hasCompletedGoal ? "Completed" : "OnGoing",
+
+          completedAt: new Date(),
+
+          // Set the users background reward id (if they recieved any)
+          backgroundRewardId: backgroundReward?.id,
         },
-        completionPercent: newCompletionPercent,
+      });
 
-        // Set the status to completed if the user has filled the required points.
-        status: hasCompletedGoal ? "Completed" : "OnGoing",
+      // Complete the history if the current has finished
+      if (hasCompletedGoal) {
+        await completeUserHistory(updatedUserGoal, prisma);
+      }
+      /*
+      Retrieves the current on going history since we can't do a db transaction using the goal id and status
+      */
+      const onGoingHistory = await prisma.history.findFirst({
+        where: {
+          goalId: onGoingGoals.id,
+          status: "OnGoing",
+        },
+      });
 
-        // Set the users background reward id (if they recieved any)
-        backgroundRewardId: backgroundReward?.id,
-      },
+      if (!onGoingHistory)
+        throw new AppError("There are on no going history right now", 404);
+
+      // Update the current ongoing history
+      await prisma.history.update({
+        where: {
+          id: onGoingHistory.id,
+        },
+        data: {
+          pointsEarned: {
+            increment: pointsEarned,
+          },
+          taskCompleted: {
+            increment: 1,
+          },
+          completionPercent: {
+            increment: completionPercentEarned,
+          },
+        },
+      });
+
+      if (!updatedUserGoal)
+        throw new AppError(
+          "Something went wrong while trying to update the user data",
+          500
+        );
+
+      return updatedUserGoal;
     });
-
-    /*
-    Retrieves the current on going history since we can't do a db transaction using the goal id and status
-    */
-    const onGoingHistory = await prisma.history.findFirst({
-      where: {
-        goalId: onGoingGoals.id,
-        status: "OnGoing",
-      },
-    });
-
-    if (!onGoingHistory)
-      throw new AppError("There are on going history right now", 404);
-
-    // Update the current ongoing history
-    await prisma.history.update({
-      where: {
-        id: onGoingHistory.id,
-      },
-      data: {
-        pointsEarned: {
-          increment: pointsEarned,
-        },
-        taskCompleted: {
-          increment: 1,
-        },
-        completionPercent: {
-          increment: completionPercentEarned,
-        },
-      },
-    });
-
-    if (!updatedUserGoal)
-      throw new AppError(
-        "Something went wrong while trying to update the user data",
-        500
-      );
 
     response.status(200).send({
       status: "success",

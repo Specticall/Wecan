@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../general/Button";
 import { useEffect, useRef, useState } from "react";
 import MobileNavbar from "./MobileNavbar";
+import GoogleLoginButton from "../auth/GoogleLoginButton";
 
 const navbarItem = [
   {
@@ -42,21 +43,17 @@ export default function Navbar() {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(document.querySelector("#hero"));
-  }, []);
-
   return (
     <>
       {/* --- Used for extra padding at the top ---*/}
       <div className="box h-[1rem]" ref={boxRef}></div>
       <nav
-        className="sticky left-0 right-0 top-0 bg-white z-20 duration-200 transition-all backdrop-blur-lg"
+        className="sticky left-0 right-0 top-0 bg-white z-20 duration-200 transition-all"
         style={{
           backgroundColor: showBackground
             ? "rgba(255,255,255,0.5)"
             : "transparent",
-          // borderBottom: showBackground ? "1px solid rgba(220,220,220,1)" : "",
+          backdropFilter: showBackground ? "blur(1rem)" : "blur(0rem)",
         }}
       >
         <ul className="py-4 section flex justify-between items-center ">
@@ -75,13 +72,10 @@ export default function Navbar() {
               </a>
             ))}
           </div>
-          <Button
-            // variant="secondary"
-            className="flex gap-4 px-8 py-2 items-center justify-center md:hidden"
-            onClick={() => navigate("/register")}
-          >
-            Sign In
-          </Button>
+          <GoogleLoginButton>
+            <i className="bx bxl-google text-lg"></i>
+            <p>Sign in</p>
+          </GoogleLoginButton>
           <MobileNavbar />
         </ul>
       </nav>

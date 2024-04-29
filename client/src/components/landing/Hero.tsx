@@ -1,5 +1,7 @@
 import heroGradient from "/assets/hero-gradient.png";
 import Button from "../general/Button";
+import { GoogleLogin } from "@react-oauth/google";
+import GoogleLoginButton from "../auth/GoogleLoginButton";
 
 export function Hero() {
   return (
@@ -19,8 +21,8 @@ export function Hero() {
         Together with Wecan, we're dedicated to supporting your mental health
         journey through engaging activities designed to promote well-being.
       </p>
-      <div className="flex flex-col items-center">
-        <Button className="mt-12">Get Started</Button>
+      <div className="flex flex-col items-center mt-8">
+        <GoogleLoginButton>Get Started</GoogleLoginButton>
       </div>
     </section>
   );

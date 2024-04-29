@@ -20,19 +20,28 @@ type TAllowedToUpdate = {
 /*
 The fetch function are using higher order functions to return a query function with the required variables such as `id` and `token` closed into the scope (closures). This is also done to make the `useQuery` and `useMutation` hook look less cluttered as easier to read. 
 */
+const fetchGoalData =
+  <Type extends "single" | "all" = "single">(
+    type: Type,
+    id?: string,
+    token?: string
+  ) =>
+  async () => {
+    const response = await axios.get<
+      TServerSucessResponse<Type extends "single" ? TGoal : TGoal[]>
+    >(
+      `${BASE_URL}${BASE_ENDPOINT}/v1/goal${
+        type === "all" ? "/all" : ""
+      }?id=${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
-const fetchGoalData = (id?: string, token?: string) => async () => {
-  const response = await axios.get<TServerSucessResponse<TGoal>>(
-    `${BASE_URL}${BASE_ENDPOINT}/v1/goal?id=${id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
-  return response.data.data;
-};
+    return response.data.data;
+  };
 
 const updateGoalData =
   (id?: string, token?: string) => (data: TAllowedToUpdate) => {
@@ -63,7 +72,13 @@ export default function useGoalMutation() {
   // Stores the user's goal data
   const goalQuery = useQuery({
     queryKey: ["userGoal", token, userId],
-    queryFn: fetchGoalData(userId, token),
+    queryFn: fetchGoalData("single", userId, token),
+    enabled: Boolean(userId && token),
+  });
+
+  const allGoalQuery = useQuery({
+    queryKey: ["allUserGoal", token, userId],
+    queryFn: fetchGoalData("all", userId, token),
     enabled: Boolean(userId && token),
   });
 
@@ -103,12 +118,16 @@ export default function useGoalMutation() {
     },
     onSettled: () => {
       queryClient.invalidateQueries(["userGoal"], { refetchType: "inactive" });
+      queryClient.invalidateQueries(["allUserGoal"], {
+        refetchType: "inactive",
+      });
     },
   });
 
   const createMutation = useMutation(createGoalData(userId, token), {
     onSuccess: () => {
       queryClient.invalidateQueries(["userGoal"]);
+      queryClient.invalidateQueries(["allUserGoal"]);
       queryClient.invalidateQueries(["userData"]);
     },
     onError: () => {
@@ -119,11 +138,15 @@ export default function useGoalMutation() {
   // This variable will be used in the `ProgressBar` component which has a `progressPercent` prop that triggers a loading skeleton state when the value passed in is `undefined`. As such this calc percentage function is catered around that behavior by returning undefined when goalData does not exist.
   const progressPercent = calcPercentage(goalData?.earned, goalData?.target);
 
+  const allGoalData = allGoalQuery.data;
+
   return {
     updateMutation,
     goalData,
     goalQuery,
     progressPercent,
     createMutation,
+    allGoalData,
+    allGoalQuery,
   };
 }

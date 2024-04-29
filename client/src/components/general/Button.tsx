@@ -33,6 +33,7 @@ type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
   to?: string;
   children: ReactNode;
   isLoading?: boolean;
+  spinnerIconClass?: string;
 };
 
 export default function Button({
@@ -40,6 +41,7 @@ export default function Button({
   variant,
   disabled,
   children,
+  spinnerIconClass,
   to = "",
   isLoading = false,
   onClick = () => {},
@@ -65,7 +67,7 @@ export default function Button({
       }}
     >
       {children}
-      {isLoading && <LoadingSpinner size={"sm"} />}
+      {isLoading && <LoadingSpinner size={"sm"} className={spinnerIconClass} />}
     </button>
   );
 }

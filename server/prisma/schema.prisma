@@ -93,6 +93,7 @@ model Goal {
   earned Int @default(0)
 
   createdAt DateTime @default(now())
+  completedAt DateTime?
   status Status @default(OnGoing)
 
   user User @relation(fields: [userId], references: [id])

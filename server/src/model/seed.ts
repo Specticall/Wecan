@@ -20,30 +20,63 @@ async function seed() {
   try {
     console.log("Seeding data, Please Wait...");
 
-    const defaultBackground = await prisma.background.findFirst({
+    // const defaultBackground = await prisma.background.findFirst({
+    //   where: {
+    //     name: "Dusk Embrace",
+    //   },
+    // });
+
+    // if (!defaultBackground) {
+    //   console.log("Default background does not exist");
+    //   return;
+    // }
+
+    // const allGoals = await prisma.goal.findMany({});
+    // if (!allGoals) {
+    //   console.log("No goals exist");
+    //   return;
+    // }
+
+    // for (const goal of allGoals) {
+    //   await prisma.goal.update({
+    //     where: {
+    //       id: goal.id,
+    //     },
+    //     data: {
+    //       hasClaimedReward: false,
+    //     },
+    //   });
+    // }
+
+    const user = await prisma.user.findFirst({
       where: {
-        name: "Dusk Embrace",
+        email: "josephyusmita@gmail.com",
       },
     });
 
-    if (!defaultBackground) {
-      console.log("Default background does not exist");
-      return;
-    }
+    const allUserGoal = await prisma.goal.findMany({
+      where: {
+        userId: user?.id,
+      },
+    });
 
-    const allGoals = await prisma.goal.findMany({});
-    if (!allGoals) {
-      console.log("No goals exist");
-      return;
-    }
+    const allUserGoalId = allUserGoal.map((goal) => goal.id);
 
-    for (const goal of allGoals) {
-      await prisma.goal.update({
+    const allHistory = await prisma.history.findMany({
+      where: {
+        goalId: {
+          in: allUserGoalId,
+        },
+      },
+    });
+
+    for (const history of allHistory) {
+      await prisma.history.update({
         where: {
-          id: goal.id,
+          id: history.id,
         },
         data: {
-          hasClaimedReward: false,
+          status: "Completed",
         },
       });
     }

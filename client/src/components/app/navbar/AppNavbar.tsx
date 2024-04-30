@@ -4,5 +4,5 @@ import DesktopNavbar from "./DesktopAppNavbar";
 
 export default function AppNavbar() {
   const { viewport } = useViewport();
-  return viewport.width <= 900 ? <MobileAppNavbar /> : <DesktopNavbar />;
+  return viewport.width <= 1200 ? <MobileAppNavbar /> : <DesktopNavbar />;
 }

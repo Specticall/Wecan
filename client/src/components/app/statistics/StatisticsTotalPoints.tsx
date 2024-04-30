@@ -11,14 +11,14 @@ export default function StatisticsTotalPoints() {
   const pointsEarnedTodayPercent = historyData?.completionPercent;
 
   return (
-    <article className="grid grid-cols-[1fr_auto] bg-white p-8 rounded-2xl">
+    <article className="grid grid-cols-[1fr_auto] bg-white p-8 rounded-2xl 2xl:mt-4">
       <p className="text-light mb-2">Total Points Earned</p>
       <i
-        className="bx bx-coin-stack row-span-2 bg-white-soft text-[2rem] p-4 rounded-xl text-white flex items-center justify-center aspect-square w-18"
+        className="bx bx-coin-stack row-span-2 bg-white-soft text-[2rem] p-4 rounded-xl text-white flex items-center justify-center aspect-square w-18 sm:invisible"
         style={{ background: ACCENT_GRADIENT }}
       ></i>
-      <div className="flex items-center justify-start gap-6">
-        <h2 className="text-xl font-semibold">
+      <div className="flex items-center justify-start gap-6 md:flex-col md:items-start md:gap-2">
+        <h2 className="text-xl font-semibold sm:text-[2rem]">
           {goalData ? (
             goalData.earned.toLocaleString("de-DE")
           ) : (

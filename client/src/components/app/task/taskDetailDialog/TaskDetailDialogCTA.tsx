@@ -41,10 +41,10 @@ export default function TaskDetailDialogCTA() {
     });
   };
   return (
-    <div className="grid grid-cols-3 mt-12">
+    <div className="grid grid-cols-3 mt-12 sm:grid-cols-1 sm:gap-2">
       <Button
         variant="tertiary"
-        className="flex items-center justify-center gap-2"
+        className="flex items-center justify-center gap-2 sm:py-4"
         onClick={handleDiscardTask}
         disabled={deleteMutation.isLoading}
       >
@@ -54,7 +54,7 @@ export default function TaskDetailDialogCTA() {
       <div></div>
       <Button
         variant="primary"
-        className="shadow-none flex items-center justify-center gap-2"
+        className="shadow-none flex items-center justify-center gap-2 sm:py-4"
         onClick={handleCompleteTask}
         disabled={completeTaskMutation.isLoading}
       >

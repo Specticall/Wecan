@@ -74,7 +74,14 @@ export function isToday(inputDate: Date) {
  * Formats date into [Date] [Month], [Year]
  * e.g. 24 April, 2024
  */
-export function formatDate(date: Date) {
+export function formatDate(date: Date, format: "short" | "long" = "long") {
+  if (format === "short")
+    return date.toLocaleDateString("en-US", {
+      year: "2-digit",
+      month: "2-digit",
+      day: "2-digit",
+    });
+
   return date.toLocaleDateString("en-US", {
     day: "numeric",
     month: "long",

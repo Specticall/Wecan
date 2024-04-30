@@ -21,11 +21,11 @@ export default function CollectionHeader({
   const totalBackgrounds = backgroundQuery.data?.length;
 
   return (
-    <header className="flex justify-between items-center">
+    <header className="flex justify-between items-center lg:flex-col lg:items-start lg:gap-8 ">
       <div>
-        <div className="flex gap-4">
+        <div className="flex gap-4 sm:flex-col-reverse sm:w-fit">
           <h1 className="text-dark text-lg font-semibold">My Collection</h1>
-          <div className="flex bg-accent px-4 py-1 rounded-lg text-white items-center justify-center gap-2">
+          <div className="flex bg-accent px-4 py-1 rounded-lg text-white items-center justify-center gap-2 sm:w-fit">
             <i className="bx bx-trophy text-md"></i>
             <p>
               {formatNumber(totalOwned)} / {formatNumber(totalBackgrounds)}

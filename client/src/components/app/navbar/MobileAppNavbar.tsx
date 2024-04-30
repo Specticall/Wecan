@@ -4,6 +4,7 @@ import { useUser } from "@/context/UserContext";
 import Skeleton from "react-loading-skeleton";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useGlobalDialog } from "@/context/GlobalDialogContext";
 
 const routes = [
   {
@@ -19,17 +20,27 @@ const routes = [
   {
     text: "Task",
     icon: <i className="bx bx-task"></i>,
-    route: ["/app/task/board", "/app/task", "/app/task/list"],
+    route: [
+      "/app/task/board/ongoing",
+      "/app/task",
+      "/app/task/board/completed",
+    ],
   },
   {
     text: "Statistics",
     icon: <i className="bx bx-line-chart"></i>,
     route: ["/app/statistics"],
   },
+  {
+    text: "Collections",
+    icon: <i className="bx bx-grid-alt"></i>,
+    route: ["/app/collections"],
+  },
 ];
 
 export default function MobileAppNavbar() {
   const [open, setOpen] = useState(false);
+  const { showDialog } = useGlobalDialog();
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -60,7 +71,10 @@ export default function MobileAppNavbar() {
         <h2 className="bg-white px-4 py-3 rounded-xl text-lg flex items-center justify-start mb-0">
           Wecan
         </h2>
-        <div className="flex items-center gap-3 px-4 bg-white-soft rounded-lg p-2">
+        <div
+          className="flex items-center gap-3 px-4 bg-white-soft rounded-lg p-2 cursor-pointer"
+          onClick={() => showDialog("userProfile")}
+        >
           <div className="h-8 aspect-square rounded-full overflow-hidden">
             {userData && userData.pictureURL ? (
               <img

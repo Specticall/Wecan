@@ -32,8 +32,10 @@ export default function AllTasks() {
         setDate={setDate}
       />
       <div className="px-8 py-8 rounded-xl border-border border-[1px] h-full flex flex-col ">
-        <div className="grid grid-cols-[5fr_4fr_2fr_2fr_1fr] w-full gap-12 px-8 text-light border-b-[1px] border-white-soft pb-6">
-          <p>Name</p>
+        <div className="grid grid-cols-[5fr_4fr_2fr_3fr_1fr] w-full gap-12 px-8 text-light border-b-[1px] border-white-soft pb-6 3xl:px-5 place-items-start [&>p]:min-w-0">
+          <div>
+            <p>Name</p>
+          </div>
           <p>Date Completed</p>
           <p>Points</p>
           <p>Status</p>

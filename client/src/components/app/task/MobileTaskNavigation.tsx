@@ -19,11 +19,11 @@ export default function MobileTaskNavigation() {
   if (!params.status) return;
 
   return (
-    <ul className="flex gap2 bg-white-soft w-fit px-2 py-2 mb-4 gap-4 rounded-md items-center justify-center">
+    <ul className="flex bg-white-soft w-fit px-2 py-2 mb-4 gap-4 rounded-md items-center justify-center h-0 2xl:h-min">
       <li
         onClick={handleNavigate("ongoing")}
         className={cn(
-          "px-4 py-1 rounded-md cursor-pointer duration-200 transition-all",
+          "px-4 py-1 rounded-md cursor-pointer duration-200 transition-all whitespace-nowrap",
           selected === "ongoing" && "bg-white"
         )}
       >
@@ -32,7 +32,7 @@ export default function MobileTaskNavigation() {
       <li
         onClick={handleNavigate("completed")}
         className={cn(
-          "px-4 py-1 rounded-md cursor-pointer duration-200 transition-all",
+          "px-4 py-1 rounded-md cursor-pointer duration-200 transition-all whitespace-nowrap",
           selected === "completed" && "bg-white"
         )}
       >

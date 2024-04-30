@@ -78,7 +78,7 @@ export default function BackgroundCard({
                 background: FADE_BG,
               }}
             >
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 sm:flex-col-reverse sm:gap-2 sm:items-start">
                 <h2 className="text-white text-lg">{background.name}</h2>
                 <p
                   style={{

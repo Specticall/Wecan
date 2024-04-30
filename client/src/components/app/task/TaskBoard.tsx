@@ -2,9 +2,10 @@ import { ScrollArea } from "@/components/ui/scrollable";
 import TaskCard from "./TaskCard";
 import useTaskMutation from "@/hooks/useTaskMutation";
 import { TUserTask } from "@/types/general";
-import { Params, useNavigate, useParams } from "react-router-dom";
+import { Params, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { useViewport } from "@/context/ViewportContext";
 type TGroupedTask = {
   onGoing: TUserTask[];
   completed: TUserTask[];
@@ -41,8 +42,15 @@ const validateURLParams = (param: Params<string>) => {
 export default function TaskBoard() {
   const { taskQuery } = useTaskMutation();
   const groupedTask = groupTaskByStatus(taskQuery.data);
+  const { pathname } = useLocation();
+  const { type } = useViewport();
   const params = useParams();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (type === "3xl" || type === "2xl") return;
+    if (pathname === "/app/task/board") navigate("/app/task/board/ongoing");
+  }, [type, pathname, navigate]);
 
   const isValidURLParams = validateURLParams(params);
 
@@ -54,11 +62,11 @@ export default function TaskBoard() {
 
   if (!isValidURLParams) return;
   return (
-    <ScrollArea className="bg-white-soft rounded-xl h-0 min-h-full dotted-grid 2xl:min-h-full 2xl:h-full 2xl:max-h-[30rem]">
+    <ScrollArea className="bg-white-soft rounded-xl h-0 min-h-full dotted-grid 2xl:min-h-[40rem] 2xl:h-full 2xl:max-h-[30rem] sm:p-4 md:min-h-[30rem]">
       {groupedTask && (
         <div
           className={cn(
-            "grid grid-cols-2 gap-12 px-12 3xl:px-8 3xl:gap-8",
+            "grid grid-cols-2 gap-12 px-12 3xl:px-8 3xl:gap-8 sm:px-0",
             params.status && "grid-cols-1"
           )}
         >

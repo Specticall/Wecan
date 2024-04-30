@@ -1,16 +1,12 @@
-import Checkbox from "@/components/general/Checkbox";
 import { ScrollArea } from "@/components/ui/scrollable";
 import useGoalMutation from "@/hooks/useGoalMutation";
 import { formatDate, toReversed } from "@/lib/utils";
-import { TGoal } from "@/types/general";
 
 export default function GoalHistory() {
   const { allGoalData } = useGoalMutation();
 
-  console.log(allGoalData && toReversed(allGoalData));
-
   return (
-    <article className=" bg-white rounded-2xl mt-4">
+    <article className=" bg-white rounded-2xl">
       <div className="px-8 pt-8">
         <h3 className="text-lg text-dark">History</h3>
         <p className="text-light leading-md mt-3">

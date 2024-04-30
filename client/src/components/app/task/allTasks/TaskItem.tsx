@@ -11,33 +11,36 @@ export default function TaskItem({ task }: { task: TUserTask }) {
   return (
     <div
       className={cn(
-        "grid grid-cols-[5fr_4fr_2fr_2fr_1fr] py-5 bg-white rounded-md px-8 gap-12 items-center hover:bg-slate-50 transition-all duration-100 cursor-pointer",
+        "grid grid-cols-[5fr_4fr_2fr_3fr_1fr] py-5 bg-white rounded-md px-8 gap-12 items-center hover:bg-slate-50 transition-all duration-100 cursor-pointer 3xl:px-4 3xl:gap-6",
         isDeleting && "opacity-60"
       )}
       onClick={handleOpenDetailDialog}
     >
-      <h3 className=" text-light truncate flex items-center gap-4">
+      <h3 className="text-light flex items-center gap-4 overflow-hidden">
         {/* Title */}
+
         <div
-          className="w-2 aspect-square rounded-full"
+          className="w-2 aspect-square rounded-full 3xl:hidden"
           style={{ backgroundColor: getMoodColor(task.mood as TMood) }}
         ></div>
-        {task.title}
+        <p className="truncate">{task.title}</p>
       </h3>
       {/* Date */}
-      <p>
-        {task.status === "Completed"
-          ? formatDate(new Date(task.createdAt))
-          : "-"}
-      </p>
+      <div>
+        <p>
+          {task.status === "Completed"
+            ? formatDate(new Date(task.createdAt))
+            : "-"}
+        </p>
+      </div>
       {/* Points */}
       <p>{task.points.toLocaleString("de-DE")}</p>
 
       {/* Status */}
-      <div>
+      <div className="">
         <p
           className={cn(
-            "text-white py-1 rounded-full  w-fit px-4",
+            "text-white py-1 w-fit rounded-full px-4",
             task.status === "Completed" ? "text-dark bg-slate-100" : "bg-accent"
           )}
         >

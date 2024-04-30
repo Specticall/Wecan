@@ -27,7 +27,7 @@ export default function CollectionImages({
   const selectedFilterFn = createFilterFn()[filter];
 
   return (
-    <ul className="grid grid-cols-3 gap-8 bg-white-soft p-6 rounded-lg mt-8">
+    <ul className="grid grid-cols-3 gap-8 bg-white-soft p-6 rounded-lg mt-8 2xl:grid-cols-2 2xl:gap-6 lg:grid-cols-1 md:p-4 sm:p-0 sm:bg-transparent">
       {/* Filter used Here VVVVVVVVV */}
       {backgroundData.filter(selectedFilterFn).map((background) => {
         const isChangingImage =

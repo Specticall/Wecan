@@ -15,7 +15,7 @@ export default function OnGoingTaskCard({ task }: TaskCardProps) {
   return (
     <article
       className={cn(
-        "grid grid-cols-[auto_1fr] bg-white rounded-xl p-8 2xl:p-6 grid-rows-[12rem_4rem] 3xl:grid-rows-[11rem_4rem] gap-x-4 hover:scale-[97.5%] trasition-all duration-200 cursor-pointer sm:flex sm:flex-col ",
+        "grid grid-cols-[auto_1fr] bg-white rounded-xl p-8 2xl:p-6 grid-rows-[12rem_4rem] 3xl:grid-rows-[11rem_4rem] gap-x-4 hover:scale-[97.5%] trasition-all duration-200 cursor-pointer sm:flex sm:flex-col",
         isDeleting && "opacity-50"
       )}
       onClick={handleOpenDetailDialog}

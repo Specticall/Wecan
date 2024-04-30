@@ -14,9 +14,9 @@ export default function Dashboard() {
   if (!userData) return;
 
   return (
-    <ScrollArea className="min-h-[calc(100vh-7rem)] px-4">
-      <main className="grid grid-cols-[4fr_3fr] h-full pb-4 gap-4 3xl:grid-cols-1 lg:mt-4">
-        <div className="bg-white rounded-xl flex flex-col h-full p-5">
+    <ScrollArea className="min-h-[calc(100vh-7rem)] px-4 sm:px-2">
+      <main className="grid grid-cols-[4fr_3fr] h-full pb-4 gap-4 3xl:grid-cols-1 lg:mt-4 sm:mt-2">
+        <div className="bg-white rounded-xl flex flex-col h-full p-5 sm:p-4">
           <DashboardHeader />
           {goalData?.status === "OnGoing" && <OnGoingTask />}
         </div>

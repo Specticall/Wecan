@@ -6,6 +6,7 @@ import ConfettiExplosion from "react-confetti-explosion";
 import ProgressBar from "@/components/general/ProgressBar";
 import AnimatedCounter from "@/components/general/AnimatedCounter";
 import Button from "@/components/general/Button";
+import { ScrollArea } from "@/components/ui/scrollable";
 
 export default function TaskCompleteDialog() {
   const { closeDialog, contextData } = useGlobalDialog();
@@ -41,61 +42,65 @@ export default function TaskCompleteDialog() {
           left: "50%",
         }}
       />
-      <article className="bg-white px-12 pb-12 pt-8 rounded-md min-w-[60rem] w-full max-w-[70rem]">
-        <div
-          className="flex items-center justify-end"
-          onClick={() => closeDialog()}
-        >
-          <i className="bx bx-x text-md text-lighter hover:text-dark duration-200 transition-all cursor-pointer"></i>
-        </div>
-        <div className="grid grid-cols-2 justify-center gap-20">
-          <img src={celebrationArt} alt="People celebrating" />
-          <div className="justify-self-start w-full">
-            <p className="mt-4 text-lighter">Task Completed</p>
-            <h2 className="text-dark text-[2rem]">Congratulations!</h2>
-            <p className="mt-8 text-lighter">Wellness Points Earned Today</p>
-            <h3 className="text-lg mt-1">
-              <AnimatedCounter
-                from={oldUserGoal.earned}
-                to={newUserGoal.earned}
-                speedMultiplier={200}
-              />{" "}
-              Points
-            </h3>
-            <div className="grid grid-cols-2 gap-y-2">
-              <div></div>
-              <div className="text-lg justify-self-end">
+      <ScrollArea className="h-full 4xl:h-[calc(100vh-5rem)] rounded-xl w-screen px-4 max-w-[35rem] lg:max-w-[35rem] sm:h-full sm:rounded-none">
+        <article className="bg-white px-12 pb-12 pt-8 rounded-md md:px-8">
+          <div
+            className="flex items-center justify-end"
+            onClick={() => closeDialog()}
+          >
+            <i className="bx bx-x text-md text-lighter hover:text-dark duration-200 transition-all cursor-pointer"></i>
+          </div>
+          <div className="justify-center gap-20 grid-cols-1 xl:gap-0">
+            <img src={celebrationArt} alt="People celebrating" />
+            <div className="justify-self-start w-full">
+              <p className="mt-4 text-lighter text-center">Task Completed</p>
+              <h2 className="text-dark text-[2rem] font-semibold text-center md:text-[1.75rem] ">
+                Congratulations!
+              </h2>
+              <p className="mt-8 text-lighter">Wellness Points</p>
+              <h3 className="text-lg mt-1">
                 <AnimatedCounter
-                  from={Math.floor(oldProgressPercent)}
-                  to={Math.floor(newProgressPercent)}
-                  speedMultiplier={1}
+                  from={oldUserGoal.earned}
+                  to={newUserGoal.earned}
+                  speedMultiplier={200}
+                />{" "}
+                Points
+              </h3>
+              <div className="grid grid-cols-2 gap-y-2">
+                <div></div>
+                <div className="text-lg justify-self-end sm:text-md">
+                  <AnimatedCounter
+                    from={Math.floor(oldProgressPercent)}
+                    to={Math.floor(newProgressPercent)}
+                    speedMultiplier={1}
+                  />
+                  %
+                </div>
+                <ProgressBar
+                  animate={{
+                    fromPercentage: oldProgressPercent / 100,
+                    toPercentage: newProgressPercent / 100,
+                    durationMs: 500,
+                  }}
+                  progressPercent={newProgressPercent}
+                  className="col-span-2"
                 />
-                %
+                <p className="text-lighter">Your Progress</p>
+                <p className="text-lighter justify-self-end">
+                  {newUserGoal.target.toLocaleString("de-DE")} Points
+                </p>
               </div>
-              <ProgressBar
-                animate={{
-                  fromPercentage: oldProgressPercent / 100,
-                  toPercentage: newProgressPercent / 100,
-                  durationMs: 500,
-                }}
-                progressPercent={newProgressPercent}
-                className="col-span-2"
-              />
-              <p className="text-lighter">Your Progress</p>
-              <p className="text-lighter justify-self-end">
-                {newUserGoal.target.toLocaleString("de-DE")} Points
-              </p>
-            </div>
-            <div className="flex items-center justify-end">
-              <DialogCollapse>
-                <Button variant="primary" className="shadow-none mt-12 px-16">
-                  Done
-                </Button>
-              </DialogCollapse>
+              <div className="flex items-center justify-end">
+                <DialogCollapse>
+                  <Button variant="primary" className="shadow-none mt-12 px-16">
+                    Done
+                  </Button>
+                </DialogCollapse>
+              </div>
             </div>
           </div>
-        </div>
-      </article>
+        </article>{" "}
+      </ScrollArea>
     </>
   );
 }

@@ -17,10 +17,10 @@ export default function TaskGenerator() {
           <div className="h-[22.5rem] flex flex-col items-center justify-center border-border border-[1px] rounded-xl  dotted-grid p-8">
             {/* <img src={personTinkering} alt="" className="h-full" /> */}
             <i className="bx bxs-check-circle text-2xl text-accent mb-4"></i>
-            <h2 className="text-lg font-semibold text-dark mb-3">
+            <h2 className="text-lg font-semibold text-dark mb-3 text-center">
               You Have Completed Your Goal.
             </h2>
-            <p className="text-light">
+            <p className="text-light text-center">
               Tasks can only be generated when your goal is not yet completed
             </p>
           </div>

@@ -23,18 +23,18 @@ export default function StatisticsCardList() {
   console.log(historyData);
 
   return (
-    <ul className="grid grid-cols-3 mt-4 gap-4">
+    <ul className="grid grid-cols-2 mt-4 gap-4 md:grid-cols-1">
       <StatisticsCard
         heading="Task Completed"
         value={formatNumber(goalData?.taskCompleted)}
         change={completedTaskToday}
         icon={<i className="bx bx-task"></i>}
       />
-      <StatisticsCard
+      {/* <StatisticsCard
         heading="Average Mood"
         value="Happy"
         icon={<i className="bx bx-task"></i>}
-      />
+      /> */}
       <StatisticsCard
         heading="Completion Rate"
         value={completionPercent}

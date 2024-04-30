@@ -43,13 +43,13 @@ export default function TaskGeneratorCTA({
   };
 
   return (
-    <div className="flex items-center justify-center mt-4 gap-6 sm:mt-0">
+    <div className="flex items-center justify-center mt-4 gap-6 sm:mt-0 md:flex-col md:gap-4">
       <Button
         disabled={addMutation.isLoading || hasCompletedGoal}
-        className="h-fit flex gap-6 px-2 py-2 pr-8 items-center justify-center group hover:opacity-80 trasition-all duration-200 bg-darkest shadow-black/120"
+        className="h-fit flex gap-6 px-2 py-2 pr-8 items-center justify-center group hover:opacity-80 trasition-all duration-200 bg-darkest shadow-black/120 md:w-full md:py-3"
         onClick={shuffleTask}
       >
-        <div className="bg-white aspect-square h-full flex items-center justify-center p-[0.5rem] rounded-full overflow-hidden relative">
+        <div className="bg-white aspect-square h-full flex items-center justify-center p-[0.5rem] rounded-full overflow-hidden relative md:hidden">
           <i className="bx bx-shuffle  text-darkest group-hover:translate-x-[2rem] transition-transform"></i>
           <i className="bx bx-shuffle  text-darkest group-hover:translate-x-[-0rem] translate-x-[-5rem] absolute transition-transform"></i>
         </div>
@@ -57,10 +57,10 @@ export default function TaskGeneratorCTA({
       </Button>
       <Button
         disabled={addMutation.isLoading || hasCompletedGoal}
-        className="h-fit flex gap-6 px-2 py-2 pr-8 items-center justify-center group hover:opacity-80 trasition-all duration-200"
+        className="h-fit flex gap-6 px-2 py-2 pr-8 items-center justify-center group hover:opacity-80 trasition-all duration-200 md:w-full md:py-3"
         onClick={handleAddTask}
       >
-        <div className="bg-white aspect-square h-full flex items-center justify-center p-[0.5rem] rounded-full overflow-hidden relative">
+        <div className="bg-white aspect-square h-full flex items-center justify-center p-[0.5rem] rounded-full overflow-hidden relative md:hidden">
           <i className="bx bx-plus  text-darkest group-hover:translate-x-[2rem] transition-transform"></i>
           <i className="bx bx-plus  text-darkest group-hover:translate-x-[-0rem] translate-x-[-5rem] absolute transition-transform"></i>
         </div>

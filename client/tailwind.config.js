@@ -34,6 +34,7 @@ export default {
     //   "2xl": { max: "1200px" },
     // },
     screens: {
+      "4xl": { max: "1600px" },
       "3xl": { max: "1500px" },
       "2xl": { max: "1200px" },
       xl: { max: "1080px" },

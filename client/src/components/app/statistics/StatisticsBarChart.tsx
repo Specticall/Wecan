@@ -7,8 +7,12 @@ export default function StatisticsBarChart() {
   const { pointsEarnedEachDay } = useBarChartData();
 
   return (
-    <div className="mt-4 bg-white p-8 rounded-xl flex-1">
-      <BarChart yAxis={stats} xAxis={pointsEarnedEachDay} className="h-full" />
+    <div className="mt-4 bg-white p-8 rounded-xl flex-1 md:hidden">
+      <BarChart
+        yAxis={stats}
+        xAxis={pointsEarnedEachDay}
+        className="h-full 2xl:h-[25rem]"
+      />
     </div>
   );
 }

@@ -5,7 +5,7 @@ import TaskProgressBanner from "@/components/app/task/TaskProgressBanner";
 
 import { useUser } from "@/context/UserContext";
 import { useViewport } from "@/context/ViewportContext";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 export default function Task() {
@@ -17,15 +17,20 @@ export default function Task() {
     if (type !== "3xl" && type !== "2xl" && pathname === "/app/task/list") {
       navigate("/app/task/board");
     }
+
+    if (
+      (type === "3xl" || type == "2xl") &&
+      (pathname === "/app/task/board/ongoing" ||
+        pathname === "/app/task/board/completed")
+    ) {
+      navigate("/app/task/board");
+    }
   }, [type, navigate, pathname]);
 
   if (!userData) return;
 
   return (
     <main className="grid grid-cols-[3fr_5fr] gap-4 px-4 pb-4 2xl:grid-cols-1 sm:p-2 sm:gap-4">
-      {/* <h1 className="hidden lg:block text-lg text-dark font-semibold mt-4">
-        Tasks
-      </h1> */}
       <div className="">
         <article className="bg-white rounded-xl p-8 lg:p-6 sm:p-6">
           <h2 className="text-lg text-dark font-semibold mb-4 sm:mt-2">
@@ -40,14 +45,14 @@ export default function Task() {
         </article>
         <TaskProgressBanner />
       </div>
-      <div className="bg-white rounded-xl p-8 flex flex-col 3xl:p-6">
+      <div className="bg-white rounded-xl p-8 flex flex-col 3xl:p-6 sm:px-4 sm:py-6">
         <div className="grid grid-cols-[1fr_auto]">
           <h1 className="text-lg font-semibold">Your Tasks</h1>
-          <TaskNavigation className="2xl:invisible" key={pathname} />
+          <TaskNavigation className="2xl:invisible" />
           <p className="text-light mt-2 mb-6 col-span-2">
             The tasks you accepted on this goal period will appear below
           </p>
-          <MobileTaskNavigation />
+          <MobileTaskNavigation key={pathname} />
         </div>
         <div className="w-full h-full ">
           <Outlet />

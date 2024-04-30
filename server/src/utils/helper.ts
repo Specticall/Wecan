@@ -1,16 +1,23 @@
 import { OAuth2Client } from "google-auth-library";
 import jwt from "jsonwebtoken";
+import { oAuth2Client } from "../googleAuth";
+import { AppError } from "./AppError";
 
 export function createJWT(id: string) {
   return jwt.sign({ id }, process.env.JWT_STRING);
 }
 
-export async function verifyGoogleCredential(jtwToken: string) {
+export async function verifyGoogleCredential(code: string) {
   const clientId = process.env.GOOGLE_ID;
+  const clientSecret = process.env.GOOGLE_SECRET;
 
-  const client = new OAuth2Client(clientId);
+  const client = new OAuth2Client(clientId, clientSecret, "postmessage");
+  const { tokens } = await client.getToken(code);
+  if (!tokens.id_token) throw new AppError("id token does not exist", 404);
+
   const ticket = await client.verifyIdToken({
-    idToken: jtwToken,
+    idToken: tokens?.id_token,
+
     audience: clientId,
   });
 

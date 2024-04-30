@@ -1,4 +1,4 @@
-import { GoogleLogin } from "@react-oauth/google";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import Button from "../general/Button";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
 import axios, { AxiosError } from "axios";
@@ -37,14 +37,31 @@ export default function GoogleLoginButton({
     }
   };
 
+  const googleLogin = useGoogleLogin({
+    onSuccess: (res) => {
+      console.log(res);
+      handleGoogleLogin({
+        credential: res.code,
+      } as TGoogleLoginResponse);
+      // handleGoogleLogin(res as TGoogleLoginResponse);
+    },
+    onError: () => {
+      notify("Something went wrong while trying to log in");
+    },
+    flow: "auth-code",
+  });
+
   return (
     <Button
       variant="primary"
       className={cn(`relative [&&]:w-fit px-6 py-3 gap-0`, className)}
-      onClick={(e) => e.preventDefault()}
+      onClick={(e) => {
+        e.preventDefault();
+        googleLogin();
+      }}
       spinnerIconClass="ml-3"
     >
-      <div className="[&>div]:!h-0 [&>div]:opacity-0 [&_iframe]:!w-0 inset-0 [&>div>div>:first-child]:hidden ">
+      {/* <div className="[&>div]:!h-0 [&>div]:opacity-0 [&_iframe]:!w-0 inset-0 [&>div>div>:first-child]:hidden ">
         <GoogleLogin
           onSuccess={(res) => {
             handleGoogleLogin(res as TGoogleLoginResponse);
@@ -53,7 +70,7 @@ export default function GoogleLoginButton({
             notify("Something went wrong while trying to log in");
           }}
         />
-      </div>
+      </div> */}
       <div className="[&>*]:invisible [&>*]:absolute google-login-wrapper"></div>
       <div className="flex gap-3 items-center justify-center [&>svg]:h-6 w-fit mx-auto">
         {children}

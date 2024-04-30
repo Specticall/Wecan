@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "../general/Button";
+import GoogleLoginButton from "../auth/GoogleLoginButton";
 
 const navbarItem = [
   {
@@ -26,7 +27,7 @@ export default function MobileNavbar() {
   return (
     <>
       {/* === Trigger === */}
-      <div className="hidden md:block" onClick={() => setIsOpen(true)}>
+      <div className="hidden lg:block" onClick={() => setIsOpen(true)}>
         <i className="bx bx-menu text-lg hover:text-accent cursor-pointer"></i>
       </div>
       {/* === Content === */}
@@ -39,7 +40,7 @@ export default function MobileNavbar() {
         onClick={() => setIsOpen(false)}
       ></div>
       <nav
-        className="fixed right-8 top-8 px-8 w-full max-w-[15rem] py-12 rounded-lg bg-white flex flex-col items-start gap-4 pt-12 transition-[scale] origin-top-right duration-300"
+        className="fixed right-8 top-8 px-8 w-full max-w-[15rem] py-8 rounded-lg bg-white flex flex-col items-start gap-4 pt-12 transition-[scale] origin-top-right duration-300 z-20"
         style={{ scale: isOpen ? "1" : "0" }}
       >
         {navbarItem.map((item) => (
@@ -52,13 +53,10 @@ export default function MobileNavbar() {
           </a>
         ))}
         <div className="w-full h-[1px] bg-lighter mt-4"></div>
-        <Button
-          variant="secondary"
-          className="flex gap-4 px-2 py-2 pr-6 items-center justify-center mt-3 w0-"
-        >
-          <i className="bx bxs-user bg-accent rounded-full aspect-square h-full flex items-center justify-center text-white p-[8px]"></i>
-          Sign In
-        </Button>
+        <GoogleLoginButton className="[&&&]:w-full [&&&]:items-center [&:last-child]:mx-auto">
+          <i className="bx bxl-google text-lg"></i>
+          <p>Sign in</p>
+        </GoogleLoginButton>
       </nav>
     </>
   );

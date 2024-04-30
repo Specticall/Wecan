@@ -85,5 +85,5 @@ export function isYesterday(date: Date) {
 }
 
 export function calcPercentage(numerator: number, denominator: number) {
-  return denominator !== 0 ? Math.round((numerator * 100) / denominator) : 0;
+  return denominator !== 0 ? Math.floor((numerator * 100) / denominator) : 0;
 }

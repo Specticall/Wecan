@@ -7,10 +7,12 @@ import {
 } from "react";
 
 const breakPoints = {
-  phone: 450,
-  smallTablet: 600,
-  tablet: 900,
-  desktop: 1080,
+  sm: 450,
+  md: 600,
+  lg: 900,
+  xl: 1200,
+  "2xl": 1400,
+  "3xl": 1500,
 } as const;
 
 type TViewportContextValues = {

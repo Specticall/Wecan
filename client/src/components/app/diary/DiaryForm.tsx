@@ -36,7 +36,7 @@ export default function DiaryForm({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "mt-4 flex flex-col flex-1 bg-white p-8 rounded-xl  md:p-6 sm:p-4",
+        "flex flex-col flex-1 bg-white p-6 rounded-xl  md:p-6 sm:px-4 sm:py-6 sm:min-w-0",
         className
       )}
     >
@@ -53,7 +53,7 @@ export default function DiaryForm({ className }: { className?: string }) {
       <textarea
         placeholder="Dear Diary..."
         className={cn(
-          "resize-none w-full rounded-xl  p-8 flex-1 bg-white-soft",
+          "resize-none w-full rounded-xl  p-8 flex-1 bg-white-soft sm:min-w-0 text-light leading-lg",
           isError && "border-[1px] border-red-400"
         )}
         onChange={(e) => setDiaryValue(e.target.value)}
@@ -61,14 +61,14 @@ export default function DiaryForm({ className }: { className?: string }) {
         disabled={Boolean(diaryMadeToday)}
       ></textarea>
       {isError && <p className="text-red-400 mt-2">Diary Can't be Empty</p>}
-      <div className="flex items-center justify-between mt-4">
-        <p className=" text-lighter self-start">
+      <div className="flex items-center justify-between mt-4 md:flex-col">
+        <p className=" text-lighter self-start whitespace-pre-wrap">
           You can create a diary once per day at any time*
         </p>
         {!diaryMadeToday && (
           <Button
             variant="dark"
-            className="px-8 ml-auto flex items-center justify-center gap-2"
+            className="px-8 ml-auto flex items-center justify-center gap-2 md:w-full md:mt-6"
             onClick={handleCreateDiary}
             disabled={createMutation.isLoading}
           >

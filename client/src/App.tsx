@@ -96,7 +96,7 @@ const router = createBrowserRouter([
             element: <Task />,
             children: [
               {
-                path: "board",
+                path: "board/:status?",
                 element: <TaskBoard />,
               },
               {

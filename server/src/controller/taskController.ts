@@ -360,6 +360,8 @@ export const completedUserTask: RequestHandler = async (
     // Update the user's point value on their goal and history instances
     const pointsEarned = updatedTask.points;
 
+    const oldCompletionPercent = onGoingGoals.completionPercent;
+
     // Calculates the new total completion rate percent
     const newCompletionPercent = calcPercentage(
       onGoingGoals.earned,
@@ -367,10 +369,7 @@ export const completedUserTask: RequestHandler = async (
     );
 
     // Calculates the completion rated earned from this task (will be incremented wih the history's current completionPercent)
-    const completionPercentEarned = calcPercentage(
-      pointsEarned,
-      onGoingGoals.target
-    );
+    const completionPercentEarned = newCompletionPercent - oldCompletionPercent;
 
     // Checks if the user has completed their goal.
     const hasCompletedGoal =
@@ -405,27 +404,25 @@ export const completedUserTask: RequestHandler = async (
         },
       });
 
-      // Complete the history if the current has finished
-      if (hasCompletedGoal) {
-        await completeUserHistory(updatedUserGoal, prisma);
-      }
       /*
-      Retrieves the current on going history since we can't do a db transaction using the goal id and status
+      Retrieves the latest going history since we can't update the history document using the goal id
       */
-      const onGoingHistory = await prisma.history.findFirst({
+      const latestUserGoal = await prisma.history.findFirst({
+        orderBy: {
+          date: "desc",
+        },
         where: {
           goalId: onGoingGoals.id,
-          status: "OnGoing",
         },
       });
 
-      if (!onGoingHistory)
+      if (!latestUserGoal)
         throw new AppError("There are on no going history right now", 404);
 
       // Update the current ongoing history
       await prisma.history.update({
         where: {
-          id: onGoingHistory.id,
+          id: latestUserGoal.id,
         },
         data: {
           pointsEarned: {
@@ -439,6 +436,11 @@ export const completedUserTask: RequestHandler = async (
           },
         },
       });
+
+      // Complete the history if the current has finished
+      if (hasCompletedGoal) {
+        await completeUserHistory(updatedUserGoal, prisma);
+      }
 
       if (!updatedUserGoal)
         throw new AppError(

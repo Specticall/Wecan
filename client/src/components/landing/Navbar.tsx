@@ -47,21 +47,23 @@ export default function Navbar() {
     <>
       {/* --- Used for extra padding at the top ---*/}
       <div className="box h-[1rem]" ref={boxRef}></div>
-      <nav
-        className="sticky left-0 right-0 top-0 bg-white z-20 duration-200 transition-all"
-        style={{
-          backgroundColor: showBackground
-            ? "rgba(255,255,255,0.5)"
-            : "transparent",
-          backdropFilter: showBackground ? "blur(1rem)" : "blur(0rem)",
-        }}
-      >
-        <ul className="py-4 section flex justify-between items-center ">
+      <nav className="sticky left-0 right-0 top-0 z-20 duration-200 transition-all">
+        {/* Background */}
+        <div
+          className="absolute inset-0 w-full h-full"
+          style={{
+            backgroundColor: showBackground
+              ? "rgba(255,255,255,0.5)"
+              : "transparent",
+            backdropFilter: showBackground ? "blur(1rem)" : "blur(0rem)",
+          }}
+        ></div>
+        <ul className="py-4 section flex justify-between items-center  relative z-20">
           <p className="text-xl text-dark">
             We<span className="font-normal italic">can.</span>
           </p>
 
-          <div className="flex gap-8 md:hidden">
+          <div className="flex gap-8 lg:hidden">
             {navbarItem.map((item) => (
               <a
                 className="relative text-sm text-dark hover:text-black hover:font-medium cursor-pointer"
@@ -72,7 +74,7 @@ export default function Navbar() {
               </a>
             ))}
           </div>
-          <GoogleLoginButton>
+          <GoogleLoginButton className="lg:hidden">
             <i className="bx bxl-google text-lg"></i>
             <p>Sign in</p>
           </GoogleLoginButton>

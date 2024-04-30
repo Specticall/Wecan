@@ -9,11 +9,11 @@ const styles = cva("", {
   variants: {
     bar: {
       light: "bg-lightest",
-      dark: "bg-dark",
+      dark: "bg-slate-400",
     },
     track: {
       light: "bg-accent",
-      dark: "bg-lightest",
+      dark: "bg-white",
     },
   },
 });

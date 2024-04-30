@@ -17,14 +17,14 @@ export default function DiaryPreviewItem({ diary }: { diary: TDiary }) {
     <article
       key={diary.id}
       className={cn(
-        "bg-white rounded-lg py-4 px-6 grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] gap-y-4 gap-x-4 h-[12.5rem] place-items-start cursor-pointer hover:scale-[97.5%] transition-all duration-200",
+        "bg-white rounded-lg py-4 px-6 grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] gap-y-4 gap-x-4 h-[12.5rem] place-items-start cursor-pointer hover:scale-[97.5%] transition-all duration-200 sm:grid-cols-1 sm:place-items-center",
         isSelected && "border-white/50 border-[1px]"
       )}
       style={isSelected ? { background: SELECTED_GRADIENT } : undefined}
       onClick={handleSelect(diary.id)}
     >
-      <div className="row-span-2 h-2 w-2 bg-accent rounded-full mt-4"></div>
-      <h3 className="flex items-center justify-between w-full">
+      <div className="row-span-2 h-2 w-2 bg-accent rounded-full mt-4 sm:hidden"></div>
+      <h3 className="flex items-center justify-between w-full sm:flex-col-reverse sm:items-start">
         <DateDisplay
           className="text-[1rem]"
           date={new Date(diary.dateCreated)}
@@ -32,7 +32,7 @@ export default function DiaryPreviewItem({ diary }: { diary: TDiary }) {
         />
         <i
           className={cn(
-            "bx bx-calendar text-[1.5rem] bg-white-soft p-2 rounded-md",
+            "bx bx-calendar text-[1.5rem] bg-white-soft p-2 rounded-md sm:hidden",
             isSelected && "bg-white"
           )}
         ></i>

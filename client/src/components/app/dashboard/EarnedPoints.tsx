@@ -28,11 +28,12 @@ export default function EarnedPoints() {
       </div>
       <div>
         <div className="flex justify-between items-center mb-2">
-          <p className="font-semibold text-lg ml-auto text-white">{`${Math.floor(
-            progressPercent
-          )}%`}</p>
+          <p className="font-semibold text-lg ml-auto text-white">{`${goalData.completionPercent}%`}</p>
         </div>
-        <ProgressBar variant="dark" progressPercent={progressPercent} />
+        <ProgressBar
+          variant="dark"
+          progressPercent={goalData.completionPercent}
+        />
         <div className="flex justify-between items-center mt-4 text-light text-[0.75rem] ">
           <p className="text-[1rem] text-white">Your Progress</p>
           <p className="text-[1rem] text-white">

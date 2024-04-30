@@ -7,7 +7,9 @@ import Skeleton from "react-loading-skeleton";
 export default function StatisticsTotalPoints() {
   const { goalData, progressPercent } = useGoalMutation();
   const { historyData } = useHistoryMutation();
-  console.log(historyData);
+
+  const pointsEarnedTodayPercent = historyData?.completionPercent;
+
   return (
     <article className="grid grid-cols-[1fr_auto] bg-white p-8 rounded-2xl">
       <p className="text-light mb-2">Total Points Earned</p>
@@ -25,7 +27,7 @@ export default function StatisticsTotalPoints() {
           Points
         </h2>
         <div className="bg-[#D4D9FF] text-accent py-1 px-3 rounded-lg">
-          +5.45% Today
+          +{pointsEarnedTodayPercent}% Today
         </div>
       </div>
       <ProgressBar

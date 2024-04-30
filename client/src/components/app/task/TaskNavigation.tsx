@@ -6,12 +6,13 @@ import {
 } from "@/components/general/Dropdown";
 import { useLocation, useNavigate } from "react-router-dom";
 
-export default function TaskNavigation() {
+export default function TaskNavigation({ className }: { className?: string }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   return (
     <Dropdown
+      className={className}
       canUnselect={false}
       onSelect={(selection) => {
         if (!selection) return;

@@ -40,7 +40,7 @@ export default function GoogleLoginButton({
   return (
     <Button
       variant="primary"
-      className={cn(`relative !w-fit px-6 py-3 gap-0`, className)}
+      className={cn(`relative [&&]:w-fit px-6 py-3 gap-0`, className)}
       onClick={(e) => e.preventDefault()}
       spinnerIconClass="ml-3"
     >
@@ -55,7 +55,7 @@ export default function GoogleLoginButton({
         />
       </div>
       <div className="[&>*]:invisible [&>*]:absolute google-login-wrapper"></div>
-      <div className="flex gap-3 items-center justify-center [&>svg]:h-6 w-fit">
+      <div className="flex gap-3 items-center justify-center [&>svg]:h-6 w-fit mx-auto">
         {children}
       </div>
     </Button>

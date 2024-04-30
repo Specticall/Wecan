@@ -43,7 +43,7 @@ export default function TaskGeneratorCTA({
   };
 
   return (
-    <div className="flex items-center justify-center mt-4 gap-6">
+    <div className="flex items-center justify-center mt-4 gap-6 sm:mt-0">
       <Button
         disabled={addMutation.isLoading || hasCompletedGoal}
         className="h-fit flex gap-6 px-2 py-2 pr-8 items-center justify-center group hover:opacity-80 trasition-all duration-200 bg-darkest shadow-black/120"

@@ -19,6 +19,7 @@ type TLoginValues = {
   password: string;
 };
 
+// No longer used in favor of Google OAuth. However might be used in the future.
 export default function Login() {
   const {
     register,
@@ -95,7 +96,7 @@ export default function Login() {
                 Sign Up
               </Button>
 
-              <GoogleLoginButton />
+              {/* <GoogleLoginButton /> */}
             </div>
           </div>
         </form>

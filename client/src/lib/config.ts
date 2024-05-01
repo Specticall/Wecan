@@ -1,3 +1,7 @@
+/**
+ * This file contains all the configuration variables that are used throughout the application.
+ */
+
 export const BG_COLOR = "#f9f9ff";
 export const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_ID;
 export const GOOGLE_CLIENT_SECRET = import.meta.env.VITE_GOOGLE_SECRET;

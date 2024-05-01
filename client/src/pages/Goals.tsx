@@ -1,3 +1,7 @@
+/*
+DEPRECATED: This component is no longer in use. This component was made for the old landing page UI.
+*/
+
 import buildingConfidenceIllustartion from "/assets/goals-building-confidence.png";
 import eraseAnxietyIllustartion from "/assets/goals-erase-anxiety.png";
 import selfLoveIllustartion from "/assets/goals-self-love.png";

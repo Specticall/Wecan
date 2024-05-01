@@ -7,6 +7,7 @@ import MoodSelector from "@/components/app/moodModal/MoodSelector";
 import DiaryForm from "@/components/app/diary/DiaryForm";
 import useGoalMutation from "@/hooks/useGoalMutation";
 
+// Entry point for the `/app/dashboard` route
 export default function Dashboard() {
   const { userData } = useUser();
   const { goalData } = useGoalMutation();
@@ -18,6 +19,7 @@ export default function Dashboard() {
       <main className="grid grid-cols-[4fr_3fr] h-full pb-4 gap-4 3xl:grid-cols-1 lg:mt-4 sm:mt-2">
         <div className="bg-white rounded-xl flex flex-col h-full p-5 sm:p-4">
           <DashboardHeader />
+          {/* Only displays onGoingTask when the user has no completed their goal yet  */}
           {goalData?.status === "OnGoing" && <OnGoingTask />}
         </div>
         <div className="flex flex-col 3xl:grid 3xl:grid-cols-2 3xl:gap-4 lg:grid-cols-1">

@@ -1,3 +1,7 @@
+/*
+Note : the fetch functions here are all built with the factory function pattern. This is a design pattern that is used to create objects based on a template of an existing object through cloning. This pattern specifically is used to create a query function with the required variables such as `id` and `token` closed into the scope (closures). This is also done to make the `useQuery` and `useMutation` hook look less cluttered as easier to read.
+*/
+
 import { useAuth } from "@/context/AuthContext";
 import { usePopup } from "@/context/PopupContext";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
@@ -5,6 +9,12 @@ import { TGoal, TServerSucessResponse } from "@/types/general";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
+/**
+ * Calculates the percentage of a number
+ * @param numerator
+ * @param denomiator
+ * @returns
+ */
 function calcPercentage(numerator?: number, denomiator?: number) {
   if (!numerator || !denomiator) return undefined;
   return denomiator === 0 ? 0 : (numerator * 100) / denomiator;
@@ -75,7 +85,7 @@ export default function useGoalMutation() {
     queryFn: fetchGoalData("single", userId, token),
     enabled: Boolean(userId && token),
   });
-
+  // Gets all the goals that a user has be it completed or ongoing. Used to display the history of goals in the `<GoalHistory/>` component.
   const allGoalQuery = useQuery({
     queryKey: ["allUserGoal", token, userId],
     queryFn: fetchGoalData("all", userId, token),

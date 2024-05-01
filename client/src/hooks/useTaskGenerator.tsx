@@ -5,6 +5,10 @@ import { TGeneratedTask, TServerSucessResponse } from "@/types/general";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
+/**
+ * Handles the login and data fetching to generate a new task for the user.
+ * @returns
+ */
 export default function useTaskGenerator() {
   const { currentMood } = useMood();
   const { token, userId } = useAuth();

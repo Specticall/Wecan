@@ -1,5 +1,8 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
+/**
+ * Response from Google OAuth2.0
+ */
 export type TGoogleResponse = {
   iss: string;
   azp: string;
@@ -16,6 +19,9 @@ export type TGoogleResponse = {
   jti: string;
 };
 
+/**
+ * Type for prisma client that is used in transactions. This is made so we can pass the prisma transaction instance to another function and include them in the transaction.
+ */
 export type PrismaTransactionalClient = Parameters<
   Parameters<PrismaClient["$transaction"]>[0]
 >[0];

@@ -1,3 +1,7 @@
+/*
+Stores context that needs the router's methods e.g. `useNavigate()`, `useLocation()`, etc...
+*/
+
 import DiaryCreationDialog from "@/components/app/dashboard/DiaryCreationDialog";
 import GoalCompletedDialog from "@/components/app/task/GoalCompleteDialog";
 import TaskCompleteDialog from "@/components/app/task/TaskCompleteDialog";
@@ -19,6 +23,7 @@ import { UserProvider } from "@/context/UserContext";
 import { ViewportProvider } from "@/context/ViewportContext";
 import { Outlet } from "react-router-dom";
 
+// Stores the the title text we would like to show on different pages.
 const titleConfig: TitleConfig = {
   title: "- Wecan",
   routes: [
@@ -33,18 +38,24 @@ const titleConfig: TitleConfig = {
   ],
 };
 
+// Stores the dialog components that can be used in the application.
+// This array will get passed into the `GlobalDialogProvider` component. which is made from scratch without the help of any existing libraries
 const dialogComponents: DialogComponentProps = [
+  // DEPRECATED. - No longer in use after the UI overhaul
   {
     name: "diaryCreation",
     component: <DiaryCreationDialog />,
   },
+  // Displays a task's details such as their description, points, creation date, and buttons to complete / delete them.
   {
     name: "taskDetail",
     component: <TaskDetailDialog />,
     options: {
+      // This option will allow the user to close the dialog by clicking anywhere outisde the component
       collapseWhenClickOutside: true,
     },
   },
+  // Displays a success / congratulation message when a user completes a task
   {
     name: "taskComplete",
     component: <TaskCompleteDialog />,
@@ -52,6 +63,7 @@ const dialogComponents: DialogComponentProps = [
       collapseWhenClickOutside: true,
     },
   },
+  // DEPRECATED - No longer in use after the UI overhaul
   {
     name: "taskExpired",
     component: <TaskExpiredDialog />,
@@ -59,6 +71,7 @@ const dialogComponents: DialogComponentProps = [
       collapseWhenClickOutside: true,
     },
   },
+  // This dialog will show in the place of `taskDetail` when the user completes their task and goal at the same time.
   {
     name: "goalCompleted",
     component: <GoalCompletedDialog />,
@@ -66,6 +79,7 @@ const dialogComponents: DialogComponentProps = [
       collapseWhenClickOutside: true,
     },
   },
+  // Displays the user's profile information such as their name, email, and points.
   {
     name: "userProfile",
     component: <UserProfile />,
@@ -73,10 +87,12 @@ const dialogComponents: DialogComponentProps = [
       collapseWhenClickOutside: true,
     },
   },
+  // Displays a prompt that asks a user to set their task on that day. This dialog will show when the user logs in for the first time on that day.
   {
     name: "newDay",
     component: <NewDayDialog />,
   },
+  // Shows an animation of a prize being "revealed" when the user completes their goal.
   {
     name: "goalPrize",
     component: <GoalPrize />,
@@ -84,6 +100,7 @@ const dialogComponents: DialogComponentProps = [
       collapseWhenClickOutside: true,
     },
   },
+  //  IMPORTANT : Developer dialog, used for development purposes. Should not be used in production.
   {
     name: "dev",
     component: <Dev />,

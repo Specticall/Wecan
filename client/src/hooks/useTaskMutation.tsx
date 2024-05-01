@@ -11,6 +11,10 @@ import axios, { AxiosError } from "axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useUser } from "@/context/UserContext";
 
+/**
+ * Handles react query mutations for the task data and serves as a query observer for a certain component. This hook also returns task data and other useful functions.
+ * @returns
+ */
 export default function useTaskMutation() {
   const { userId, token } = useAuth();
   const { userData } = useUser();
@@ -36,8 +40,10 @@ export default function useTaskMutation() {
   // Typescript was not able to infer taskQuery.data as TUserTask[] because we seperated the check into a different variable `taskHasExpired` which why is have to manually assert to type.
   const userTask = taskQuery.data;
 
+  // Filter the user task to only show the ongoing task
   const onGoingTask = userTask?.filter((data) => data.status === "OnGoing");
 
+  // Mutation to add a new task
   const addMutation = useMutation(
     (newTask: TTaskRequest) => {
       return axios.post(
@@ -66,6 +72,7 @@ export default function useTaskMutation() {
     }
   );
 
+  // Mutation to delete a task
   const deleteMutation = useMutation(
     (taskId: string) => {
       return axios.delete(
@@ -91,6 +98,7 @@ export default function useTaskMutation() {
     }
   );
 
+  // Mutation to complete a task
   const completeTaskMutation = useMutation(
     (taskId: string) => {
       return axios.post<TServerSucessResponse<TGoal>>(

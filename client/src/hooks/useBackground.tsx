@@ -10,12 +10,14 @@ import {
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
+// Handles logic and react-query mutations from adding, switching, and fetching background data.
 export default function useBackground() {
   const { token, userId } = useAuth();
   const { userData } = useUser();
   const { notify } = usePopup();
   const queryClient = useQueryClient();
 
+  // Retrieves every background that exist. In the future when alot more background art are added this query will be paginated.
   const backgroundQuery = useQuery({
     queryKey: ["allBackgrounds"],
     queryFn: async () => {
@@ -26,6 +28,7 @@ export default function useBackground() {
     },
   });
 
+  // Retrieves the background that are owned by the user
   const userBackgroundQuery = useQuery({
     queryKey: ["userBackground", userId, token],
     queryFn: async () => {
@@ -57,7 +60,7 @@ export default function useBackground() {
       );
     },
     {
-      // Pass the context so we can load only the background that is being set
+      // Pass the background id to the context so `<CollectionImage />` can show a loader for the correct background imaged. (Clicked on)
       onMutate: (backgroundId: string) => {
         return { backgroundId };
       },

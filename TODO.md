@@ -25,3 +25,7 @@
 [V] Owned background counter
 [V] Make sure user data is not stale before removing bg change loading spinner
 [] Image Loading Issues (IMPORTANT)
+[] Race conditions on task creation
+[] Button still appearing after an operation finished (probably needs optimistic updates)
+[] Diary somehow not working on some devices.
+[] Responsve Onboarding page

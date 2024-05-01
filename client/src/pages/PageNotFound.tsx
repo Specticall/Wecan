@@ -1,3 +1,7 @@
+/*
+Handles all errors and invalid routes happening in the application. This component ensures the user does not see the debug message printed by react router.
+*/
+
 import Button from "@/components/general/Button";
 import personSadArt from "/assets/modal-art-sad.png";
 import {
@@ -12,6 +16,9 @@ import { clearLocalStorage } from "@/lib/utils";
 const DEFAULT_TITLE = "Something Went Wrong";
 const DEFAULT_MESSAGE = "There was a problem, please try again later";
 
+/*
+Data containing error messages, their titles, and indicators to match the error message.
+*/
 const errorMessages = [
   {
     indicator: "No route matches URL",
@@ -31,6 +38,7 @@ const errorMessages = [
   },
 ];
 
+// Matches the error object with the error data.
 const matchError = (error: unknown) => {
   const errorData = {
     statusCode: 0 as number | undefined,
@@ -77,8 +85,8 @@ export default function PageNotFound() {
 
   const { statusCode, title, message } = matchError(error);
 
+  // Clear the local storage if we fail to retrieve user data from the database so user can relog.
   useEffect(() => {
-    // Clear the local storage if we fail to retrieve user data from the database so user can relog.
     if (message.includes("Failed to retrieve your account data.")) {
       clearLocalStorage("token", "id");
     }

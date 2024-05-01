@@ -1,7 +1,12 @@
+/**
+ * Full type definitions descriptions are located in the server/prisma/schema.prisma file.
+ */
+
 import { TMood } from "@/context/MoodContext";
 
 export type TStatus = "OnGoing" | "Completed";
 
+// Extracts the variant from a component
 //eslint-disable-next-line
 export type ExtractCVAVariants<T extends (...args: any) => unknown> =
   NonNullable<NonNullable<Parameters<T>[0]>["variant"]>;

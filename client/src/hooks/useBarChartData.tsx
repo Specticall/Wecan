@@ -5,6 +5,9 @@ import { THistory, TServerSucessResponse } from "@/types/general";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
+/*
+Stores the days name in an array
+*/
 const days = [
   "Sunday",
   "Monday",
@@ -14,6 +17,7 @@ const days = [
   "Friday",
   "Saturday",
 ] as const;
+// Converts the days name to a shortened version e.g. Sunday -> Sun
 const daysShortened = days.map((day) => day.slice(0, 3));
 
 /**
@@ -26,6 +30,7 @@ export default function useBarChartData() {
   const barChartQuery = useQuery({
     queryKey: ["barChartData"],
     queryFn: async () => {
+      // Used to retrieve history data that were made from the start of the week (sunday) to the end (saturday). Ensures each week, new data will be displayed on the bar chart.
       const { startDate, endDate } = getWeekStartAndEnd();
 
       const response = await axios.get<TServerSucessResponse<THistory[]>>(

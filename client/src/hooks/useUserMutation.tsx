@@ -5,6 +5,10 @@ import { TUserData } from "@/types/general";
 import axios, { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+/**
+ * Handles react query mutations for the user data
+ * @returns
+ */
 export default function useUserMutation() {
   const { userId, token } = useAuth();
   const { notify } = usePopup();

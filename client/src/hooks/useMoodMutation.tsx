@@ -5,11 +5,14 @@ import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+// Handles react query mutations for the mood data. Primarily used for updating the user's mood on the `<MoodSelector/>` component.
 export default function useMoodMutation() {
   const queryClient = useQueryClient();
   const { token, userId } = useAuth();
   const { notify } = usePopup();
 
+  // Performs an optimisitic update to the mood query cache as suggested by the docs
+  // https://tanstack.com/query/v4/docs/framework/react/guides/optimistic-updates
   const updateMutation = useMutation(
     (newMood?: TMood) => {
       return axios.patch(

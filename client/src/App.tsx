@@ -30,14 +30,22 @@ import Collection from "./pages/Collection";
 
 const router = createBrowserRouter([
   {
+    /**
+     * Used as a component to place context that needs methods from react router e.g. `useNavigate()`, `useLocation()`, etc...
+     * */
     element: <FirstRouterChild />,
+
+    // Fetches data to check if the user is logged in
     loader: reloadSavedLoginDataLoader,
+
+    // Handles invalid routes and errors caused by the application
     errorElement: <PageNotFound />,
     children: [
       {
         path: "/",
         element: <Navigate to="/home/landing" />,
       },
+      // Landing page
       {
         path: "/home",
         element: <HomeLayout />,
@@ -48,14 +56,17 @@ const router = createBrowserRouter([
           },
         ],
       },
+      // DEPRECATED - Use Google OAuth instead
       {
         path: "/login",
         element: <Login />,
       },
+      // DEPRECATED - Use Google OAuth instead
       {
         path: "/register",
         element: <Register />,
       },
+      // Page that is shown when the user first logs in for the very first time
       {
         path: "/onboarding",
         element: (
@@ -75,6 +86,7 @@ const router = createBrowserRouter([
           },
         ],
       },
+      // The main application route
       {
         path: "/app",
         element: (
@@ -94,8 +106,10 @@ const router = createBrowserRouter([
           {
             path: "task",
             element: <Task />,
+            // Nested routes for the task page to display different forms (board and table/list style)
             children: [
               {
+                // This `status` param is used primarily for mobile views where the task display can only be seen in either ongoing of completed status due to limited viewing space.
                 path: "board/:status?",
                 element: <TaskBoard />,
               },
@@ -109,10 +123,12 @@ const router = createBrowserRouter([
             path: "statistics",
             element: <Statistics />,
           },
+          // DEPRECATED
           {
             path: "result",
             element: <div>(Optional)</div>,
           },
+
           {
             path: "collections",
             element: <Collection />,

@@ -10,14 +10,6 @@ export function truncateText(str: string, length: number) {
   return `${str.split("").splice(0, length).join("")}...`;
 }
 
-/*
---neutral:rgb(233 196 106) ;
-    --happy: rgb(42 157 143);
-    --ecstatic: rgb(38 70 83);
-    --sad: rgb(244 162 97);
-    --depressed: rgb(231 111 81);
-*/
-
 export function getMoodColor(mood: TMood) {
   switch (mood) {
     case "Ecstatic":
@@ -71,8 +63,12 @@ export function isToday(inputDate: Date) {
 }
 
 /**
- * Formats date into [Date] [Month], [Year]
- * e.g. 24 April, 2024
+ * Formats the date into a readable format (long or short)
+ * long : "1 January 2021"
+ * short: "01/01/21"
+ * @param date
+ * @param format
+ * @returns
  */
 export function formatDate(date: Date, format: "short" | "long" = "long") {
   if (format === "short")
@@ -89,6 +85,12 @@ export function formatDate(date: Date, format: "short" | "long" = "long") {
   });
 }
 
+/**
+ * Formats number into a readable format
+ * @param data
+ * @returns
+ * @example formatNumber(1000) // "1,000"
+ */
 export function formatNumber(data?: number) {
   if (data === undefined) return undefined;
 
@@ -113,10 +115,19 @@ export const getWeekStartAndEnd = () => {
   };
 };
 
+/**
+ * Deletes the local storage keys
+ * @param keys
+ */
 export const clearLocalStorage = (...keys: string[]) => {
   keys.forEach((key) => localStorage.removeItem(key));
 };
 
+/**
+ * reverses an array
+ * @param arr
+ * @returns
+ */
 export const toReversed = <T>(arr: T[]) => {
   const reversed = [...arr].reverse();
   return reversed;

@@ -1,16 +1,8 @@
-import OnBoardingNavigation from "@/components/onboarding/OnBoardingNavigation";
-import OnboardingNavigator from "@/components/onboarding/OnBoardingNavigator";
-import { PaginationProvider } from "@/context/PaginationContext";
 import { useUser } from "@/context/UserContext";
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
-const routes = [
-  "/onboarding/step-1",
-  "/onboarding/step-2",
-  "/onboarding/step-3",
-];
-
+// Entry point for the user's onboarding process (first time users)
 export default function OnBoarding() {
   const { userData } = useUser();
   const navigate = useNavigate();

@@ -14,43 +14,53 @@ datasource db {
 }
 
 model User {
+  // General user information
   id    String  @id @default(auto()) @map("_id") @db.ObjectId
   email String  @unique
   name  String
   password String?
+
+  // User's Profile picture URL
   pictureURL String?
   
+  // User's last login date
   lastLogin DateTime @default(now())
 
+  // User's wellness points (used to unlock backgrounds and complete goals)
   // DEPRECATED
-  // hasCreatedDiaryToday Boolean
-
-  point Point?
+  // point Point?
+  
+  // User's mood that they set for the day
   mood Mood
+  
+  // DEPRECATED
   streak Int?
 
+  // User's current diary streak
   diaryStreak Int @default(0)
-
-  // DEPRECATED
-  // Keeps track of any tasks that was deleted and has not beens shown to the user yet.
-  // This data gets reset to 0 after a user is notified of the task deletion (sent manually the from client)
-  // unannouncedExpiredTaskCount Int @default(0)
 
   // Checks if the user has created a goal that's on going (in progress). This is used to notify a user if they should / can create a new goal.
   hasOnGoingGoal Boolean @default(false)
 
-  // Checks if the user has completed the onboarding form 
+  // Checks if the user has completed the onboarding form which they recieve when they first sign up. 
   hasOnboarded Boolean @default(false)
 
   // Checks if the user has set their mood for the current day (this is used to prompt the user to set their mood on the first log of the day)
   hasSetMoodToday Boolean @default(false)
   
+  // Stores the user's diary entries
   diaries Diary[]
+
+  // User's task that they have to added from the generator 
   tasks Task[]
+
+  // Users's Goals infromation
   goals Goal[]
 
-  // Background stuff
+  // List of backgrounds that the user has unlocked
   ownedBackground UserBackground[]
+
+  // URL of the background that the user has selected
   selectedBackgroundURL String
 }
 
@@ -65,48 +75,73 @@ model UserBackground {
   background Background @relation(fields: [backgroundId], references: [id])
 }
 
+// The background that the user can unlock by completing goals. The background is used to be displayed as a cosmetic feature on the user's dashboard page
 model Background {
   id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  
+  // Stores the URL of the background image stored in google photos.
   URL   String
+
+  // The background's name
   name  String
+
+  // The background's tier (1, 2, 3)
   tier  Int
 
+  // Users that have unlocked this background
   users UserBackground[]
 }
-
-model Point {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
-
-  earnedToday Int @default(0)
-  targetToday Int @default(0)
-
-  earnedOverall Int @default(0)
   
-  user User @relation(fields: [userId], references: [id])
-  userId String @unique @db.ObjectId
-}
+// DEPRECATED
+// model Point {
+//   id    String  @id @default(auto()) @map("_id") @db.ObjectId
+//   earnedToday Int @default(0)
+//   targetToday Int @default(0)
+//   earnedOverall Int @default(0)
+//   user User @relation(fields: [userId], references: [id])
+//   userId String @unique @db.ObjectId
+// }
 
+// The user's goal that they have set for themselves. The goal can be completed or in progress.
 model Goal {
   id String  @id @default(auto()) @map("_id") @db.ObjectId
 
+  // The target points that the user has set and needs to reach in order to complete the goal. 
   target Int @default(0)
+  
+  // The points that the user has earned so far in the goal.
   earned Int @default(0)
 
+  // creation time of the goal
   createdAt DateTime @default(now())
+
+  // completion time of the goal
   completedAt DateTime?
+
+  // The user's goal status can be either "Completed" or "OnGoing"
   status Status @default(OnGoing)
 
   user User @relation(fields: [userId], references: [id])
   userId String @db.ObjectId
 
+  // Each task the user accepts are grouped into a goal. This is done so that the user can see the progress of the goal and the tasks that they have to complete on that specific goal.
   task Task[]
+
+  // The user's activity on a certain day (points earned, mood, etc...). Used to display data on the statistics page. Will be reset every new day.
   history History[]
 
+  // The amount of tasks the user has completed in this goal period.
   taskCompleted Int @default(0)
+
+  // DEPRECATED -> There was no time to implement this feature
   averageMood Mood @default(Unknown)
+
+  // Completion percentage of the goal. Calculated by the sum of the points earned divided by the target points.
   completionPercent Int @default(0)
 
+  // Each goal has a difficulty associated with it. This is used to determine what background rewards the user will get when they complete the goal.
   difficulty Difficulty @default(Easy)
+
 
   points Int @default(0)
 
@@ -125,56 +160,89 @@ model History {
   goal Goal @relation(fields: [goalId], references: [id])
   goalId String @db.ObjectId
 
+  // Creation date of the history
   date DateTime @default(now()) 
+  
+  // A history is used to store the user's activity on a certain day (points earned, mood, etc...). Used to display data on the statistics page. Will be reset every new day. 
   status Status @default(OnGoing)
 
+  // The following three fields are will store the users activity on a certain day
   pointsEarned Int @default(0)
   taskCompleted Int @default(0)
   mood Mood @default(Unknown)
 
+  // Completion percent earned on the history's day
   completionPercent Int @default(0)
 }
 
+// The user's task that they accepted and can complete to earn points. This task will become in progress one the user accepts it and becomes completed once the user finishes it.
 model Task {
-  id String @id @default(auto()) @map("_id") @db.ObjectId 
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  // The points that the user can earn by completing the task 
   points Int
+
+  // The title of the task
   title String
+
+  // The description of the task
   description String
+
+  // The mood that the task is associated with (This value is used to determine which tasks should show on certain moods)
   mood Mood
+
   status Status @default(OnGoing)
+  
+  // Stores the creation and completion time of the task
+  createdAt DateTime @default(now())
+  completedAt DateTime?
   
   user User @relation(fields: [userId], references: [id])
   userId  String @db.ObjectId
   
   goal Goal @relation(fields: [goalId], references: [id])
   goalId String @db.ObjectId
-  
-  createdAt DateTime @default(now())
-  completedAt DateTime?
-
 
 }
 
+// User diary entry
 model Diary {
   id String @id @default(auto()) @map("_id") @db.ObjectId 
+  
+  // Note: inconsistent naming here due to the fact this was one of the first model created and the naming convention was not established yet..
   author User @relation(fields: [authorId], references: [id])
   authorId String @db.ObjectId
 
+  // The day this diary entry was written
   dateCreated DateTime @default(now())
+  
+  // Contains the content of the diary entry
   content String
 }
 
+// Stores a seeded list of tasks that the user can accept. The user can accept these tasks to earn points.
+model AvailableTask {
+  id String @id @default(auto()) @map("_id") @db.ObjectId 
+  points Int
+  title String
+  description String
+  mood Mood
+}
+
+// Most of the documents in this application have a status they, they usually can either be "Completed" or "OnGoing"
 enum Status {
   Completed
   OnGoing
 }
 
+// The difficulty the user can set for their goal. This is used to determine what background rewards the user will get when they complete the goal.
 enum Difficulty {
   Easy
   Medium
   Hard
 }
 
+// Available moods that the user can set for the day
 enum Mood {
   Ecstatic
   Happy
@@ -184,10 +252,3 @@ enum Mood {
   Unknown
 }
 
-model AvailableTask {
-  id String @id @default(auto()) @map("_id") @db.ObjectId 
-  points Int
-  title String
-  description String
-  mood Mood
-}

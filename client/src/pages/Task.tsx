@@ -8,11 +8,18 @@ import { useViewport } from "@/context/ViewportContext";
 import { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
+// Entry point for the `/app/task` route
 export default function Task() {
   const { userData } = useUser();
   const { type } = useViewport();
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  /**
+   * Reroute the user to the correct page based on the viewport size.
+   * On mobile views, due to limited viewing sizes, they either can only either see "ongoing" or "completed" task.
+   * When the view transition from small screens to large ones (vice versa), they will be redirected to the corresponding page.
+   */
   useEffect(() => {
     if (type !== "3xl" && type !== "2xl" && pathname === "/app/task/list") {
       navigate("/app/task/board");

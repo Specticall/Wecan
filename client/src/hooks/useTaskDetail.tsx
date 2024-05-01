@@ -4,7 +4,7 @@ import { useGlobalDialog } from "@/context/GlobalDialogContext";
 import { TTask } from "@/types/general";
 
 /**
- * Logic for open tasks detail dialog
+ * Handles a the logic to open the task detail dialog and delete a task. Used in components that shows the `<TaskDetail />` dialog when clicked.
  * @param
  * @returns
  */
@@ -23,6 +23,7 @@ export default function useTaskDetail<T extends TTask>({ task }: { task?: T }) {
   const handleOpenDetailDialog = (
     e: MouseEvent<HTMLElement, globalThis.MouseEvent>
   ) => {
+    // Prevents opening the dialog when the trash icon is clicked
     if ((e.target as HTMLDivElement).classList.contains("bx-trash")) return;
     showDialog("taskDetail", task);
   };

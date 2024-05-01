@@ -6,20 +6,16 @@ import { useEffect } from "react";
 
 import { Outlet } from "react-router-dom";
 
+// Entry point for teh `/app` route
 export default function AppLayout() {
   const { userData } = useUser();
   const { showDialog } = useGlobalDialog();
 
+  // Show the newDay dialog when the user logs in for the first time in a day
   useEffect(() => {
     if (!userData || (userData && userData.hasSetMoodToday)) return;
     showDialog("newDay");
   }, [showDialog, userData]);
-
-  // TEMP
-  // useEffect(() => {
-  //   if (!userData) return;
-  //   showDialog("dev");
-  // }, [userData]);
 
   return (
     <DiaryProvider>

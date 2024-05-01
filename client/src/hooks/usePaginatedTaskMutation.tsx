@@ -11,6 +11,11 @@ type TServerSuccessTaskResponse = TServerSucessResponse<TUserTask[]> & {
   totalTaskCount: number;
 };
 
+/**
+ * Handles the logic for paginating the task data. Used for pagination the task data in the `<TaskList />` component. (Table version)
+ * @param paginationSize - The number of task to show per page
+ * @returns
+ */
 export default function usePaginatedTaskMutation({
   paginationSize = DEFAULT_PAGINATION_SIZE,
 }: {
@@ -21,6 +26,7 @@ export default function usePaginatedTaskMutation({
   const [filter, setFilter] = useState<"All" | "OnGoing" | "Completed">("All");
   const [date, setDate] = useState<Date | undefined>();
 
+  // Queries the task data from the server with the provided filter options as query paramters.
   const paginatedTaskQuery = useQuery({
     queryKey: [
       "paginatedTask",
@@ -48,17 +54,26 @@ export default function usePaginatedTaskMutation({
     enabled: userId && token ? true : false,
   });
 
+  // The paginated task data
   const paginatedTask = paginatedTaskQuery.data?.data;
+
+  // The amount of task data that exists in the server (not paginated / filtered)
   const taskCount = paginatedTaskQuery.data?.totalTaskCount;
 
+  // Checks if the user if on the first page of the paginated task data
   const onFirstPage = page === 1;
+
+  // Checks if the user if on the last page of the paginated task data.
+  // when dividing the total task count by the pagination size, it should be equal to amount of pages that will exist page.
   const onLastPage =
     taskCount && page === Math.ceil(taskCount / paginationSize);
 
+  // Function to go to the previous page
   const prevPage = () => {
     setPage((cur) => Math.max(cur - 1, 1));
   };
 
+  // Function to go to the next page. Will abort then no task exists.
   const nextPage = () => {
     if (!taskCount) return;
     setPage((cur) => Math.min(cur + 1, Math.ceil(taskCount / paginationSize)));

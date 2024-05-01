@@ -7,6 +7,7 @@ import axios, { AxiosError } from "axios";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { isToday } from "date-fns";
 
+// Handles react query mutations for the diary data and serves as a query observer for a certain component. This hook also returns diary data and other useful functions.
 export default function useDiaryMutation() {
   const { token, userId } = useAuth();
   const { notify } = usePopup();
@@ -31,6 +32,8 @@ export default function useDiaryMutation() {
   );
 
   const diaryList = diaryQuery.data;
+
+  // Retrieves the diary that is created today to display them on the dashboard page.
   const diaryMadeToday = diaryList?.find((diary) => isToday(diary.dateCreated));
 
   const bearerTokenHeader = {

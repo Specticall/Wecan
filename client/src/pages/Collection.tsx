@@ -4,6 +4,7 @@ import CollectionHeader, {
 import CollectionImages from "@/components/app/collection/CollectionImages";
 import { useState } from "react";
 
+// Entry point for the `/app/collection` route
 export default function Collection() {
   const [filter, setFilter] = useState<TCollectionFilter>("All");
 

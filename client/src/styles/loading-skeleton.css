@@ -1,3 +1,7 @@
+/*
+  No longer use if favor of `react-loading-skeleton`
+*/
+
 .shimmer {
   animation-duration: 1s;
   animation-fill-mode: forwards;

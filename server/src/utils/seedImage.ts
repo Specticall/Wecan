@@ -1,3 +1,7 @@
+/**
+ * Used to seed the database with the image data from the imageSeed.json file which contains background images for the user to to obtain on task completion.
+ */
+
 import fs from "fs/promises";
 import { PrismaClient } from "@prisma/client";
 

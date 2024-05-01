@@ -21,6 +21,7 @@ type TRegisterValues = {
   confirmPassword: string;
 };
 
+// No longer used in favor of Google OAuth. However might be used in the future.
 export default function Register() {
   const {
     register,

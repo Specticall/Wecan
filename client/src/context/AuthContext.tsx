@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useLoaderData, useNavigate, useRouteError } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { BASE_ENDPOINT, BASE_URL } from "@/lib/config";
 import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
@@ -21,9 +21,6 @@ type TAuthContextValues = {
 };
 
 const AuthContext = createContext<TAuthContextValues | null>(null);
-
-type TODO = any;
-// Clear local storage if user is not found in the database!
 
 export const reloadSavedLoginDataLoader = async () => {
   //1. Retrieve user id and token from local storage

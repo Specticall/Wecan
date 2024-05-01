@@ -39,7 +39,7 @@ const router = createBrowserRouter([
     loader: reloadSavedLoginDataLoader,
 
     // Handles invalid routes and errors caused by the application
-    errorElement: <PageNotFound />,
+    // errorElement: <PageNotFound />,
     children: [
       {
         path: "/",

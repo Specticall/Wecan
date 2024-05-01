@@ -397,7 +397,7 @@ export const completedUserTask: RequestHandler = async (
           // Set the status to completed if the user has filled the required points.
           status: hasCompletedGoal ? "Completed" : "OnGoing",
 
-          completedAt: new Date(),
+          completedAt: hasCompletedGoal ? new Date() : undefined,
 
           // Set the users background reward id (if they recieved any)
           backgroundRewardId: backgroundReward?.id,

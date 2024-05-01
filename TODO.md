@@ -10,18 +10,18 @@
 [V] Set Changeable backround
 [V] Get images (atleast 9, 3 for each tier)
 [] Select Date Range for Diary (MAYBE SKIPPED)
-[] Calculate Average Mood
-[] Responsive Diary
-[] Responsive Task
-[] Responsive Statistics
-[] Responsive Recap
+[V] Responsive Diary
+[V] Responsive Task
+[V] Responsive Statistics
+[V] Responsive Recap
 [V] Disable Buttons on Load
 [V] Remove Login Page
 [V] Empty Diary Page
 [V] Start New Goal
 [V] Statistics +% Today
-[] Make home page different for signed in / signed out users
+[V] Make home page different for signed in / signed out users
 [V] Statistics Bar Chart incorrect data (BUG)
 [V] Set Collection Background Filters
 [V] Owned background counter
 [V] Make sure user data is not stale before removing bg change loading spinner
+[] Image Loading Issues (IMPORTANT)

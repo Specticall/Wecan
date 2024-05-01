@@ -3,10 +3,12 @@ import useTaskMutation from "@/hooks/useTaskMutation";
 import { useNavigate } from "react-router-dom";
 import OnGoingTaskCard from "./OnGoingTaskCard";
 import { cn } from "@/lib/utils";
+import { useViewport } from "@/context/ViewportContext";
 
 export default function OnGoingTask() {
   const { userTask } = useTaskMutation();
   const navigate = useNavigate();
+  const { type } = useViewport();
 
   const onGoingTask = userTask
     ? userTask.filter((task) => task.status === "OnGoing")
@@ -31,7 +33,13 @@ export default function OnGoingTask() {
         <Button
           variant="clean"
           className="bg-white px-6 py-2 rounded-full flex items-center justify-center gap-2 hover:bg-border whitespace-nowrap"
-          onClick={() => navigate("/app/task/list")}
+          onClick={() => {
+            if (type === "2xl" || type === "3xl" || type === "xl") {
+              navigate("/app/task/board");
+            } else {
+              navigate("/app/task/board/onboarding");
+            }
+          }}
         >
           View All
           <i className="bx bx-chevron-right text-md"></i>

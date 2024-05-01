@@ -75,10 +75,11 @@ export default function DesktopNavbar() {
           })}
         </div>
         <div className="flex-1 flex items-center justify-end">
-          {!goalData?.hasClaimedReward && hasReward && (
+          {(!goalData?.hasClaimedReward ||
+            (hasReward && !goalData?.hasClaimedReward)) && (
             <Button
               className={clsx(
-                "flex px-6 py-3 items-center text-white justify-center gap-2 cursor-pointer transition-all duration-200 rounded-lg hover:opacity-70 bg-accent relative overflow-hidden",
+                "flex px-6 py-3 items-center text-white justify-center gap-2 cursor-pointer transition-all duration-200 rounded-lg hover:opacity-70 bg-accent relative overflow-hidden 3xl:hidden",
                 !hasCompletedGoal && "grayscale"
               )}
               onClick={() => {

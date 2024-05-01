@@ -2,6 +2,7 @@ import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Slider } from "../ui/slider";
+import { cn } from "@/lib/utils";
 
 const MIN_POINTS = 50000;
 const MAX_POINTS = 500000;
@@ -24,9 +25,11 @@ const findDifficulty = (point: number) => {
 export default function GoalSlider({
   onChange = () => {},
   defaultValue = DEFAULT_POINTS,
+  className,
 }: {
   onChange: (value: number) => void;
   defaultValue?: number;
+  className?: string;
 }) {
   const [value, setValue] = useState(defaultValue || DEFAULT_POINTS);
 
@@ -41,7 +44,7 @@ export default function GoalSlider({
 
   return (
     <>
-      <div className="flex items-center">
+      <div className={cn("flex items-center", className)}>
         <i className="bx bx-coin-stack text-[2rem] text-dark"></i>
         <p className="text-md text-darkest ml-2 mr-4">
           {value.toLocaleString("de-DE") || <Skeleton />} Points

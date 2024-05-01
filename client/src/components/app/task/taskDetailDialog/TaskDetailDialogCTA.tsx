@@ -46,20 +46,20 @@ export default function TaskDetailDialogCTA() {
         variant="tertiary"
         className="flex items-center justify-center gap-2 sm:py-4"
         onClick={handleDiscardTask}
-        disabled={deleteMutation.isLoading}
+        disabled={deleteMutation.isLoading || completeTaskMutation.isLoading}
+        isLoading={deleteMutation.isLoading}
       >
         Discard
-        {deleteMutation.isLoading && <LoadingSpinner />}
       </Button>
       <div></div>
       <Button
         variant="primary"
         className="shadow-none flex items-center justify-center gap-2 sm:py-4"
         onClick={handleCompleteTask}
-        disabled={completeTaskMutation.isLoading}
+        disabled={completeTaskMutation.isLoading || deleteMutation.isLoading}
+        isLoading={completeTaskMutation.isLoading}
       >
         Complete
-        {completeTaskMutation.isLoading && <LoadingSpinner color="white" />}
       </Button>
     </div>
   );

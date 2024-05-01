@@ -14,7 +14,7 @@ export default function NewDayDialog() {
     <article className="bg-white p-12 max-w-[50rem] rounded-xl flex flex-col items-center justify-center">
       <h1 className="text-[1.75rem] font-semibold mb-2">Welcome Back!</h1>
       <p className="text-center text-light leading-md mb-6 max-w-[22.5rem]">
-        Looks like it’s your first time logging in today. Tell us how you’re
+        Looks like it’s your first time logging in today. Tell us how you are
         feeling!
       </p>
       <div className="flex flex-col gap-4 items-center justify-center  mb-8">
@@ -27,7 +27,7 @@ export default function NewDayDialog() {
 
       <Button
         className="w-full max-w-[10rem] mt-6 disabled:grayscale flex items-center justify-center gap-2"
-        disabled={userData?.mood === "Unknown"}
+        disabled={userData?.mood === "Unknown" || updateMutation.isLoading}
         onClick={() => {
           updateMutation.mutate(
             { hasSetMoodToday: true },
@@ -39,6 +39,7 @@ export default function NewDayDialog() {
             }
           );
         }}
+        isLoading={updateMutation.isLoading}
       >
         Done {updateMutation.isLoading ? <LoadingSpinner /> : ""}
       </Button>

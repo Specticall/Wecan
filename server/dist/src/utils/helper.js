@@ -6,16 +6,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.calcPercentage = exports.isYesterday = exports.getTimeSpan = exports.buildPrismaSelectQueryObject = exports.isToday = exports.getRandomNumber = exports.verifyGoogleCredential = exports.createJWT = void 0;
 const google_auth_library_1 = require("google-auth-library");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const AppError_1 = require("./AppError");
 function createJWT(id) {
     return jsonwebtoken_1.default.sign({ id }, process.env.JWT_STRING);
 }
 exports.createJWT = createJWT;
-async function verifyGoogleCredential(jtwToken) {
+async function verifyGoogleCredential(code) {
     const clientId = process.env.GOOGLE_ID;
-    const client = new google_auth_library_1.OAuth2Client(clientId);
-    console.log(client, clientId);
+    const clientSecret = process.env.GOOGLE_SECRET;
+    const client = new google_auth_library_1.OAuth2Client(clientId, clientSecret, "postmessage");
+    const { tokens } = await client.getToken(code);
+    if (!tokens.id_token)
+        throw new AppError_1.AppError("id token does not exist", 404);
     const ticket = await client.verifyIdToken({
-        idToken: jtwToken,
+        idToken: tokens?.id_token,
         audience: clientId,
     });
     const payload = ticket.getPayload();
@@ -68,7 +72,7 @@ function isYesterday(date) {
 }
 exports.isYesterday = isYesterday;
 function calcPercentage(numerator, denominator) {
-    return denominator !== 0 ? Math.round((numerator * 100) / denominator) : 0;
+    return denominator !== 0 ? Math.floor((numerator * 100) / denominator) : 0;
 }
 exports.calcPercentage = calcPercentage;
 //# sourceMappingURL=helper.js.map

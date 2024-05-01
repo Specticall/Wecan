@@ -28,6 +28,14 @@ const googleLogin = async (request, response, next) => {
                 point: true,
             },
         });
+        // Find the default backround.
+        const defaultBackground = await prisma.background.findFirst({
+            where: {
+                name: "Pale Twilight",
+            },
+        });
+        if (!defaultBackground)
+            throw new AppError_1.AppError("Default background 'Pale Twilight' not found while creating user!", 404);
         // If user data does not yet exist on the database (first time login) then create one
         if (!userData) {
             await prisma.user.create({
@@ -36,6 +44,13 @@ const googleLogin = async (request, response, next) => {
                     name: dataFromGoogle.name,
                     mood: client_1.Mood.Unknown,
                     pictureURL: dataFromGoogle.picture || "",
+                    selectedBackgroundURL: defaultBackground.URL,
+                    // Add default background to the user's collection
+                    ownedBackground: {
+                        create: {
+                            backgroundId: defaultBackground.id,
+                        },
+                    },
                 },
             });
             // Retrieve the data again to get a user object with the mongoDB's generated Object Id.

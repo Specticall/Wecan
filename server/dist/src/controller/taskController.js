@@ -5,6 +5,8 @@ const prisma_1 = require("../../prisma/prisma");
 const AppError_1 = require("../utils/AppError");
 const helper_1 = require("../utils/helper");
 const library_1 = require("@prisma/client/runtime/library");
+const backgroundController_1 = require("./backgroundController");
+const historyController_1 = require("./historyController");
 const DEFAULT_PAGINATION_SIZE = 5;
 const generateAvailableTask = async (request, response, next) => {
     try {
@@ -159,7 +161,11 @@ const addUserTask = async (request, response, next) => {
         // Find onGoing goal
         const onGoingGoal = await prisma_1.prisma.goal.findFirst({
             where: {
+                userId,
                 status: "OnGoing",
+            },
+            orderBy: {
+                status: "desc",
             },
         });
         if (!onGoingGoal)
@@ -259,7 +265,7 @@ const completedUserTask = async (request, response, next) => {
         });
         if (Status?.status === "Completed")
             throw new AppError_1.AppError("Task is already completed", 400);
-        // Update the task document status to complete and at completion date
+        // Update the task document status to complete and add completion date
         const updatedTask = await prisma_1.prisma.task.update({
             where: {
                 id: taskId,
@@ -282,56 +288,75 @@ const completedUserTask = async (request, response, next) => {
             throw new AppError_1.AppError("There are not on going goals right now!", 404);
         // Update the user's point value on their goal and history instances
         const pointsEarned = updatedTask.points;
+        const oldCompletionPercent = onGoingGoals.completionPercent;
         // Calculates the new total completion rate percent
         const newCompletionPercent = (0, helper_1.calcPercentage)(onGoingGoals.earned, onGoingGoals.target);
         // Calculates the completion rated earned from this task (will be incremented wih the history's current completionPercent)
-        const completionPercentEarned = (0, helper_1.calcPercentage)(pointsEarned, onGoingGoals.target);
-        const updatedUserGoal = await prisma_1.prisma.goal.update({
-            where: {
-                id: onGoingGoals.id,
-            },
-            data: {
-                earned: {
-                    increment: pointsEarned,
+        const completionPercentEarned = newCompletionPercent - oldCompletionPercent;
+        // Checks if the user has completed their goal.
+        const hasCompletedGoal = onGoingGoals.earned + pointsEarned >= onGoingGoals.target;
+        // If the user has completed their goal then generate a background reward for the user.
+        const backgroundReward = hasCompletedGoal
+            ? await (0, backgroundController_1.getBackgroundReward)(userId, onGoingGoals.difficulty)
+            : undefined;
+        const updatedUserGoal = await prisma_1.prisma.$transaction(async (prisma) => {
+            const updatedUserGoal = await prisma.goal.update({
+                where: {
+                    id: onGoingGoals.id,
                 },
-                taskCompleted: {
-                    increment: 1,
+                data: {
+                    earned: {
+                        increment: pointsEarned,
+                    },
+                    taskCompleted: {
+                        increment: 1,
+                    },
+                    completionPercent: newCompletionPercent,
+                    // Set the status to completed if the user has filled the required points.
+                    status: hasCompletedGoal ? "Completed" : "OnGoing",
+                    completedAt: hasCompletedGoal ? new Date() : undefined,
+                    // Set the users background reward id (if they recieved any)
+                    backgroundRewardId: backgroundReward?.id,
                 },
-                completionPercent: newCompletionPercent,
-                // Set the status to completed if the user has filled the required points.
-                status: onGoingGoals.earned >= onGoingGoals.target ? "Completed" : "OnGoing",
-            },
+            });
+            /*
+            Retrieves the latest going history since we can't update the history document using the goal id
+            */
+            const latestUserGoal = await prisma.history.findFirst({
+                orderBy: {
+                    date: "desc",
+                },
+                where: {
+                    goalId: onGoingGoals.id,
+                },
+            });
+            if (!latestUserGoal)
+                throw new AppError_1.AppError("There are on no going history right now", 404);
+            // Update the current ongoing history
+            await prisma.history.update({
+                where: {
+                    id: latestUserGoal.id,
+                },
+                data: {
+                    pointsEarned: {
+                        increment: pointsEarned,
+                    },
+                    taskCompleted: {
+                        increment: 1,
+                    },
+                    completionPercent: {
+                        increment: completionPercentEarned,
+                    },
+                },
+            });
+            // Complete the history if the current has finished
+            if (hasCompletedGoal) {
+                await (0, historyController_1.completeUserHistory)(updatedUserGoal, prisma);
+            }
+            if (!updatedUserGoal)
+                throw new AppError_1.AppError("Something went wrong while trying to update the user data", 500);
+            return updatedUserGoal;
         });
-        /*
-        Retrieves the current on going history since we can't do a db transaction using the goal id and status
-        */
-        const onGoingHistory = await prisma_1.prisma.history.findFirst({
-            where: {
-                goalId: onGoingGoals.id,
-                status: "OnGoing",
-            },
-        });
-        if (!onGoingHistory)
-            throw new AppError_1.AppError("There are on going history right now", 404);
-        // Update the current ongoing history
-        await prisma_1.prisma.history.update({
-            where: {
-                id: onGoingHistory.id,
-            },
-            data: {
-                pointsEarned: {
-                    increment: pointsEarned,
-                },
-                taskCompleted: {
-                    increment: 1,
-                },
-                completionPercent: {
-                    increment: completionPercentEarned,
-                },
-            },
-        });
-        if (!updatedUserGoal)
-            throw new AppError_1.AppError("Something went wrong while trying to update the user data", 500);
         response.status(200).send({
             status: "success",
             data: updatedUserGoal,

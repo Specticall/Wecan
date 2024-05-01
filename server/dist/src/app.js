@@ -14,6 +14,7 @@ const historyRouter_1 = __importDefault(require("./routes/historyRouter"));
 const config_1 = require("./utils/config");
 const errorController_1 = require("./controller/errorController");
 const AppError_1 = require("./utils/AppError");
+const backgroundRouter_1 = __importDefault(require("./routes/backgroundRouter"));
 const app = (0, express_1.default)();
 // Enable fetching from localhost
 app.use((0, cors_1.default)());
@@ -26,6 +27,7 @@ app.use(`${config_1.BASE_ENDPOINT}/v1/diary`, diaryRouter_1.default);
 app.use(`${config_1.BASE_ENDPOINT}/v1/task`, taskRouter_1.default);
 app.use(`${config_1.BASE_ENDPOINT}/v1/goal`, goalRouter_1.default);
 app.use(`${config_1.BASE_ENDPOINT}/v1/history`, historyRouter_1.default);
+app.use(`${config_1.BASE_ENDPOINT}/v1/background`, backgroundRouter_1.default);
 // Handle invalid routes
 app.use("*", (request, response, next) => {
     next(new AppError_1.AppError("The route you requested does not exist", 404));

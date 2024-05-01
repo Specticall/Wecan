@@ -12,6 +12,13 @@ type TPopupContextValues = {
 
 const PopupContext = createContext<TPopupContextValues | null>(null);
 
+/*
+* PopupProvider is a context provider that provides a function to display a popup message.
+* The popup message is displayed at the bottom of the screen and disappears after a specified amount of time.
+* The message can be displayed using the `notify()` function.  
+* 
+* Self implementation of the popular library `react-toastify` to display popup messages.
+*/
 export default function PopupProvider({
   children,
   suspendDuration = 2000,

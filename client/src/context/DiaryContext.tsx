@@ -14,19 +14,19 @@ type TDiaryContextValues = {
   selectDiaryById: (id: string) => void;
 };
 
-// TODO
-/*
-GET DIARY FROM BACKEND AND SWITCH STATE TO QUERY.
-*/
 
 const DiaryContext = createContext<TDiaryContextValues | null>(null);
 
+/*
+This context servers as gateway for the diary page to display selected diary entry.
+*/
 export function DiaryProvider({ children }: { children: ReactNode }) {
   const { diaryQuery } = useDiaryMutation();
   const [selectedDiary, setSelectedDiary] = useState<TDiary | undefined>();
 
   const diaryList = diaryQuery.data;
 
+  // Selects a diary entry by its id.
   const selectDiaryById = (id: string) => {
     if (!diaryList) return;
     const selected = diaryList.find((diary) => diary.id === id);

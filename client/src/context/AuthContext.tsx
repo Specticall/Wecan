@@ -46,9 +46,15 @@ export const reloadSavedLoginDataLoader = async () => {
   return response.data.data;
 };
 
+/*
+  This context stores the user's authentication data and provides a centralized methods for authentication and authorization.
+  token and user id are also stored in this context so it can be easily retrieved the the react query custom hook wrappers to send an authorized request to the server.
+*/
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | undefined>(undefined);
   const [userId, setUserId] = useState<string | undefined>();
+
+  // This state checks if we have attemped to reload the saved login data (token & id) from local storage.
   const [hasReloadSavedLoginData, setHasReloadSavedLoginData] = useState(false);
 
   const navigate = useNavigate();

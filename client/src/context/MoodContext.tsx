@@ -17,6 +17,12 @@ type TMoodContextValues = {
 
 const MoodContext = createContext<TMoodContextValues | null>(null);
 
+/*
+ * MoodProvider is a context provider that fetches the user mood data from the server
+ * and provides it to the children components.
+ *
+ * Note: This provider is outdated and should be replaced to use the new react-query custom hook pattern. This incosistency is due the fact that the project was built over a period of time a the pattern guidlines was not established properly at the beginning.
+ */
 export function MoodProvider({ children }: { children: ReactNode }) {
   // const [currentMood, setCurrentMood] = useState<TMood | undefined>();
 

@@ -45,21 +45,27 @@ function identifyBreakpointType(viewportWidth: number) {
   ][0] as keyof typeof breakPoints;
 }
 
-/*
-1500 -> 1080 = 
-*/
-
 const viewportContext = createContext<TViewportContextValues | null>(null);
 
+/**
+ * This provider is used to provide the viewport size and breakpoint type to the app.
+ * It uses the window object to get the viewport size and updates the context whenever the window is resized.
+ * The breakpoint type is calculated based on the viewport width and is used to determine the layout of the app.
+ *
+ * @returns
+ */
 export function ViewportProvider({ children }: { children: ReactNode }) {
+  // Contains the current viewport size
   const [viewport, setViewport] = useState<TViewport>(() => ({
     width: window.innerWidth,
     height: window.innerHeight,
   }));
+  // Contains the current breakpoint type (defined at the top of the file)
   const [type, setType] = useState<keyof typeof breakPoints>(() =>
     identifyBreakpointType(window.innerWidth)
   );
 
+  // Update the viewport size whenever the window is resized
   useEffect(() => {
     const handleResize = () => {
       setViewport({

@@ -10,6 +10,8 @@ const PageLoaderContext = createContext<TPageLoaderContextValues | null>(null);
 
 /**
  * Used primarily to for page loading e.g. reloading saved login data
+ *
+ * Note: no longer use due to react query not supporting a page data loader feature similar to react router. This context was created with the intention of combining the tradinitional render-fetch and render-while-fetch however this caused alot of issues and was not used in the final version of the app.
  */
 export function PageLoaderProvider({ children }: { children: ReactNode }) {
   const ref = useRef<null | LoadingBarRef>(null);

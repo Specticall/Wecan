@@ -12,6 +12,12 @@ type TUserContextValues = {
 
 const UserContext = createContext<TUserContextValues | null>(null);
 
+/*
+ * UserProvider is a context provider that fetches the user data from the server
+ * and provides it to the children components.
+ *
+ * Note: This provider is outdated and should be replaced to use the new react-query custom hook pattern. This incosistency is due the fact that the project was built over a period of time a the pattern guidlines was not established properly at the beginning.
+ */
 export function UserProvider({ children }: { children: ReactNode }) {
   const { userId, token } = useAuth();
 

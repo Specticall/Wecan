@@ -24,9 +24,9 @@ const googleLogin = async (request, response, next) => {
             where: {
                 email: dataFromGoogle.email,
             },
-            include: {
-                point: true,
-            },
+            // include: {
+            //   point: true,
+            // },
         });
         // Find the default backround.
         const defaultBackground = await prisma.background.findFirst({
@@ -58,9 +58,9 @@ const googleLogin = async (request, response, next) => {
                 where: {
                     email: dataFromGoogle.email,
                 },
-                include: {
-                    point: true,
-                },
+                // include: {
+                //   point: true,
+                // },
             });
             if (!userData)
                 throw new AppError_1.AppError("Something went wrong while trying to retrieve the user data", 500);

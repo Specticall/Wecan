@@ -51,9 +51,9 @@ const refreshUserData = async (userData) => {
             mood: shouldResetMood ? "Unknown" : undefined,
             lastLogin: new Date(),
         },
-        include: {
-            point: true,
-        },
+        // include: {
+        //   point: true,
+        // },
     });
     // Check the most recent history creation date, if it is not made from today that means the user last logged a while ago so we need to create a new instance. This action will only happen if an ongoing goal exists.
     if (!onGoingGoal)

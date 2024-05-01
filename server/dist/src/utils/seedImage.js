@@ -1,4 +1,7 @@
 "use strict";
+/**
+ * Used to seed the database with the image data from the imageSeed.json file which contains background images for the user to to obtain on task completion.
+ */
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };

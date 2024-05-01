@@ -30,9 +30,9 @@ export const googleLogin: RequestHandler = async (request, response, next) => {
       where: {
         email: dataFromGoogle.email,
       },
-      include: {
-        point: true,
-      },
+      // include: {
+      //   point: true,
+      // },
     });
 
     // Find the default backround.
@@ -72,9 +72,9 @@ export const googleLogin: RequestHandler = async (request, response, next) => {
         where: {
           email: dataFromGoogle.email,
         },
-        include: {
-          point: true,
-        },
+        // include: {
+        //   point: true,
+        // },
       });
       if (!userData)
         throw new AppError(

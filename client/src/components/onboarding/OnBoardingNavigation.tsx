@@ -1,6 +1,10 @@
 import { cn } from "@/lib/utils";
 import { useLocation } from "react-router-dom";
 
+/**
+ * List of steps in the onboarding process.
+ * Add a new object to this list to add a new step to the onboarding process.
+ */
 const navigateList = [
   { path: "/onboarding/step-1", display: "Select Mood" },
   {
@@ -13,6 +17,9 @@ const navigateList = [
   },
 ] as const;
 
+/**
+ * Top navigation for the onboarding process. Indicates the current step of the onboarding process.
+ */
 export default function OnboardingNavigation() {
   const { pathname } = useLocation();
 

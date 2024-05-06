@@ -1,6 +1,4 @@
 import heroGradient from "/assets/hero-gradient.png";
-import Button from "../general/Button";
-import { GoogleLogin } from "@react-oauth/google";
 import GoogleLoginButton from "../auth/GoogleLoginButton";
 
 export function Hero() {

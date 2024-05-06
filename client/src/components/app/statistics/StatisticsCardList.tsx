@@ -3,6 +3,7 @@ import StatisticsCard from "./StatisticsCard";
 import useGoalMutation from "@/hooks/useGoalMutation";
 import { formatNumber } from "@/lib/utils";
 
+// Parent component of the statistics cards, contains the calculation logic for the statistics itself.
 export default function StatisticsCardList() {
   const { historyData } = useHistoryMutation();
   const { goalData } = useGoalMutation();
@@ -20,21 +21,16 @@ export default function StatisticsCardList() {
     ? `${historyData.completionPercent}%`
     : undefined;
 
-  console.log(historyData);
-
   return (
     <ul className="grid grid-cols-2 mt-4 gap-4 md:grid-cols-1">
+      {/* How many task the user has completed */}
       <StatisticsCard
         heading="Task Completed"
         value={formatNumber(goalData?.taskCompleted)}
         change={completedTaskToday}
         icon={<i className="bx bx-task"></i>}
       />
-      {/* <StatisticsCard
-        heading="Average Mood"
-        value="Happy"
-        icon={<i className="bx bx-task"></i>}
-      /> */}
+      {/* Completion the user has earned */}
       <StatisticsCard
         heading="Completion Rate"
         value={completionPercent}

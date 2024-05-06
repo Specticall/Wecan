@@ -6,17 +6,28 @@ import TaskItem from "./TaskItem";
 
 const PAGE_SIZE = 7;
 
+// Component that dispalys all the tasks in the task list as a paginated table.
 export default function AllTasks() {
   const {
     paginatedTask,
     taskCount,
+
+    // Current page
     page,
+
+    // Navigates between pages
     nextPage,
     prevPage,
+
+    // Handles status filtering for the tasks
     setFilter,
     filter,
+
+    // Used to remove previous button on the first page and remove the next button on the last page.
     onFirstPage,
     onLastPage,
+
+    // Set the date filter.
     setDate,
   } = usePaginatedTaskMutation({
     paginationSize: PAGE_SIZE,

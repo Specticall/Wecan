@@ -3,6 +3,7 @@ import useTaskDetail from "@/hooks/useTaskDetail";
 import { cn, formatDate, getMoodColor } from "@/lib/utils";
 import { TUserTask } from "@/types/general";
 
+// Table task item
 export default function TaskItem({ task }: { task: TUserTask }) {
   const { handleDelete, handleOpenDetailDialog, isDeleting } = useTaskDetail({
     task,

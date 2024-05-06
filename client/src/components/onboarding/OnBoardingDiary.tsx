@@ -9,16 +9,32 @@ import { useNavigate } from "react-router-dom";
 import useUserMutation from "@/hooks/useUserMutation";
 import { usePopup } from "@/context/PopupContext";
 
+/**
+ * Page component that asks the user to write a diary on first login (this onboarding step is optional, the user can not insert anything and skip past this step).
+ */
 export default function OnBoardingDiary() {
   const { createMutation, diaryMadeToday } = useDiaryMutation();
   const { updateMutation } = useUserMutation();
+
   const [diaryValue, setDiaryValue] = useState(diaryMadeToday?.content || "");
+
+  // Pagination
   const { prevPage } = useOnboardingPagination();
+
+  // Utils
   const { notify } = usePopup();
   const navigate = useNavigate();
 
+  /**
+   * Flags the component when the diary is being saved. This state is neccessary to prevent loaders showing up on the next button when the user presses "skip". This is because the skip button also triggers the updateMutation which is updates the user's onboarding status.
+   */
   const [isSavingDiary, setIsSavingDiary] = useState(false);
 
+  /**
+   * When the user presses the next button, 2 mutations are executed. One to create the diary and the other to update the user's onboarding status. This function handles the next button click.
+   *
+   * Note : `hasOnBoarded` is a flag that tells the application whether to redirect the user to the dashboard or to the onboarding steps. (also acts a route protector for the onboarding steps)
+   */
   const handleNext = async () => {
     try {
       setIsSavingDiary(true);
@@ -35,6 +51,7 @@ export default function OnBoardingDiary() {
     }
   };
 
+  // When the user skips then only the onboarding status gets updated.
   const handleSkip = () => {
     updateMutation.mutateAsync(
       { hasOnboarded: true },
@@ -85,6 +102,7 @@ export default function OnBoardingDiary() {
           variant="transparent"
           className="border-none text-accent md:order-1"
           onClick={handleSkip}
+          // Both `disabled` and `isLoading` for skip are only trigger when the user clicks the skip button.
           disabled={updateMutation.isLoading && !isSavingDiary}
           isLoading={updateMutation.isLoading && !isSavingDiary}
         >

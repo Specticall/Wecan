@@ -4,6 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 
 type TFilterParams = "completed" | "ongoing";
 
+/*
+Used to navigate between the different task status (ongoing / completed) on mobile devices
+*/
 export default function MobileTaskNavigation() {
   const params = useParams();
   const [selected, setSelected] = useState<TFilterParams>(

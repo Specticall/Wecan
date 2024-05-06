@@ -7,6 +7,9 @@ import { TMood, useMood } from "@/context/MoodContext";
 import OnboardingNavigation from "./OnBoardingNavigation";
 import useOnboardingPagination from "@/hooks/useOnboardingPagination";
 
+/**
+ * Page component that asks to user to set their mood on first login (onboard)
+ */
 export default function OnBoardingMood() {
   const { userData } = useUser();
   const { currentMood } = useMood();
@@ -17,6 +20,7 @@ export default function OnBoardingMood() {
 
   if (!userData) return;
 
+  // Updates the user's mood and moves to the next page on success in the onboarding flow.
   const handleNext = () => {
     updateMutation.mutate(mood, {
       onSuccess: () => {
@@ -48,7 +52,6 @@ export default function OnBoardingMood() {
         </p>
       </div>
       <div className="w-full grid grid-cols-[10rem_1fr_10rem] sm:grid-cols-[1fr] max-w-[1500px] mx-auto px-8 pb-4 mt-16 sm:px-0">
-        {/* <Button variant="tertiary">Previous</Button> */}
         <div></div>
         <div></div>
         <Button

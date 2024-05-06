@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-import Button from "../general/Button";
 import { useEffect, useRef, useState } from "react";
 import MobileNavbar from "./MobileNavbar";
 import GoogleLoginButton from "../auth/GoogleLoginButton";
@@ -23,11 +21,23 @@ const navbarItem = [
   },
 ] as const;
 
+/*
+Landing page navbar component. Due to heavy changes in the UI layout on mobile, we also have a seperate component for that `<MobileNavbar/>`
+*/
 export default function Navbar() {
   const [showBackground, setBackground] = useState(false);
-  const boxRef = useRef<HTMLDivElement | null>(null);
-  const navigate = useNavigate();
 
+  // Use to cover the navbar with a white background when the user scrolls to certain position in the page.
+  const boxRef = useRef<HTMLDivElement | null>(null);
+
+  /*
+  The strategy used here is by having a short <div> placed on the very top of every landing page element
+  
+      <div> --> Box (height ~ 1rem == 16px)
+      <LandingPage> --> Actual page
+
+  We can then attach the observer to the Box, then simply checks whenever it becomes out of view to show the background. This approach is better compared to having a scroll listener because we're minimizing the amount of event detection happening
+  */
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -47,6 +57,7 @@ export default function Navbar() {
     <>
       {/* --- Used for extra padding at the top ---*/}
       <div className="box h-[1rem]" ref={boxRef}></div>
+      {/* Actual page */}
       <nav className="sticky left-0 right-0 top-0 z-20 duration-200 transition-all">
         {/* Background */}
         <div

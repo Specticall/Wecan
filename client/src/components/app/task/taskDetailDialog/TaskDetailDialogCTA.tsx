@@ -1,10 +1,10 @@
 import Button from "@/components/general/Button";
-import LoadingSpinner from "@/components/general/loadingSpinner";
 import { useGlobalDialog } from "@/context/GlobalDialogContext";
 import useGoalMutation from "@/hooks/useGoalMutation";
 import useTaskMutation from "@/hooks/useTaskMutation";
 import { TUserTask } from "@/types/general";
 
+// Component wrapper that contains the call to action buttons (delete / complete) for the task detail dialog.
 export default function TaskDetailDialogCTA() {
   const { contextData, closeDialog, showDialog } = useGlobalDialog();
   const { completeTaskMutation, deleteMutation } = useTaskMutation();
@@ -19,8 +19,10 @@ export default function TaskDetailDialogCTA() {
 
     completeTaskMutation.mutate(userTaskData.id, {
       onSuccess: (data) => {
+        // Displays the goal completed dialog if the user has reached the target points.
         if (
           goalData &&
+          // If the current points + earned points from is greater then the target that means the user has passed to gaol. e.g. (1000 + 500 > 1200 -> Completed)
           userTaskData.points + goalData.earned >= goalData.target
         ) {
           showDialog("goalCompleted");

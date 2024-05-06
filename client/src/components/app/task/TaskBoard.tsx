@@ -11,6 +11,7 @@ type TGroupedTask = {
   completed: TUserTask[];
 };
 
+// Converts a list of tasks into a grouped object with two keys: "onGoing" and "completed"
 function groupTaskByStatus(task?: TUserTask[]) {
   if (!task) return undefined;
 
@@ -31,6 +32,7 @@ function groupTaskByStatus(task?: TUserTask[]) {
   );
 }
 
+// Make sures a URL param is either empty, "ongoing" or "completed". This is mostly used for mobile version of the appliaction where we can't fit two columns of tasks. As such, on smaller screens the user is only shown either ongoing tasks or completed at a time.
 const validateURLParams = (param: Params<string>) => {
   const isEmpty = JSON.stringify(param) === "{}";
   const isOnGoing = param.status === "ongoing";
@@ -47,6 +49,7 @@ export default function TaskBoard() {
   const params = useParams();
   const navigate = useNavigate();
 
+  // If the user in using a large screen and their currently viewing a singular task status (either ongoing or completed), redirect them to the board where there exist 2 columns.
   useEffect(() => {
     if (type === "3xl" || type === "2xl") return;
     if (pathname === "/app/task/board") navigate("/app/task/board/ongoing");
@@ -54,6 +57,7 @@ export default function TaskBoard() {
 
   const isValidURLParams = validateURLParams(params);
 
+  // Navigate to /ongoing by default if the URL params are invalid
   useEffect(() => {
     if (!isValidURLParams) {
       navigate("/app/task/board/ongoing");

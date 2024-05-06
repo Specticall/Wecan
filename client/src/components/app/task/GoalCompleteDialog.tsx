@@ -6,6 +6,7 @@ import useClaimReward from "@/hooks/useClaimReward";
 import useGoalMutation from "@/hooks/useGoalMutation";
 import { DialogCollapse } from "@/context/GlobalDialogContext";
 
+// Dialog that appears when a user completes a goal
 export default function GoalCompletedDialog() {
   const { claimMutation } = useClaimReward();
   const { goalData } = useGoalMutation();

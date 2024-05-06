@@ -4,6 +4,7 @@ import useHistoryMutation from "@/hooks/useHistoryMutation";
 import { ACCENT_GRADIENT } from "@/lib/config";
 import Skeleton from "react-loading-skeleton";
 
+// Total point the user has earned on the current goal.
 export default function StatisticsTotalPoints() {
   const { goalData, progressPercent } = useGoalMutation();
   const { historyData } = useHistoryMutation();

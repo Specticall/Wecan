@@ -1,5 +1,6 @@
 import GoalCard from "./GoalCard";
 
+// Decorative component that displays the user's goal target.
 export default function GoalResultsCard() {
   return (
     <article className="bg-white rounded-2xl p-8 3xl:p-6">

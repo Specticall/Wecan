@@ -8,6 +8,9 @@ import AnimatedCounter from "@/components/general/AnimatedCounter";
 import Button from "@/components/general/Button";
 import { ScrollArea } from "@/components/ui/scrollable";
 
+/*
+Displays a success / congratulation message when a user completes a task
+*/
 export default function TaskCompleteDialog() {
   const { closeDialog, contextData } = useGlobalDialog();
   const { userData } = useUser();
@@ -17,12 +20,16 @@ export default function TaskCompleteDialog() {
     newUserGoal: TGoal;
     oldUserGoal: TGoal;
   };
-
+  /**
+   * Both the old and new progress percents are used to display an animation where the counter for point and progress bar goes up.
+   */
+  // Calculate the previous (old) progress percentage of the user's goal
   const oldProgressPercent =
     oldUserGoal.target === 0
       ? 0
       : (oldUserGoal.earned * 100) / oldUserGoal.target;
 
+  // Calculate the new progress percentage of the user's goal
   const newProgressPercent =
     newUserGoal.target === 0
       ? 0

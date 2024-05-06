@@ -8,6 +8,7 @@ type StatisticsCardProps = {
   change?: string;
 };
 
+// Displays a statistics card with a heading, value, icon and change.
 export default function StatisticsCard({
   heading,
   value,

@@ -3,6 +3,7 @@ import { TMood } from "@/context/MoodContext";
 import useTaskGenerator from "@/hooks/useTaskGenerator";
 import { cn, getMoodColor } from "@/lib/utils";
 
+// Card that displays the the task generator's generated task.
 export default function GeneratorTaskCard({
   isShuffling,
 }: {

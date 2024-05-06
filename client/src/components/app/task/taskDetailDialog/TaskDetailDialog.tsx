@@ -6,6 +6,7 @@ import TaskDetailDialogDesc from "./TaskDetailDialogDesc";
 import TaskDetailDialogCTA from "./TaskDetailDialogCTA";
 import { ScrollArea } from "@/components/ui/scrollable";
 
+// Task detail dialog component that shows when user clicks on a task
 export default function TaskDetailDialog() {
   const { contextData, closeDialog } = useGlobalDialog();
 

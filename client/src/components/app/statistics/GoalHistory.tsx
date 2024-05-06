@@ -2,6 +2,7 @@ import { ScrollArea } from "@/components/ui/scrollable";
 import useGoalMutation from "@/hooks/useGoalMutation";
 import { formatDate, toReversed } from "@/lib/utils";
 
+// Displays all goals that the user has completed in the past.
 export default function GoalHistory() {
   const { allGoalData } = useGoalMutation();
 

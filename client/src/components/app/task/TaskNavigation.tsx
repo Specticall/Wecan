@@ -6,6 +6,9 @@ import {
 } from "@/components/general/Dropdown";
 import { useLocation, useNavigate } from "react-router-dom";
 
+/*
+Navigates between different the different viewing mode that exists within the task preview (board / list (table))
+*/
 export default function TaskNavigation({ className }: { className?: string }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -16,6 +19,7 @@ export default function TaskNavigation({ className }: { className?: string }) {
       canUnselect={false}
       onSelect={(selection) => {
         if (!selection) return;
+        // selection is either "board" or "list" so when we navigate we want to go to the respective route (previous_route/board or previous_route/list)
         navigate(`${selection?.toLowerCase()}`);
       }}
       defaultValue={pathname.includes("list") ? "List" : "Board"}

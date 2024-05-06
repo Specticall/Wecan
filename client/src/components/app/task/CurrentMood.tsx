@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { TMood, useMood } from "@/context/MoodContext";
 import useMoodMutation from "@/hooks/useMoodMutation";
 
+// DEPRECATED: This component is no longer in use after UI revamp
 export default function CurrentMood({ children }: { children: ReactNode }) {
   const { currentMood } = useMood();
   const { updateMutation } = useMoodMutation();

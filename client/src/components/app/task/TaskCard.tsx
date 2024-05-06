@@ -7,6 +7,7 @@ type TaskCardProps = {
   task: TUserTask;
 };
 
+// Displays any ongoing tasks for the dashboard
 export default function OnGoingTaskCard({ task }: TaskCardProps) {
   const { handleOpenDetailDialog, isDeleting } = useTaskDetail({ task });
 

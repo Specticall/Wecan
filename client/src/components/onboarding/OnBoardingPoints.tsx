@@ -7,6 +7,9 @@ import useGoalMutation from "@/hooks/useGoalMutation";
 
 const DEFAULT_POINTS = 50_000;
 
+/*
+Page component that asks to user to set their wellness points goal on first login (onboard)
+*/
 export default function OnBoardingPoints() {
   const [points, setPoints] = useState(DEFAULT_POINTS);
   const { nextPage, prevPage } = useOnboardingPagination();

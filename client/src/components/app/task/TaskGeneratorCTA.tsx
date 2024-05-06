@@ -4,6 +4,9 @@ import useTaskMutation from "@/hooks/useTaskMutation";
 import { TTaskRequest } from "@/types/general";
 import { useRef } from "react";
 
+/*
+Task generator's call to action buttons. This component is responsible for shuffling the task and adding the task to the user's task list.
+*/
 export default function TaskGeneratorCTA({
   setShuffling,
   hasCompletedGoal = false,
@@ -13,13 +16,21 @@ export default function TaskGeneratorCTA({
 }) {
   const { generatedTask, generatedTaskQuery } = useTaskGenerator();
   const { addMutation } = useTaskMutation();
+
+  // We're storing a timer reference on this ref
   const timer = useRef<NodeJS.Timeout | undefined>();
 
+  /**
+   * This task creates a imaginary timer then calls the shuffleTask function to refetch the generated task. This imaginary timer is used to ensure the shuffle animation is visible to the user. (When a requests happens too fast, the shuffle button doesn't look like it's doing anything)
+   *
+   */
   const shuffleTask = () => {
+    // Clear the previous timer if it exists. This is done to prevent race conditions where the previous timer is still running and the new timer is created.
     clearTimeout(timer.current);
 
     setShuffling(true);
 
+    // Queue a function that will set the shuffling state to false after 1000ms / 1s has passed.
     timer.current = setTimeout(() => {
       setShuffling(false);
     }, 1000);

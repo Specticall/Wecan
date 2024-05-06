@@ -3,6 +3,7 @@ import { ACCENT_GRADIENT } from "@/lib/config";
 import { cn, formatDate } from "@/lib/utils";
 import Skeleton from "react-loading-skeleton";
 
+// Displays the user's main point goal
 export default function GoalCard({ className }: { className?: string }) {
   const { goalData } = useGoalMutation();
 

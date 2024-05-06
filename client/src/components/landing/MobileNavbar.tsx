@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Button from "../general/Button";
 import GoogleLoginButton from "../auth/GoogleLoginButton";
 
 const navbarItem = [
@@ -21,6 +20,9 @@ const navbarItem = [
   },
 ] as const;
 
+/*
+Mobile version for the landing page's navigation bar. Gets displayed when viewport reaches a certain width.
+*/
 export default function MobileNavbar() {
   const [isOpen, setIsOpen] = useState(false);
 

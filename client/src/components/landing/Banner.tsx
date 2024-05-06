@@ -1,5 +1,4 @@
 import GoogleLoginButton from "../auth/GoogleLoginButton";
-import Button from "../general/Button";
 import dashboardUI from "/assets/banner-dashboard.png";
 
 export default function Banner() {

@@ -35,6 +35,7 @@ const routes = [
   },
 ];
 
+// Desktop Navbar for the main application
 export default function DesktopNavbar() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -52,6 +53,7 @@ export default function DesktopNavbar() {
         Wecan
       </h2>
       <ul className="rounded-xl flex-1 bg-white items-center justify-between gap-6 px-3 py-3 flex">
+        {/* == Route Navigator == */}
         <div className="flex bg-white-soft justify-start w-fit rounded-lg px-2 py-2 gap-4">
           {routes.map((route) => {
             const isOnPath = route.route.some((route) =>
@@ -74,6 +76,7 @@ export default function DesktopNavbar() {
             );
           })}
         </div>
+        {/* == Prize Preview Button == */}
         <div className="flex-1 flex items-center justify-end">
           {(!goalData?.hasClaimedReward ||
             (hasReward && !goalData?.hasClaimedReward)) && (
@@ -98,6 +101,7 @@ export default function DesktopNavbar() {
             </Button>
           )}
         </div>
+        {/* == User Profile Button == */}
         <div
           className="flex items-center gap-4 hover:bg-slate-100 transition-all duration-200 cursor-pointer py-2 px-4 rounded-md mr-3"
           onClick={() => showDialog("userProfile")}

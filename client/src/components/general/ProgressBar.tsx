@@ -1,4 +1,3 @@
-import { ACCENT_GRADIENT } from "@/lib/config";
 import { VariantProps, cva } from "class-variance-authority";
 import clsx from "clsx";
 import { useEffect, useState } from "react";

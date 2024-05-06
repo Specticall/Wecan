@@ -8,6 +8,7 @@ const CTAList = [
   { display: "Completed", value: "Completed" },
 ] as const;
 
+// Button list component that displays the filter options for the task list. Will trigger the respective filter when clicked.
 export default function AllTasksFilterCTA({
   filter,
   setFilter,

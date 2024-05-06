@@ -22,6 +22,10 @@ const findDifficulty = (point: number) => {
   return range;
 };
 
+/**
+ * Component that allows the user to set their wellness points goal using a slider interface. This slider has a callback that is called whenever the value is changed. This is because sliders become unresponsive and janky when they are used inconjuction with mutation directly. Optimistic updates also have alot of caveats we need to overcame. Which is why this callback pattern if best for the `GoalSlider` component.
+ *
+ */
 export default function GoalSlider({
   onChange = () => {},
   defaultValue = DEFAULT_POINTS,
@@ -56,6 +60,7 @@ export default function GoalSlider({
           {difficultyRange.difficulty}
         </p>
       </div>
+      {/* Shadcn slider component */}
       <Slider
         className="mt-6"
         step={MIN_POINTS}
@@ -63,6 +68,7 @@ export default function GoalSlider({
         max={MAX_POINTS}
         min={MIN_POINTS}
         defaultValue={[DEFAULT_POINTS]}
+        // Retrieves data from the slider through the callback.
         onValueChange={handleValueChange}
       />
       <div className="flex justify-between text-lighter mt-4">

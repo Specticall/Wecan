@@ -46,7 +46,6 @@ export default function GoogleLoginButton({
   // Hook to connects the google SDK with the application
   const googleLogin = useGoogleLogin({
     onSuccess: (res) => {
-      console.log(res);
       handleGoogleLogin({
         credential: res.code,
       } as TGoogleLoginResponse);

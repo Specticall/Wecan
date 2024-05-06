@@ -2,6 +2,7 @@ import LoadingSpinner from "@/components/general/loadingSpinner";
 import { TMood } from "@/context/MoodContext";
 import useTaskGenerator from "@/hooks/useTaskGenerator";
 import { cn, getMoodColor } from "@/lib/utils";
+import Skeleton from "react-loading-skeleton";
 
 // Card that displays the the task generator's generated task.
 export default function GeneratorTaskCard({
@@ -17,12 +18,12 @@ export default function GeneratorTaskCard({
     generatedTaskQuery.isRefetching ||
     generatedTaskQuery.isLoading;
 
-  if (!generatedTask) return;
+  if (!generatedTask) return <Skeleton height={"22.5rem"} width={"100%"} />;
   return (
-    <article className="relative w-full border-[1px] border-border rounded-lg px-8 py-6 overflow-hidden sm:px-6">
+    <article className="relative w-full border-[1px] border-border rounded-lg px-8 py-6 sm:px-6 overflow-hidden">
       <div
         className={cn(
-          "bg-white-soft absolute inset-0 rounded-full aspect-square transition-all duration-700 z-10 flex items-center justify-center translate-y-[-10rem] translate-x-[10rem] origin-top-right"
+          "bg-white-soft absolute inset-0 rounded-full aspect-square transition-all duration-700 z-10 flex items-center justify-center translate-y-[-10rem] translate-x-[10rem] origin-top-right min-w-[27.5rem]"
         )}
         style={{
           scale: isLoading ? "200%" : "0%",

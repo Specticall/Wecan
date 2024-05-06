@@ -27,6 +27,7 @@ import OnBoardingPoints from "./components/onboarding/OnBoardingPoints";
 import OnBoardingDiary from "./components/onboarding/OnBoardingDiary";
 import PageNotFound from "./pages/PageNotFound";
 import Collection from "./pages/Collection";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 const router = createBrowserRouter([
   {
@@ -144,10 +145,15 @@ const queryClient = new QueryClient();
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_ID}>
-        <RouterProvider router={router} />
-      </GoogleOAuthProvider>
-      <ReactQueryDevtools />
+      <SkeletonTheme
+        baseColor="rgb(230, 230, 245)"
+        highlightColor="rgb(235, 235, 250)"
+      >
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_ID}>
+          <RouterProvider router={router} />
+        </GoogleOAuthProvider>
+        <ReactQueryDevtools />
+      </SkeletonTheme>
     </QueryClientProvider>
   );
 }

@@ -2,14 +2,17 @@ import Button from "@/components/general/Button";
 import DateDisplay from "@/components/general/DateDisplay";
 import LoadingSpinner from "@/components/general/loadingSpinner";
 import { usePopup } from "@/context/PopupContext";
+import { useUser } from "@/context/UserContext";
 
 import useDiaryMutation from "@/hooks/useDiaryMutation";
 import { cn } from "@/lib/utils";
 import { useRef, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 
 export default function DiaryForm({ className }: { className?: string }) {
   const { createMutation, diaryMadeToday } = useDiaryMutation();
   const [diaryValue, setDiaryValue] = useState(diaryMadeToday?.content || "");
+  const { userData } = useUser();
 
   const { notify } = usePopup();
   const [isError, setIsError] = useState(false);
@@ -65,16 +68,20 @@ export default function DiaryForm({ className }: { className?: string }) {
         <p className=" text-lighter self-start whitespace-pre-wrap">
           You can create a diary once per day at any time*
         </p>
-        {!diaryMadeToday && (
-          <Button
-            variant="dark"
-            className="px-8 ml-auto flex items-center justify-center gap-2 md:w-full md:mt-6"
-            onClick={handleCreateDiary}
-            disabled={createMutation.isLoading}
-          >
-            Create
-            {createMutation.isLoading && <LoadingSpinner />}
-          </Button>
+        {userData ? (
+          !diaryMadeToday && (
+            <Button
+              variant="dark"
+              className="px-8 ml-auto flex items-center justify-center gap-2 md:w-full md:mt-6"
+              onClick={handleCreateDiary}
+              disabled={createMutation.isLoading}
+            >
+              Create
+              {createMutation.isLoading && <LoadingSpinner />}
+            </Button>
+          )
+        ) : (
+          <Skeleton className="w-28 h-10 rounded-full" />
         )}
       </div>
     </div>

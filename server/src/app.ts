@@ -15,6 +15,11 @@ import backgroundRouter from "./routes/backgroundRouter";
 
 const app = express();
 
+// TEMPORARY: Delay all responses by 2 seconds
+// app.use((req, res, next) => {
+//   setTimeout(next, 2000);
+// });
+
 // Enable fetching from localhost
 app.use(cors());
 

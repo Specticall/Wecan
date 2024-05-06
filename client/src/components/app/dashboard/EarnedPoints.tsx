@@ -1,18 +1,19 @@
 import ProgressBar from "@/components/general/ProgressBar";
 import useGoalMutation from "@/hooks/useGoalMutation";
 import { ACCENT_GRADIENT } from "@/lib/config";
+import { cn } from "@/lib/utils";
+import Skeleton from "react-loading-skeleton";
 
 export default function EarnedPoints() {
   const { goalData } = useGoalMutation();
-  if (!goalData) return;
 
-  const target = goalData.target;
-  const earned = goalData.earned;
+  const target = goalData?.target;
+  const earned = goalData?.earned;
 
-  const progressPercent = target === 0 ? 0 : (earned * 100) / target;
+  // const progressPercent = target === 0 ? 0 : (earned * 100) / target;
   return (
     <article
-      className="bg-white rounded-xl p-8 3xl:order-3"
+      className={cn("bg-white rounded-xl p-8 3xl:order-3")}
       style={{
         background: ACCENT_GRADIENT,
       }}
@@ -21,26 +22,40 @@ export default function EarnedPoints() {
         <div>
           <p className="text-white">Wellness Points Earned</p>
           <h3 className="text-xl font-semibold text-white">
-            {earned.toLocaleString("de-DE")} points
+            {!target && target !== 0 ? (
+              <Skeleton />
+            ) : (
+              <>{earned?.toLocaleString("de-DE")} points</>
+            )}
           </h3>
         </div>
         <i className="bx bx-coin-stack text-xl p-4 rounded-lg sm:mb-4 text-accent bg-white"></i>
       </div>
       <div>
         <div className="flex justify-between items-center mb-2">
-          <p className="font-semibold text-lg ml-auto text-white">{`${goalData.completionPercent}%`}</p>
+          <p className="font-semibold text-lg ml-auto text-white">
+            {goalData ? (
+              <>{`${goalData.completionPercent}%`}</>
+            ) : (
+              <Skeleton className="h-8 w-16" />
+            )}
+          </p>
         </div>
         <ProgressBar
           variant="dark"
-          progressPercent={goalData.completionPercent}
+          progressPercent={goalData?.completionPercent}
         />
         <div className="flex justify-between items-center mt-4 text-light text-[0.75rem] ">
           <p className="text-[1rem] text-white">Your Progress</p>
           <p className="text-[1rem] text-white">
-            {target.toLocaleString("de-DE")} Points
+            {!target && target !== 0 ? (
+              <Skeleton className="w-24 h-4" />
+            ) : (
+              <>{target?.toLocaleString("de-DE")} Points</>
+            )}
           </p>
         </div>
-      </div>
+      </div>{" "}
     </article>
   );
 }

@@ -33,7 +33,8 @@ export default function CollectionHeader({
           </div>
         </div>
         <p className="mt-2 text-light">
-          The backgrounds you have unlocked will appear here.
+          The backgrounds you have unlocked will appear here. Unlock new
+          backgrounds by completing goals.
         </p>
       </div>
       <ul className="grid bg-white-soft rounded-lg py-2 px-2 grid-cols-3 max-w-[25rem] place-items-center gap-2">

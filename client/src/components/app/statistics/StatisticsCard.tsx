@@ -19,7 +19,7 @@ export default function StatisticsCard({
   const isLoading = heading == undefined || value == undefined;
 
   if (isLoading) {
-    return <Skeleton height={"100%"} className="rounded-xl" />;
+    return <Skeleton height={"7.5rem"} className="rounded-xl" />;
   }
 
   return (

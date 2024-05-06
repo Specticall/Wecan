@@ -11,16 +11,19 @@ const getTier = (tier: 1 | 2 | 3) => {
       return {
         tier: "Tier I",
         color: "rgb(42 157 143)",
+        difficulty: "Easy",
       };
     case 2:
       return {
         tier: "Tier II",
         color: "rgb(244 162 97)",
+        difficulty: "Medium",
       };
     case 3:
       return {
         tier: "Tier III",
         color: "rgb(231 111 81)",
+        difficulty: "Hard",
       };
   }
 };
@@ -39,7 +42,7 @@ export default function BackgroundCard({
   isLoading?: boolean;
   className?: string;
 }) {
-  const { tier, color: tierColor } = getTier(background.tier);
+  const { tier, color: tierColor, difficulty } = getTier(background.tier);
 
   const isOwned = background.owned;
   const isSelected = background.selected;
@@ -68,8 +71,25 @@ export default function BackgroundCard({
             )}
 
             {!isSelected && (
-              <div className="absolute inset-0 z-30 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-black/50 flex items-center justify-center text-white text-md">
-                {isOwned ? "Click to select" : "This background is locked"}
+              <div className="absolute inset-0 z-30 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-black/50 flex items-center justify-center text-white text-md backdrop-blur-sm">
+                {isOwned ? (
+                  "Click to select"
+                ) : (
+                  <div className="flex flex-col items-center justify-center gap-4">
+                    <p className="text-md font-semibold">
+                      <i className="bx bx-lock-alt text-lg mr-2"></i>
+                      You Don't Own This Background
+                    </p>
+                    <p className="text-slate-100 text-sm">
+                      Unlock by completing
+                      <span className="px-4 py-1 rounded-full bg-accent mx-2 text-sm">
+                        {" "}
+                        {difficulty}{" "}
+                      </span>
+                      goals
+                    </p>
+                  </div>
+                )}
               </div>
             )}
             <div

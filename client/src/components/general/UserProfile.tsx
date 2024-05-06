@@ -19,7 +19,6 @@ export default function UserProfile() {
   if (!userData) return;
 
   const handleSave = () => {
-    console.log(username);
     if (!username || username.length <= 0) {
       setError("This field can't be empty");
       return;

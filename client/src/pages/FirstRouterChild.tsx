@@ -33,7 +33,13 @@ const titleConfig: TitleConfig = {
     { path: "/register", titlePath: "Create an Account" },
     { path: "/app/dashboard", titlePath: "Dashboard" },
     { path: "/app/diary", titlePath: "Diary" },
-    { path: "/app/task", titlePath: "Task" },
+    {
+      path: "/app/task",
+      titlePath: "Task",
+      options: {
+        partialMatch: true,
+      },
+    },
     { path: "/app/statistics", titlePath: "Statistics" },
   ],
 };

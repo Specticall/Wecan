@@ -6,6 +6,10 @@ export type TitleConfig = {
   routes: {
     path: string;
     titlePath: string;
+    options?: {
+      // false by default
+      partialMatch?: boolean;
+    };
   }[];
 };
 
@@ -19,11 +23,14 @@ export default function TitleWatcher({
   titleConfig: TitleConfig;
 }) {
   const { pathname } = useLocation();
+
   useEffect(() => {
-    const targetRoute = titleConfig.routes.find(
-      (route) => pathname === route.path
-    );
+    const targetRoute = titleConfig.routes.find((route) => {
+      if (route.options?.partialMatch) return pathname.includes(route.path);
+      return pathname === route.path;
+    });
     document.title = `${targetRoute?.titlePath || ""} ${titleConfig.title}`;
   }, [pathname, titleConfig.routes, titleConfig.title]);
+
   return <></>;
 }

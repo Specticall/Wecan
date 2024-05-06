@@ -18,7 +18,6 @@ export default function CustomCursor({
   const cursorRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    console.log("MOUNT");
     const handleMouseMove = (e: MouseEvent) => {
       if (!cursorRef.current) return;
       const posX = e.clientX;

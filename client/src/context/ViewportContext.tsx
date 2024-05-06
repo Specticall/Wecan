@@ -34,11 +34,9 @@ function identifyBreakpointType(viewportWidth: number) {
       if (index === 0) return viewportWidth < limit;
 
       const minimum = breakpointList[index - 1][1];
-      // console.log(minimum, limit);
       return minimum <= viewportWidth && viewportWidth <= limit;
     }
   );
-  // console.log(viewportWidth);
 
   return breakpoints[
     targetIndex === -1 ? breakpoints.length - 1 : targetIndex

@@ -19,7 +19,7 @@ export default function AppLayout() {
 
   return (
     <DiaryProvider>
-      <div className="">
+      <div className="flex flex-col min-h-screen lg:min-h-0">
         <AppNavbar />
         <Outlet />
       </div>

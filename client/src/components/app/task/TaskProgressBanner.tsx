@@ -8,6 +8,13 @@ export default function TaskProgressBanner() {
 
   const pointsToGo = goalData && goalData.target - goalData.earned;
   const hasCompletedGoal = pointsToGo && pointsToGo > 0;
+
+  if (!goalData)
+    return (
+      <div className="mt-4">
+        <Skeleton height={"15rem"} width={"100%"} className="rounded-lg" />
+      </div>
+    );
   return (
     <article
       className="bg-white mt-4 rounded-lg p-8"

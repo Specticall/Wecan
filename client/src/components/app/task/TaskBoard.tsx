@@ -6,7 +6,11 @@ import { Params, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useViewport } from "@/context/ViewportContext";
-type TGroupedTask = {
+import Skeleton from "react-loading-skeleton";
+import DesktopTaskBoard from "./DesktopTaskBoard";
+import { CategoryIndicator } from "../../general/CategoryIndicator";
+import MobileTaskBoard from "./MobileTaskBoard";
+export type TGroupedTask = {
   onGoing: TUserTask[];
   completed: TUserTask[];
 };
@@ -63,68 +67,37 @@ export default function TaskBoard() {
       navigate("/app/task/board/ongoing");
     }
   }, [navigate, isValidURLParams]);
-
   if (!isValidURLParams) return;
+
   return (
     <ScrollArea className="bg-white-soft rounded-xl h-0 min-h-full dotted-grid 2xl:min-h-[40rem] 2xl:h-full 2xl:max-h-[30rem] sm:p-4 md:min-h-[30rem]">
-      {groupedTask && (
-        <div
-          className={cn(
-            "grid grid-cols-2 gap-12 px-12 3xl:px-8 3xl:gap-8 sm:px-0",
-            params.status && "grid-cols-1"
-          )}
-        >
-          {!params.status ? (
-            <>
-              <ul className=" flex flex-col gap-12 py-12 3xl:py-8 3xl:gap-8">
-                <CategoryIndicator
-                  count={groupedTask.onGoing.length}
-                  text="On Going"
-                />
-                {groupedTask.onGoing.map((task) => {
-                  return <TaskCard task={task} key={task.id} />;
-                })}
-              </ul>
-              <ul className=" flex flex-col gap-12 py-12  3xl:py-8 3xl:gap-8">
-                <CategoryIndicator
-                  count={groupedTask.completed.length}
-                  text="Completed"
-                />
-                {groupedTask.completed.map((task) => {
-                  return <TaskCard task={task} key={task.id} />;
-                })}
-              </ul>
-            </>
-          ) : (
-            <ul className=" flex flex-col gap-12 py-12  3xl:py-8 3xl:gap-8">
-              <CategoryIndicator
-                count={
-                  groupedTask[
-                    params.status === "ongoing" ? "onGoing" : "completed"
-                  ].length
-                }
-                text={params.status === "ongoing" ? "On Going" : "Completed"}
+      <div
+        className={cn(
+          "grid grid-cols-2 gap-12 px-12 3xl:px-8 3xl:gap-8 sm:px-0",
+          params.status && "grid-cols-1"
+        )}
+      >
+        {groupedTask ? (
+          <>
+            {/* Render the complete task board if param do status is empty (this means all tasks) */}
+            {!params.status ? (
+              <DesktopTaskBoard groupedTask={groupedTask} />
+            ) : (
+              // Only render a specific task status if the user has selected either "ongoing" or "completed" as their parameter
+              <MobileTaskBoard
+                groupedTask={groupedTask}
+                status={params.status === "ongoing" ? "onGoing" : "completed"}
               />
-              {groupedTask[
-                params.status === "ongoing" ? "onGoing" : "completed"
-              ].map((task) => {
-                return <TaskCard task={task} key={task.id} />;
-              })}
-            </ul>
-          )}
-        </div>
-      )}
-    </ScrollArea>
-  );
-}
-
-function CategoryIndicator({ count, text }: { count: number; text: string }) {
-  return (
-    <p className="text-light flex items-center justify-start gap-3 text-[1rem] mb-[-1.5rem] 3xl:mb-0">
-      {text}
-      <div className="text-dark bg-white-soft p-2 rounded-md border-[1px] border-border w-6 h-6 flex items-center justify-center">
-        {count}
+            )}{" "}
+          </>
+        ) : (
+          <div className="col-span-2 grid grid-cols-2 lg:grid-cols-1 gap-12 py-12 3xl:py-8 3xl:gap-8">
+            {new Array(4).fill(0).map((_, i) => {
+              return <Skeleton key={i} height={"20rem"} />;
+            })}
+          </div>
+        )}
       </div>
-    </p>
+    </ScrollArea>
   );
 }

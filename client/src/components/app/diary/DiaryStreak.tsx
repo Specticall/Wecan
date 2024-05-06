@@ -1,5 +1,4 @@
 import { useUser } from "@/context/UserContext";
-import personReachingOutArt from "/assets/person-reaching-out.png";
 
 export default function DiaryStreak() {
   const { userData } = useUser();
@@ -22,7 +21,7 @@ export default function DiaryStreak() {
               ? `Great Job! You Have A ${
                   userData?.diaryStreak || 0
                 } Diary Streak 🔥`
-              : "You Haven't Made A Diary Yet"}
+              : "You Have No Streak Right Now"}
           </h2>
           <p className="mt-6 text-lighter max-w-[20rem]  lg:max-w-[25rem] leading-md mx-auto">
             {hasDiaryStreak

@@ -1,7 +1,9 @@
 import ProgressBar from "@/components/general/ProgressBar";
+import Suspend from "@/components/general/SkeletonWrapper";
 import useGoalMutation from "@/hooks/useGoalMutation";
 import useHistoryMutation from "@/hooks/useHistoryMutation";
 import { ACCENT_GRADIENT } from "@/lib/config";
+import { formatNumber } from "@/lib/utils";
 import Skeleton from "react-loading-skeleton";
 
 // Total point the user has earned on the current goal.
@@ -19,17 +21,17 @@ export default function StatisticsTotalPoints() {
         style={{ background: ACCENT_GRADIENT }}
       ></i>
       <div className="flex items-center justify-start gap-6 md:flex-col md:items-start md:gap-2">
-        <h2 className="text-xl font-semibold sm:text-[2rem]">
-          {goalData ? (
-            goalData.earned.toLocaleString("de-DE")
-          ) : (
-            <Skeleton width={"10rem"} />
-          )}{" "}
-          Points
-        </h2>
-        <div className="bg-[#D4D9FF] text-accent py-1 px-3 rounded-lg">
-          +{pointsEarnedTodayPercent}% Today
-        </div>
+        <Suspend
+          fallback={<Skeleton className="h-10 w-64" />}
+          renderFallback={!goalData}
+        >
+          <h2 className="text-xl font-semibold sm:text-[2rem]">
+            {goalData?.earned.toLocaleString("de-DE")} Points
+          </h2>
+          <div className="bg-[#D4D9FF] text-accent py-1 px-3 rounded-lg">
+            +{pointsEarnedTodayPercent}% Today
+          </div>
+        </Suspend>
       </div>
       <ProgressBar
         className="col-span-2 mt-8"
@@ -38,7 +40,11 @@ export default function StatisticsTotalPoints() {
       <div className="flex items-center justify-between col-span-2 mt-3">
         <p className="text-light">Your Progress</p>
         <p className="text-light">
-          {goalData?.target || <Skeleton width={"5rem"} />}
+          {goalData ? (
+            formatNumber(goalData.target)
+          ) : (
+            <Skeleton width={"5rem"} />
+          )}
         </p>
       </div>
     </article>

@@ -38,7 +38,7 @@ export default function MoodSelector({
   return (
     <article
       className={cn(
-        "bg-accent px-6 py-6 rounded-lg flex items-center justify-center gap-6 transition-all duration-100 3xl:order-1 3xl:mt-0 sm:flex-col sm:items-start",
+        "bg-accent px-6 py-6 rounded-lg flex items-center justify-center gap-6 transition-all duration-100 3xl:order-1 3xl:mt-0 md:flex-col md:items-center md:gap-6",
         styles({ background: variant }),
         className
       )}
@@ -48,7 +48,7 @@ export default function MoodSelector({
           : undefined
       }
     >
-      <div className="flex-1 flex gap-6 items-center justify-center">
+      <div className="flex-1 flex gap-6 items-center justify-center md:justify-between md:w-full md:flex-row-reverse">
         <div
           className={cn(
             "w-14 aspect-square rounded-full bg-white",
@@ -60,7 +60,7 @@ export default function MoodSelector({
               : undefined
           }
         ></div>
-        <div className="flex-1">
+        <div className="flex-1 md:flex-grow-0 whitespace-nowrap">
           <p className={cn("text-lightest", styles({ subtitle: variant }))}>
             My Mood Today
           </p>

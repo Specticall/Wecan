@@ -30,8 +30,8 @@ export default function UserProfile() {
   };
 
   return (
-    <ScrollArea className="h-full 3xl:h-[calc(100vh-5rem)] overflow-hidden rounded-xl">
-      <article className="bg-white p-12 rounded-xl max-w-[45rem] pb-10">
+    <ScrollArea className="h-full 3xl:h-[calc(100vh-5rem)] overflow-hidden rounded-xl md:h-screen ">
+      <article className="bg-white p-12 rounded-xl max-w-[45rem] pb-10 md:px-4 md:py-12 md:w-screen md:h-screen md:rounded-none">
         <div className="flex justify-between">
           <h2 className="text-dark font-semibold text-lg mb-1">Your Profile</h2>
           <DialogCollapse>
@@ -41,21 +41,21 @@ export default function UserProfile() {
         <p className="text-light border-b-[1px] border-slate-300 pb-6 mb-12">
           Manage your account profile and set preferences
         </p>
-        <div className="grid grid-cols-[2fr_9fr] gap-16 gap-y-20">
-          <div>
+        <div className="grid grid-cols-[2fr_9fr] gap-16 gap-y-20 md:gap-0 md:flex-col md:flex">
+          <div className="md:mb-6">
             <p className="text-dark mb-4 whitespace-nowrap">Profile Picture</p>
             <img
               src={userData.pictureURL}
-              className="rounded-full"
+              className="rounded-full md:w-16"
               alt=""
               referrerPolicy="no-referrer"
             />
           </div>
-          <form>
+          <form className="md:mb-12">
             <TextField
               value={userData.email}
               disabled={true}
-              className="mb-12 text-lighter"
+              className="mb-12 text-lighter md:mb-6"
             >
               <TextFieldLabel>
                 Email
@@ -78,7 +78,7 @@ export default function UserProfile() {
               </p>
             </TextField>
           </form>
-          <div className="grid grid-cols-[10rem_1fr_10rem] col-span-2">
+          <div className="grid grid-cols-[10rem_1fr_10rem] col-span-2 md:grid-cols-1 md:gap-2">
             <Button variant="tertiary" onClick={handleLogout}>
               Logout
             </Button>

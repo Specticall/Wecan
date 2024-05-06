@@ -67,7 +67,7 @@ export default function MoodDropdown({
       <DropdownTrigger
         className={twMerge(
           clsx(
-            "px-6 py-2 border-[1px] rounded-full flex items-center justify-center gap-2 cursor-pointer  transition-bg duration-75",
+            "px-6 py-2 border-[1px] rounded-full flex items-center justify-center gap-2 cursor-pointer  transition-bg duration-75 sm:w-full",
             styles({ trigger: variant }),
             triggerColor && triggerVariant[triggerColor]
           )

@@ -13,12 +13,12 @@ type TPopupContextValues = {
 const PopupContext = createContext<TPopupContextValues | null>(null);
 
 /*
-* PopupProvider is a context provider that provides a function to display a popup message.
-* The popup message is displayed at the bottom of the screen and disappears after a specified amount of time.
-* The message can be displayed using the `notify()` function.  
-* 
-* Self implementation of the popular library `react-toastify` to display popup messages.
-*/
+ * PopupProvider is a context provider that provides a function to display a popup message.
+ * The popup message is displayed at the bottom of the screen and disappears after a specified amount of time.
+ * The message can be displayed using the `notify()` function.
+ *
+ * Self implementation of the popular library `react-toastify` to display popup messages.
+ */
 export default function PopupProvider({
   children,
   suspendDuration = 2000,
@@ -56,7 +56,7 @@ export default function PopupProvider({
   return (
     <PopupContext.Provider value={{ notify }}>
       <div
-        className="fixed bottom-0 left-[50%] translate-x-[-50%] z-[100] translate-y-[-2rem] text-body bg-white px-12 py-3 rounded-md font-body shadow-lg shadow-main/30 transition-all duration-500"
+        className="fixed bottom-0 left-[50%] translate-x-[-50%] z-[100] translate-y-[-2rem] text-body bg-white px-12 py-3 rounded-md font-body shadow-lg shadow-main/30 transition-all duration-500 md:w-[calc(100vw-1.5rem)] md:px-4 md:text-center"
         style={{
           translate: show ? "0 0" : "0 300%",
         }}

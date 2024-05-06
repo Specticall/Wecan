@@ -114,7 +114,7 @@ export default function useTaskMutation() {
     {
       onMutate: () => {},
       onSuccess: () => {
-        notify("Success");
+        // notify("Success");
         queryClient.invalidateQueries(["userTask", userId, token]);
         queryClient.invalidateQueries(["userData", userId, token]);
         queryClient.invalidateQueries(["paginatedTask"]);

@@ -62,16 +62,18 @@ const updateGoalData =
     });
   };
 
-const createGoalData = (id?: string, token?: string) => (target?: number) => {
-  return axios.post(
-    `${BASE_URL}${BASE_ENDPOINT}/v1/goal?id=${id}`,
-    { target },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+const createGoalData = (id?: string, token?: string) => {
+  return (target?: number) => {
+    return axios.post(
+      `${BASE_URL}${BASE_ENDPOINT}/v1/goal?id=${id}`,
+      { target },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  };
 };
 
 export default function useGoalMutation() {

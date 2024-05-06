@@ -22,7 +22,7 @@ export default function MoodSelectorSlide({
     onSelect(selected === mood ? undefined : mood);
   };
   return (
-    <ul className={cn("flex gap-6", className)}>
+    <ul className={cn("flex gap-6 px-6", className)}>
       {moods.map((mood) => {
         const moodColor = getMoodColor(mood).slice(4, -1).split(" ").join(",");
         const shadowColor = `rgba(${moodColor},0.2)`;

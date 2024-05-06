@@ -63,7 +63,9 @@ export function Dropdown({
         )}
         onClick={handleClose}
       ></div>
-      <div className={twMerge(clsx("relative", className))}>{children}</div>
+      <div className={twMerge(clsx("relative  w-full", className))}>
+        {children}
+      </div>
     </DropdownContext.Provider>
   );
 }

@@ -36,7 +36,7 @@ export default function OnBoardingMood() {
           Looks like this is your first time here. Tell us how are you feeling
           today
         </p>
-        <div className="border-border border-[1px] rounded-xl px-8 pb-6">
+        <div className="border-border border-[1px] rounded-xl px-8 pb-6 sm:w-screen sm:overflow-x-auto md:border-none md:px-0">
           <MoodSelectorSlide
             className="mt-8"
             onSelect={setMood}
@@ -47,7 +47,7 @@ export default function OnBoardingMood() {
           You can change your mood anytime*
         </p>
       </div>
-      <div className="w-full grid grid-cols-[10rem_1fr_10rem] max-w-[1500px] mx-auto px-8 pb-4 mt-16">
+      <div className="w-full grid grid-cols-[10rem_1fr_10rem] sm:grid-cols-[1fr] max-w-[1500px] mx-auto px-8 pb-4 mt-16 sm:px-0">
         {/* <Button variant="tertiary">Previous</Button> */}
         <div></div>
         <div></div>

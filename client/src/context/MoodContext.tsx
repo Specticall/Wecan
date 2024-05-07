@@ -4,7 +4,6 @@ import { ReactNode, createContext, useContext } from "react";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import { useAuth } from "./AuthContext";
 import { TServerSucessResponse } from "@/types/general";
-import { useUser } from "./UserContext";
 
 // The format of the `mood` field used by the API
 export type TMood = "Ecstatic" | "Happy" | "Neutral" | "Sad" | "Depressed";

@@ -28,9 +28,9 @@ export default function useMoodMutation() {
       );
     },
     {
-      onMutate: (newMood?: TMood) => {
+      onMutate: async (newMood?: TMood) => {
         //1. Cancel outgoing queries (data fetching) to prevent race conditions
-        queryClient.cancelQueries({ queryKey: ["userMood", token] });
+        await queryClient.cancelQueries({ queryKey: ["userMood", token] });
 
         //2. Save the previous value from the mood query cache (used in case the mutation fails)
         const previousMood = queryClient.getQueryData(["userMood", token]);

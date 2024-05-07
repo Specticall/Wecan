@@ -1,0 +1,18 @@
+{
+  "_id": {
+    "$oid": "662a05a73711660e72277eba"
+  },
+  "email": "josephchristianyusmita@gmail.com",
+  "name": "Joseph Yusmita",
+  "pictureURL": "https://lh3.googleusercontent.com/a/ACg8ocLgoHrBPZnl908sPql-cEItoDUo3ruf7k9eC7fKm_fV49vkijdl=s96-c",
+  "lastLogin": {
+    "$date": "2024-05-06T14:49:45.576Z"
+  },
+  "mood": "Ecstatic",
+  "diaryStreak": 0,
+  "hasOnGoingGoal": true,
+  "hasOnboarded": true,
+  "hasSetMoodToday": true,
+  "selectedBackgroundId": "662b786bbb3447d96aeb128d",
+  "selectedBackgroundURL": "https://lh3.googleusercontent.com/pw/AP1GczP93nSvPQzSZEwcEzqrikvgACgy612wUnGufWYBVOT9KBJsmFeEdU5iitFTF64Snnd18mZRON0drokd_dObQOacUpKMXi8iCKTNM9oyVsZ-OmD1xrM=w2400"
+}

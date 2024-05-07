@@ -63,6 +63,7 @@ export default function MoodDropdown({
     <Dropdown
       defaultValue={defaultValue}
       onSelect={(selected) => onSetMood(selected as TMood | undefined)}
+      className="2xl:w-full"
     >
       <DropdownTrigger
         className={twMerge(

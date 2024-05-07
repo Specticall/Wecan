@@ -1,5 +1,13 @@
+import { useViewport } from "@/context/ViewportContext";
 import clsx from "clsx";
-import React, { ReactNode, createContext, useContext, useState } from "react";
+import React, {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { twMerge } from "tailwind-merge";
 
 type TDropdownContextValues = {
@@ -63,9 +71,7 @@ export function Dropdown({
         )}
         onClick={handleClose}
       ></div>
-      <div className={twMerge(clsx("relative  w-full", className))}>
-        {children}
-      </div>
+      <div className={twMerge(clsx("relative ", className))}>{children}</div>
     </DropdownContext.Provider>
   );
 }
@@ -104,6 +110,7 @@ export function DropdownContent({
   className?: string;
 }) {
   const { isOpen } = useDropdown();
+  const contentRef = useRef<HTMLUListElement | null>(null);
 
   return (
     <ul
@@ -114,6 +121,7 @@ export function DropdownContent({
           isOpen && "scale-100 opacity-100 translate-y-[0%] visible"
         )
       )}
+      ref={contentRef}
     >
       {children}
     </ul>

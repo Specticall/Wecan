@@ -31,7 +31,10 @@ export default function GoalHistory() {
           {allGoalData &&
             toReversed(allGoalData).map((goal) => {
               return (
-                <li className="py-6 border-t-[1px] border-slate-100 flex gap-4 hover:bg-slate-50 transition-all duration-200 cursor-pointer px-8">
+                <li
+                  className="py-6 border-t-[1px] border-slate-100 flex gap-4 hover:bg-slate-50 transition-all duration-200 cursor-pointer px-8"
+                  key={goal.id}
+                >
                   <h4 className="text-dark flex-1">
                     {goal.target.toLocaleString("de-DE")} Points Goal
                   </h4>

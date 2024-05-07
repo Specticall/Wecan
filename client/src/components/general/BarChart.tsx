@@ -40,7 +40,9 @@ export default function BarChart<
       {/* Y-AXIS ITEMS */}
       <ul className="flex flex-col justify-between items-end ">
         {yAxis.map((item) => (
-          <li className="text-light">{item.toLocaleString("de-DE")}</li>
+          <li className="text-light" key={item}>
+            {item.toLocaleString("de-DE")}
+          </li>
         ))}
       </ul>
 
@@ -120,6 +122,7 @@ export default function BarChart<
         {xAxis.map((content) => {
           return (
             <li
+              key={`${content.item}${content.value}`}
               className="text-lighter flex items-center justify-center  w-full"
               style={{ maxWidth: width }}
             >

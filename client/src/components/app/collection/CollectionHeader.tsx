@@ -41,6 +41,7 @@ export default function CollectionHeader({
         {collectionFilter.map((item) => {
           return (
             <li
+              key={item}
               className={cn(
                 "cursor-pointer transition-all duration-200 w-full h-full flex items-center justify-center py-2 px-4 rounded-md",
                 item === filter ? "bg-accent text-white" : "hover:bg-slate-200"

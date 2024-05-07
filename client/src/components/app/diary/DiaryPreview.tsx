@@ -19,7 +19,12 @@ export default function DiaryPreview() {
           <ScrollArea className="w-full h-0 min-h-[100%] 2xl:h-full lg:max-h-[30rem]">
             <div className="p-8 grid grid-cols-2 gap-6 lg:grid-cols-1 xl:p-4">
               {diaryList?.map((diary) => {
-                return <DiaryPreviewItem diary={diary} />;
+                return (
+                  <DiaryPreviewItem
+                    diary={diary}
+                    key={`${diary.dateCreated}`}
+                  />
+                );
               })}
             </div>
           </ScrollArea>

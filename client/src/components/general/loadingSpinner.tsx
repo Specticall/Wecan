@@ -30,10 +30,11 @@ export default function LoadingSpinner({
 }) {
   return (
     <div className={cn("lds-ring", styles({ thickness: size }), className)}>
-      {new Array(4).fill(".").map(() => {
+      {new Array(4).fill(".").map((_, i) => {
         return (
           <div
             className={cn(styles({ size }))}
+            key={i}
             style={
               color
                 ? {

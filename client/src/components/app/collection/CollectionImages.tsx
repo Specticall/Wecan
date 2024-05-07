@@ -31,8 +31,8 @@ export default function CollectionImages({
     <ul className="grid grid-cols-3 gap-8 bg-white-soft p-6 rounded-lg mt-8 2xl:grid-cols-2 2xl:gap-6 lg:grid-cols-1 md:p-4 sm:p-0 sm:bg-transparent flex-1">
       {/* Filter used Here VVVVVVVVV */}
       {!backgroundData &&
-        new Array(6).fill(0).map(() => {
-          return <Skeleton height={"20rem"} />;
+        new Array(6).fill(0).map((_, i) => {
+          return <Skeleton height={"20rem"} key={i} />;
         })}
       {backgroundData?.filter(selectedFilterFn).map((background) => {
         const isChangingImage =
@@ -46,6 +46,7 @@ export default function CollectionImages({
 
         return (
           <BackgroundCard
+            key={background.id}
             background={background}
             isLoading={isChangingImage}
             onClick={handleSelect}

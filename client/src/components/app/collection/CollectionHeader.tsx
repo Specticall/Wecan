@@ -1,9 +1,11 @@
 import useBackground from "@/hooks/useBackground";
 import { cn, formatNumber } from "@/lib/utils";
 
+// We can filter image collections based on 3 category:
 const collectionFilter = ["Unlocked", "Locked", "All"] as const;
 export type TCollectionFilter = (typeof collectionFilter)[number];
 
+// Header UI displayed on top of the images
 export default function CollectionHeader({
   filter,
   setFilter,
@@ -13,11 +15,14 @@ export default function CollectionHeader({
 }) {
   const { backgroundQuery, backgroundData } = useBackground();
 
+  // Total amount of background owned by the user.
   const totalOwned = backgroundData?.reduce(
     (count, background) => (background.owned ? count + 1 : count),
     0
   );
 
+  // total backgrounds that exist the database (both owned and not)
+  // Used to tell : (backgrounds the user has / the database's background pool)
   const totalBackgrounds = backgroundQuery.data?.length;
 
   return (

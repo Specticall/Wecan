@@ -9,6 +9,8 @@ import { useMood } from "@/context/MoodContext";
 import { getMoodColor } from "@/lib/utils";
 import useGoalMutation from "@/hooks/useGoalMutation";
 
+// DEPRECATED
+
 const pages = [<IntroPage />, <EncouragementPage />, <PointPage />];
 
 export default function DiaryCreationDialog() {

@@ -1,3 +1,4 @@
+// Displays UI indicating that a diary has not been selected.
 export default function DiaryDetailsEmpty() {
   return (
     <div className="flex flex-col justify-center items-center flex-1 p-8">

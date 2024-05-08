@@ -1,13 +1,16 @@
 import { useUser } from "@/context/UserContext";
 
+// Displays the user current streak
 export default function DiaryStreak() {
   const { userData } = useUser();
+
+  // Streak only exists if the user has a streak and the amount of data is NOT 0.
   const hasDiaryStreak =
     userData?.diaryStreak || (userData && userData?.diaryStreak > 0);
   return (
     <div className="bg-white mt-4 p-4 rounded-xl 2xl:p-4">
       <div
-        className="p-10 rounded-lg relative gridoverflow-hidden dotted-grid bg-white-soft place-items-center grid-cols-1"
+        className="p-10 rounded-lg relative grid overflow-hidden dotted-grid bg-white-soft place-items-center grid-cols-1"
         style={
           {
             // background:

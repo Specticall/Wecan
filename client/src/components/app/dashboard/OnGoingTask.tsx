@@ -8,6 +8,7 @@ import useGoalMutation from "@/hooks/useGoalMutation";
 import Suspend from "@/components/general/SkeletonWrapper";
 import Skeleton from "react-loading-skeleton";
 
+// Shows a preview of the user's current on going task,allowing for an easy access
 export default function OnGoingTask() {
   const { userTask } = useTaskMutation();
   const { goalData } = useGoalMutation();
@@ -20,6 +21,7 @@ export default function OnGoingTask() {
 
   const onGoingTaskExist = onGoingTask ? onGoingTask?.length > 0 : false;
 
+  // Do not show this component if goal has been completed (because use can't create a new one)
   if (goalData && goalData?.status === "Completed") return;
   return (
     <article className="bg-white-soft mt-4 p-10 rounded-xl flex-1 md:px-4 md:py-6">

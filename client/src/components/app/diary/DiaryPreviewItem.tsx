@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 
 const SELECTED_GRADIENT = "linear-gradient(180deg, #E7E7F8 0%, #E8EAFF 100%)";
 
+// Diary cards used to preview the user's diary history.
 export default function DiaryPreviewItem({ diary }: { diary: TDiary }) {
   const { selectDiaryById, selectedDiary } = useDiary();
 

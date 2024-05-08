@@ -12,6 +12,7 @@ function createFilterFn<T extends { owned: boolean }>() {
   };
 }
 
+// Container element for image lists
 export default function CollectionImages({
   filter,
 }: {
@@ -29,16 +30,19 @@ export default function CollectionImages({
 
   return (
     <ul className="grid grid-cols-3 gap-8 bg-white-soft p-6 rounded-lg mt-8 2xl:grid-cols-2 2xl:gap-6 lg:grid-cols-1 md:p-4 sm:p-0 sm:bg-transparent flex-1">
-      {/* Filter used Here VVVVVVVVV */}
+      {/* Skeleton element when no background exists. */}
       {!backgroundData &&
         new Array(6).fill(0).map((_, i) => {
           return <Skeleton height={"20rem"} key={i} />;
         })}
+      {/* Filter used Here VVVVVVVVV */}
       {backgroundData?.filter(selectedFilterFn).map((background) => {
+        // Checks is the current image should show Loading state
         const isChangingImage =
           selectMutation.context?.backgroundId === background.id &&
           (selectMutation.isLoading || userQuery.isRefetching);
 
+        // Sets the user background
         const handleSelect = () => {
           if (background.selected || !background.owned) return;
           selectMutation.mutate(background.id);

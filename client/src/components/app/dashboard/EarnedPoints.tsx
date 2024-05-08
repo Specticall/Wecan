@@ -4,13 +4,16 @@ import { ACCENT_GRADIENT } from "@/lib/config";
 import { cn } from "@/lib/utils";
 import Skeleton from "react-loading-skeleton";
 
+// Dashboard card that tells how many points the user has earned /  needs to earn
 export default function EarnedPoints() {
   const { goalData } = useGoalMutation();
 
+  // The point a user needs to earn to complete their goal
   const target = goalData?.target;
+
+  // The point a user has earned in order to compelte their goal
   const earned = goalData?.earned;
 
-  // const progressPercent = target === 0 ? 0 : (earned * 100) / target;
   return (
     <article
       className={cn("bg-white rounded-xl p-8 3xl:order-3")}

@@ -1,5 +1,6 @@
 import personReadingArt from "/assets/person-reading.png";
 
+// Shows UI indicating that the diary list is empty.
 export default function EmptyDiaryList() {
   return (
     <>

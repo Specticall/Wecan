@@ -3,6 +3,8 @@ import useTaskDetail from "@/hooks/useTaskDetail";
 import { cn, getMoodColor } from "@/lib/utils";
 import { TUserTask } from "@/types/general";
 
+// Task card used to display the user's current on going task
+// This component is only used in the dashboard, for the ones showed in /task is an entirely different component
 export default function OnGoingTaskCard({ task }: { task: TUserTask }) {
   const { handleOpenDetailDialog, isDeleting } = useTaskDetail({ task });
 

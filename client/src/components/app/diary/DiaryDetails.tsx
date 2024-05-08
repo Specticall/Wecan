@@ -3,6 +3,7 @@ import DiaryForm from "./DiaryForm";
 import DiaryView from "./DiaryView";
 import DiaryStreak from "./DiaryStreak";
 
+// Shows a detail of a diary (also shows the current user streak)
 export default function DiaryDetails() {
   const { selectedDiary } = useDiary();
 

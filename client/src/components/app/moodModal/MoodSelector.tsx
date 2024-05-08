@@ -27,6 +27,8 @@ const styles = cva("", {
   },
 });
 
+// Wrapper over mood dropdown, this compent adds a functionality where the user can see the mood they have selected.
+// Note that since the mood dropdown itself does an optimistic update to the database, the way this query knows what mood the user has right now is from the query which then gets validated once the request has completed.
 export default function MoodSelector({
   variant = "accent",
   className,

@@ -1,5 +1,6 @@
 import DateDisplay from "@/components/general/DateDisplay";
 
+// Diary form but with prepended values from past data and disabled inuts.
 export default function DiaryView({
   content,
   dateCreated,

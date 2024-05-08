@@ -3,6 +3,7 @@ import EmptyDiaryList from "./EmptyDiaryList";
 import { ScrollArea } from "@/components/ui/scrollable";
 import DiaryPreviewItem from "./DiaryPreviewItem";
 
+// Shows all diaries created by the user.
 export default function DiaryPreview() {
   const { diaryList } = useDiary();
 

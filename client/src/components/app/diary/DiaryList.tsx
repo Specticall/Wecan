@@ -8,6 +8,9 @@ import EmptyDiaryList from "./EmptyDiaryList";
 
 const TEXT_TRUNCATE_LENGTH = 75;
 
+// DEPRECATED -> Waiting for deletion once the component is confirmed to be no longer used.
+
+// List of diaries the user has created.
 export default function DiaryList() {
   const { diaryList, selectDiaryById, selectedDiary } = useDiary();
 

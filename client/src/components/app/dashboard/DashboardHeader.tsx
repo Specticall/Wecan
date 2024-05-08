@@ -6,12 +6,14 @@ import { cn } from "@/lib/utils";
 import Skeleton from "react-loading-skeleton";
 import Suspend from "@/components/general/SkeletonWrapper";
 
+// Dashboard banner
 export default function DashboardHeader() {
   const { userData } = useUser();
   const { goalData } = useGoalMutation();
 
   return (
     <header className="bg-white border-border border-[1px] rounded-lg  lg:grid-cols-1 relative flex-1">
+      {/* Shows the new goal selector when the currente one has been completed */}
       {goalData?.status === "Completed" && <DashboardNewGoal />}
       <Suspend
         fallback={

@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { useRef, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 
+// Diary input form, allows the user to createa a diary.
 export default function DiaryForm({ className }: { className?: string }) {
   const { createMutation, diaryMadeToday } = useDiaryMutation();
   const [diaryValue, setDiaryValue] = useState(diaryMadeToday?.content || "");

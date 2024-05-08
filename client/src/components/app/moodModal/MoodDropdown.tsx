@@ -11,6 +11,7 @@ import { cva } from "class-variance-authority";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 
+// List of all available mood.
 const moodList = [
   {
     mood: "Ecstatic",
@@ -48,6 +49,10 @@ const styles = cva("", {
   },
 });
 
+// Component that allows user to select mood by using a drop down component
+// Impletmentation of the dropdown component.
+
+// NOTE: This component performs an optimistic update to the cache, implementation can be seed in `useMoodMutation()`
 export default function MoodDropdown({
   triggerColor,
   onSetMood,

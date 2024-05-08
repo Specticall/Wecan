@@ -1,3 +1,5 @@
+// This file is not used for the code itself, it's used to perform some mutation / seeding on the database manually
+
 import fs from "fs/promises";
 
 async function convert() {

@@ -6,6 +6,7 @@ import useDiaryMutation from "@/hooks/useDiaryMutation";
 import { cn } from "@/lib/utils";
 import { useRef, useState } from "react";
 
+// Diary form displayed in the darhboard
 export default function DashboardDiary() {
   const { createMutation, diaryMadeToday } = useDiaryMutation();
   const [diaryValue, setDiaryValue] = useState(diaryMadeToday?.content || "");

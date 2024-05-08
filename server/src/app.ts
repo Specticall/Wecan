@@ -15,7 +15,7 @@ import backgroundRouter from "./routes/backgroundRouter";
 
 const app = express();
 
-// TEMPORARY: Delay all responses by 2 seconds
+// TEMPORARY: Delay all responses by 2 seconds (Simulate slow internet connections / heavy server load)
 // app.use((req, res, next) => {
 //   setTimeout(next, 1200);
 // });

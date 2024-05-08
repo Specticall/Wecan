@@ -6,10 +6,14 @@ import { useState } from "react";
 
 const DEFAULT_POINTS = 150000;
 
+// Goal selector that shows in the dashboard. Allows user to set a new goal once they have completed their current one.
 export default function DashboardNewGoal() {
   const { createMutation } = useGoalMutation();
   const { goalData } = useGoalMutation();
+
+  // New target point set as state because we need to pass it into the mutation on load.
   const [target, setTarget] = useState(DEFAULT_POINTS);
+
   const { claimMutation } = useClaimReward();
 
   const handleCreateGoal = () => {
@@ -42,6 +46,7 @@ export default function DashboardNewGoal() {
         </div>
       </article>
     );
+
   return (
     <article className="absolute inset-0 z-10 grid place-items-center">
       <div className="bg-white/80 p-10 rounded-xl backdrop-blur-md ">

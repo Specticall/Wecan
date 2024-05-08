@@ -5,6 +5,7 @@ import { TBackground } from "@/types/general";
 const FADE_BG =
   "linear-gradient(0deg, rgba(0,0,0,0.9) 1%, rgba(255,255,255,0) 60%)";
 
+// Match the corresponding tier with their respective color, display text and difficulty data
 const getTier = (tier: 1 | 2 | 3) => {
   switch (tier) {
     case 1:
@@ -28,6 +29,7 @@ const getTier = (tier: 1 | 2 | 3) => {
   }
 };
 
+// Image card that displays a preview of a certain background image to the user.
 export default function BackgroundCard({
   background,
   onClick = () => {},
@@ -42,9 +44,13 @@ export default function BackgroundCard({
   isLoading?: boolean;
   className?: string;
 }) {
+  // Retrieve the corresponding data from the background object passed in as prop.
   const { tier, color: tierColor, difficulty } = getTier(background.tier);
 
+  // Owned by the user
   const isOwned = background.owned;
+
+  // Selected by the user
   const isSelected = background.selected;
 
   return (
@@ -70,8 +76,11 @@ export default function BackgroundCard({
               </div>
             )}
 
+            {/* Disable hover effect when the user is selecting. */}
             {!isSelected && (
+              // Hover effect element
               <div className="absolute inset-0 z-30 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-black/50 flex items-center justify-center text-white text-md backdrop-blur-sm">
+                {/* Displays different UI when the background is owned and not */}
                 {isOwned ? (
                   "Click to select"
                 ) : (

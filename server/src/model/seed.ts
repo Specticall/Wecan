@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import fs from "fs/promises";
 
 const prisma = new PrismaClient();
 
@@ -16,70 +17,43 @@ const findDifficulty = (point: number) => {
   return range;
 };
 
+type ImageType = {
+  URL: string;
+  name: string;
+  tier: string;
+};
+
 async function seed() {
   try {
     console.log("Seeding data, Please Wait...");
 
-    // const defaultBackground = await prisma.background.findFirst({
-    //   where: {
-    //     name: "Dusk Embrace",
-    //   },
-    // });
+    const jsonTaskData = await fs.readFile(`./data/imageSeed.json`, "utf-8");
 
-    // if (!defaultBackground) {
-    //   console.log("Default background does not exist");
-    //   return;
-    // }
+    if (!jsonTaskData)
+      throw new Error(
+        "Something went wrong while trying to read the json seed data"
+      );
+    const JSONData = JSON.parse(jsonTaskData) as ImageType[];
 
-    // const allGoals = await prisma.goal.findMany({});
-    // if (!allGoals) {
-    //   console.log("No goals exist");
-    //   return;
-    // }
-
-    // for (const goal of allGoals) {
-    //   await prisma.goal.update({
-    //     where: {
-    //       id: goal.id,
-    //     },
-    //     data: {
-    //       hasClaimedReward: false,
-    //     },
-    //   });
-    // }
-
-    const user = await prisma.user.findFirst({
-      where: {
-        email: "josephyusmita@gmail.com",
-      },
-    });
-
-    const allUserGoal = await prisma.goal.findMany({
-      where: {
-        userId: user?.id,
-      },
-    });
-
-    const allUserGoalId = allUserGoal.map((goal) => goal.id);
-
-    const allHistory = await prisma.history.findMany({
-      where: {
-        goalId: {
-          in: allUserGoalId,
-        },
-      },
-    });
-
-    for (const history of allHistory) {
-      await prisma.history.update({
+    for (const data of JSONData) {
+      const isAlreadyInDB = await prisma.background.findFirst({
         where: {
-          id: history.id,
+          URL: data.URL,
+          name: data.name,
         },
+      });
+
+      if (isAlreadyInDB) continue;
+
+      await prisma.background.create({
         data: {
-          status: "Completed",
+          URL: data.URL,
+          name: data.name,
+          tier: Number(data.tier),
         },
       });
     }
+    // console.log(JSONData);
 
     console.log("Seeding completed");
   } catch (err) {

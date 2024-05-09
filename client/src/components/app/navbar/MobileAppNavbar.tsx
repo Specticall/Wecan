@@ -69,7 +69,7 @@ export default function MobileAppNavbar() {
         style={{ scale: open ? "1" : "0" }}
       >
         <h2 className="bg-white px-4 py-3 rounded-xl text-lg flex items-center justify-start mb-0">
-          Wecan
+          We<span className="font-normal italic">can.</span>
         </h2>
         <div
           className="flex items-center gap-3 px-4 bg-white-soft rounded-lg p-2 cursor-pointer"

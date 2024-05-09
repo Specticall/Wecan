@@ -1,0 +1,477 @@
+[{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559c7"
+  },
+  "title": "Take a stroll outside your house",
+  "points": 2500,
+  "description": "Going for a leisurely walk is a great way to ease your mind of any stress accumulated from work or tasks.",
+  "mood": "Ecstatic"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559c8"
+  },
+  "title": "Create a mini herb garden",
+  "points": 3000,
+  "description": "Cultivate herbs like basil, mint, or rosemary in small pots or a designated garden area. Enjoy the therapeutic benefits of gardening while enhancing your culinary adventures.",
+  "mood": "Ecstatic"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559c9"
+  },
+  "title": "Organize a home spa day",
+  "points": 3500,
+  "description": "Treat yourself to a relaxing spa experience at home with DIY facials, aromatic baths, and soothing music. Indulge in self-care and rejuvenation.",
+  "mood": "Ecstatic"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559ca"
+  },
+  "title": "Try a new recipe",
+  "points": 2000,
+  "description": "Explore your culinary skills by cooking a new dish from scratch. Experiment with flavors and ingredients to create a delightful meal.",
+  "mood": "Ecstatic"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559cb"
+  },
+  "title": "Have a picnic in nature",
+  "points": 2800,
+  "description": "Pack a picnic basket with your favorite snacks and head to a nearby park or scenic spot. Enjoy the outdoors while savoring delicious food.",
+  "mood": "Ecstatic"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559cc"
+  },
+  "title": "Create a vision board",
+  "points": 3200,
+  "description": "Gather images, quotes, and goals that inspire you, and create a visual representation of your aspirations. Manifest positivity and motivation.",
+  "mood": "Ecstatic"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559cd"
+  },
+  "title": "Write a gratitude journal",
+  "points": 2700,
+  "description": "Reflect on the things you're grateful for by writing them down daily. Cultivate a mindset of appreciation and positivity.",
+  "mood": "Ecstatic"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559ce"
+  },
+  "title": "Learn a new dance routine",
+  "points": 3300,
+  "description": "Pick a dance style you've always wanted to try and learn a new routine through online tutorials or classes. Have fun and get moving!",
+  "mood": "Ecstatic"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559cf"
+  },
+  "title": "Explore a nearby museum or art gallery",
+  "points": 2600,
+  "description": "Immerse yourself in culture and creativity by visiting a local museum or art gallery. Appreciate diverse artworks and historical exhibits.",
+  "mood": "Ecstatic"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559d0"
+  },
+  "title": "Host a game night with friends",
+  "points": 3100,
+  "description": "Invite friends over or organize a virtual game night. Play board games, trivia, or interactive online games for a fun and engaging time.",
+  "mood": "Ecstatic"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559d1"
+  },
+  "title": "Practice mindfulness meditation",
+  "points": 2900,
+  "description": "Dedicate time to mindfulness meditation to enhance focus, reduce stress, and promote overall well-being. Connect with your inner self and find inner peace.",
+  "mood": "Ecstatic"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559d2"
+  },
+  "title": "Try a new hobby",
+  "points": 2000,
+  "description": "Doing something you love or trying out a new hobby can boost your mood and make you feel happier.",
+  "mood": "Happy"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559d3"
+  },
+  "title": "Take a nature walk",
+  "points": 1500,
+  "description": "Immerse yourself in the beauty of nature by taking a leisurely walk outdoors. Fresh air and scenic views can uplift your spirits.",
+  "mood": "Happy"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559d4"
+  },
+  "title": "Practice gratitude journaling",
+  "points": 1800,
+  "description": "Spend a few minutes each day writing down things you're grateful for. Focusing on positive aspects of life can increase happiness.",
+  "mood": "Happy"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559d5"
+  },
+  "title": "Have a movie night",
+  "points": 1600,
+  "description": "Gather your favorite snacks, pick a feel-good movie, and enjoy a cozy movie night alone or with loved ones.",
+  "mood": "Happy"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559d6"
+  },
+  "title": "Try a new recipe",
+  "points": 1900,
+  "description": "Experimenting with cooking can be a fun and rewarding experience. Try preparing a new dish and savor the delicious results.",
+  "mood": "Happy"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559d7"
+  },
+  "title": "Practice mindfulness meditation",
+  "points": 2200,
+  "description": "Take a few minutes to practice mindfulness meditation. Focus on your breath and bring awareness to the present moment for mental relaxation.",
+  "mood": "Happy"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559d8"
+  },
+  "title": "Volunteer for a cause",
+  "points": 2100,
+  "description": "Helping others through volunteering can bring a sense of fulfillment and happiness. Find a cause you're passionate about and get involved.",
+  "mood": "Happy"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559d9"
+  },
+  "title": "Listen to uplifting music",
+  "points": 1400,
+  "description": "Create a playlist of your favorite upbeat songs and enjoy the positive vibes that music can bring.",
+  "mood": "Happy"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559da"
+  },
+  "title": "Practice a relaxation technique",
+  "points": 2300,
+  "description": "Explore relaxation techniques like deep breathing, progressive muscle relaxation, or yoga to unwind and reduce stress.",
+  "mood": "Happy"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559db"
+  },
+  "title": "Connect with a friend",
+  "points": 1700,
+  "description": "Reach out to a friend for a chat or meet up for coffee. Social connections can significantly impact your happiness.",
+  "mood": "Happy"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559dc"
+  },
+  "title": "Read a feel-good book",
+  "points": 2000,
+  "description": "Escape into a captivating story or self-help book that inspires joy and positivity.",
+  "mood": "Happy"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559dd"
+  },
+  "title": "Read a book",
+  "points": 1500,
+  "description": "Reading a book can be a good way to relax and unwind, especially if you're feeling neutral or indifferent.",
+  "mood": "Neutral"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559de"
+  },
+  "title": "Take a walk",
+  "points": 1200,
+  "description": "Going for a walk can help clear your mind and boost your mood, particularly if you're in a neutral state.",
+  "mood": "Neutral"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559df"
+  },
+  "title": "Listen to music",
+  "points": 1000,
+  "description": "Listening to music can be soothing and enjoyable, especially when you're feeling neutral or indifferent.",
+  "mood": "Neutral"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559e0"
+  },
+  "title": "Watch a documentary",
+  "points": 1800,
+  "description": "Watching a documentary can be informative and thought-provoking, which might appeal to you if you're feeling neutral.",
+  "mood": "Neutral"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559e1"
+  },
+  "title": "Cook a new recipe",
+  "points": 1600,
+  "description": "Trying out a new recipe can be a fun and creative way to spend your time, suitable for when you're feeling neutral.",
+  "mood": "Neutral"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559e2"
+  },
+  "title": "Practice mindfulness",
+  "points": 1400,
+  "description": "Engaging in mindfulness exercises can help you stay present and calm, particularly beneficial when you're in a neutral state of mind.",
+  "mood": "Neutral"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559e3"
+  },
+  "title": "Write in a journal",
+  "points": 1300,
+  "description": "Journaling can be a reflective and therapeutic activity, suitable for processing emotions, including neutral ones.",
+  "mood": "Neutral"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559e4"
+  },
+  "title": "Do a puzzle",
+  "points": 1700,
+  "description": "Working on a puzzle can be a challenging and satisfying task, ideal for when you're feeling neutral or relaxed.",
+  "mood": "Neutral"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559e5"
+  },
+  "title": "Attend a virtual lecture",
+  "points": 1900,
+  "description": "Attending a virtual lecture can be intellectually stimulating and educational, suitable for when you're feeling neutral or curious.",
+  "mood": "Neutral"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559e6"
+  },
+  "title": "Practice a hobby",
+  "points": 1500,
+  "description": "Engaging in a hobby can be a fulfilling and enjoyable way to pass the time, especially when you're feeling neutral or indifferent.",
+  "mood": "Neutral"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559e7"
+  },
+  "title": "Take a nap",
+  "points": 1100,
+  "description": "Taking a short nap can help rejuvenate your energy levels and improve your mood, particularly if you're feeling neutral or fatigued.",
+  "mood": "Neutral"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559e8"
+  },
+  "title": "Listen to your favorite music",
+  "points": 1000,
+  "description": "Listening to music, especially your favorite songs, can help lift your mood when you're feeling sad.",
+  "mood": "Sad"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559e9"
+  },
+  "title": "Write a letter to your younger self",
+  "points": 1500,
+  "description": "Reflect on your past experiences and offer words of comfort and advice to the person you once were. Writing can be cathartic and healing.",
+  "mood": "Sad"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559ea"
+  },
+  "title": "Take a long, soothing bath",
+  "points": 1200,
+  "description": "Fill your bath with warm water, add some bubbles or bath salts, and take your time to relax and unwind. Let go of stress and tension.",
+  "mood": "Sad"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559eb"
+  },
+  "title": "Watch a heartwarming movie",
+  "points": 1100,
+  "description": "Choose a movie with a positive message or a touching storyline. Allow yourself to be moved and inspired by the characters and their journey.",
+  "mood": "Sad"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559ec"
+  },
+  "title": "Volunteer at a local charity",
+  "points": 2000,
+  "description": "Helping others in need can bring a sense of fulfillment and purpose. Find a cause you care about and dedicate your time to making a difference.",
+  "mood": "Sad"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559ed"
+  },
+  "title": "Practice mindfulness meditation",
+  "points": 1800,
+  "description": "Set aside time to focus on the present moment and cultivate a sense of calm and awareness. Mindfulness can help reduce stress and promote emotional well-being.",
+  "mood": "Sad"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559ee"
+  },
+  "title": "Write in a gratitude journal",
+  "points": 1300,
+  "description": "Each day, write down three things you're grateful for. Focusing on the positive aspects of your life can shift your perspective and improve your mood.",
+  "mood": "Sad"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559ef"
+  },
+  "title": "Take a nature walk",
+  "points": 1400,
+  "description": "Immerse yourself in the beauty of nature by going for a walk in a park, forest, or by the beach. Connect with the outdoors and breathe in the fresh air.",
+  "mood": "Sad"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559f0"
+  },
+  "title": "Cook a comforting meal",
+  "points": 1600,
+  "description": "Prepare a meal that brings you comfort and joy. Cooking can be therapeutic and nourishing, both for your body and your soul.",
+  "mood": "Sad"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559f1"
+  },
+  "title": "Engage in a creative hobby",
+  "points": 1700,
+  "description": "Channel your emotions into a creative outlet like painting, writing, or crafting. Expressing yourself artistically can be a powerful way to cope with sadness.",
+  "mood": "Sad"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559f2"
+  },
+  "title": "Watch a movie",
+  "points": 500,
+  "description": "Watching a movie, especially a comedy or a feel-good film, can help distract you from negative thoughts and improve your mood.",
+  "mood": "Depressed"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559f3"
+  },
+  "title": "Write in a journal",
+  "points": 400,
+  "description": "Expressing your feelings and thoughts in a journal can be therapeutic and help you gain clarity.",
+  "mood": "Depressed"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559f4"
+  },
+  "title": "Take a walk in nature",
+  "points": 450,
+  "description": "Spending time in nature can have a calming effect and improve your overall well-being.",
+  "mood": "Depressed"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559f5"
+  },
+  "title": "Talk to a trusted friend",
+  "points": 600,
+  "description": "Sharing your feelings with someone you trust can provide comfort and support during difficult times.",
+  "mood": "Depressed"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559f6"
+  },
+  "title": "Practice deep breathing exercises",
+  "points": 350,
+  "description": "Deep breathing exercises can help reduce stress and anxiety, promoting a sense of relaxation.",
+  "mood": "Depressed"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559f7"
+  },
+  "title": "Create art or write poetry",
+  "points": 550,
+  "description": "Engaging in creative activities like art or writing poetry can be a therapeutic outlet for processing emotions.",
+  "mood": "Depressed"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559f8"
+  },
+  "title": "Do a mindfulness meditation session",
+  "points": 400,
+  "description": "Practicing mindfulness meditation can help you stay present and manage overwhelming emotions.",
+  "mood": "Depressed"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559f9"
+  },
+  "title": "Volunteer for a cause you care about",
+  "points": 700,
+  "description": "Helping others through volunteering can give you a sense of purpose and fulfillment.",
+  "mood": "Depressed"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559fa"
+  },
+  "title": "Cook a comforting meal",
+  "points": 450,
+  "description": "Preparing and enjoying a comforting meal can provide a sense of nourishment and warmth.",
+  "mood": "Depressed"
+},
+{
+  "_id": {
+    "$oid": "66265aacf9cb3b7c725559fb"
+  },
+  "title": "Practice self-care activities",
+  "points": 500,
+  "description": "Engage in self-care activities like taking a relaxing bath or indulging in a favorite hobby to nurture yourself.",
+  "mood": "Depressed"
+}]

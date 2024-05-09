@@ -50,7 +50,7 @@ export default function DesktopNavbar() {
   return (
     <nav className="flex gap-6 px-4 py-4">
       <h2 className="bg-white px-8 py-3 rounded-xl text-lg flex items-center justify-center">
-        Wecan
+        We<span className="font-normal italic">can.</span>
       </h2>
       <ul className="rounded-xl flex-1 bg-white items-center justify-between gap-6 px-3 py-3 flex">
         {/* == Route Navigator == */}

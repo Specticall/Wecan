@@ -1,6 +1,10 @@
 
 # Wecan
 
+>
+> Link to live site : https://wecan-ten.vercel.app/
+>
+
 Wecan adalah web application yang membantu seseorang menjaga kondisi mental dirinya. Wecan memiliki tujuan untuk membantu user mengekspresikan hal apa yang sedang dialaminya dalam keseharian dengan memberikan saran kegiatan yang mendukung mental dan emosional mereka. Fitur - fitur Wecan mencakup
 
 * Diary Creator

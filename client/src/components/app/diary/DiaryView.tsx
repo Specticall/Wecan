@@ -10,7 +10,7 @@ export default function DiaryView({
 }) {
   return (
     <div className="flex flex-col flex-1 bg-white p-6 rounded-xl lg:p-4">
-      <div className="flex justify-between items-center mb-5">
+      <div className="flex justify-between items-center mb-5 md:flex-col md:gap-2 md:items-start">
         <h2 className="text-lg  flex items-center justify-center gap-2 font-semibold">
           <i className="bx bx-book text-[2rem]"></i>Your Diary
         </h2>

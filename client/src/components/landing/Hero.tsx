@@ -12,7 +12,7 @@ export function Hero() {
       <div className="bg-white rounded-full w-fit px-6 py-2 mx-auto">
         Hi There Welcome 👋
       </div>
-      <h1 className="text-center text-2xl font-semibold max-w-[60rem] mx-auto mt-6 lg:text-[3rem] md:text-xl">
+      <h1 className="text-center text-2xl font-semibold max-w-[60rem] mx-auto mt-6 lg:text-[3rem] md:text-xl leading-[130%]">
         Prioritizing Mental Well Being Leads to a Happier Life.{" "}
       </h1>
       <p className="text-light mx-auto max-w-[40rem] leading-lg text-center mt-8">

@@ -15,7 +15,7 @@ Wecan adalah web application yang membantu seseorang menjaga kondisi mental diri
 
 Semua fitur Wecan dibuat menggunakan pendekatan gamification untuk menciptakan pengalaman user yang menyenangkan.
 
-Video demo dilihat pada [link berikut](https://drive.google.com/drive/folders/1-ACyzjN1RoAPADekJoTKlP31LMF8Ok3L)
+Video demo dilihat pada [link berikut](https://drive.google.com/file/d/1wQlqsmPLdiAgF39Y_NC_1PunnzGF9h-f/view?usp=drive_link)
 
 
 ## Dokumentasi
@@ -58,7 +58,7 @@ JWT_STRING=
 
 > Detail installasi database (`DATABASE_URL` dan `DATABASE_USERNAME`) dengan Atlas dapat dilihat di [link berikut](https://www.mongodb.com/docs/atlas). Untuk installasi google auth (`GOOGLE_ID` dan `GOOGLE_SECRET`) dapat dilakukan melalui [google cloud](https://cloud.google.com)
 
-> `JWT_SECRET` Dapat menggunakan string bebas, namun dapat dibuat secara otomatis dengan menjalankan kode berikut dalam terminal
+> `JWT_STRING` Dapat menggunakan string bebas, namun dapat dibuat secara otomatis dengan menjalankan kode berikut dalam terminal
 
 ```
 node -e "console.log(require('crypto').randomBytes(64).toString('hex'));"

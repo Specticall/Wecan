@@ -15,7 +15,7 @@ Wecan adalah web application yang membantu seseorang menjaga kondisi mental diri
 
 Semua fitur Wecan dibuat menggunakan pendekatan gamification untuk menciptakan pengalaman user yang menyenangkan.
 
-Video demo dilihat pada [link berikut](https://www.youtube.com/watch?feature=shared&v=u8pJh1pp2PU)
+Video demo dilihat pada [link berikut](https://drive.google.com/drive/folders/1-ACyzjN1RoAPADekJoTKlP31LMF8Ok3L)
 
 
 ## Dokumentasi

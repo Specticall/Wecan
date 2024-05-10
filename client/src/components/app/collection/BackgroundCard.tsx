@@ -85,11 +85,11 @@ export default function BackgroundCard({
                   "Click to select"
                 ) : (
                   <div className="flex flex-col items-center justify-center gap-4">
-                    <p className="text-md font-semibold">
+                    <p className="text-md font-semibold md:text-center">
                       <i className="bx bx-lock-alt text-lg mr-2"></i>
                       You Don't Own This Background
                     </p>
-                    <p className="text-slate-100 text-sm">
+                    <p className="text-slate-100 text-sm md:text-center">
                       Unlock by completing
                       <span className="px-4 py-1 rounded-full bg-accent mx-2 text-sm">
                         {" "}

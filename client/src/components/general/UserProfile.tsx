@@ -40,8 +40,8 @@ export default function UserProfile() {
         <p className="text-light border-b-[1px] border-slate-300 pb-6 mb-12">
           Manage your account profile and set preferences
         </p>
-        <div className="grid grid-cols-[2fr_9fr] gap-16 gap-y-20 md:gap-0 md:flex-col md:flex">
-          <div className="md:mb-6">
+        <div className="grid grid-cols-[2fr_9fr] gap-16 gap-y-20 xl:gap-0 xl:flex-col xl:flex">
+          <div className="xl:mb-6">
             <p className="text-dark mb-4 whitespace-nowrap">Profile Picture</p>
             <img
               src={userData.pictureURL}
@@ -50,11 +50,11 @@ export default function UserProfile() {
               referrerPolicy="no-referrer"
             />
           </div>
-          <form className="md:mb-12">
+          <form className="xl:mb-12">
             <TextField
               value={userData.email}
               disabled={true}
-              className="mb-12 text-lighter md:mb-6"
+              className="mb-12 text-lighter xl:mb-6 xl:w-[30rem] md:w-full"
             >
               <TextFieldLabel>
                 Email

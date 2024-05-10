@@ -47,10 +47,14 @@ export default function useBarChartData() {
   });
 
   const barChartData = barChartQuery.data;
-
+  // console.log(barChartData);
   // Converts the bar chart data to the `<BarChart/>` component object format
   // Assigns each history object to each down day.
   const pointsEarnedEachDay = daysShortened.map((day, dayIndex) => {
+    // console.log(
+    //   day,
+    //   barChartData?.find((data) => new Date(data.date).getDay() === dayIndex)
+    // );
     return {
       item: day,
       value:
@@ -58,6 +62,7 @@ export default function useBarChartData() {
           ?.pointsEarned || 0,
     };
   });
+  // console.log(pointsEarnedEachDay);
 
   return { barChartQuery, barChartData, pointsEarnedEachDay };
 }

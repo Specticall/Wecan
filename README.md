@@ -75,3 +75,5 @@ Dengan menggunakan package [concurrently](https://www.npmjs.com/package/concurre
 - [@Alicia Felisha](https://github.com/aliciafelishaa)
 - [@Rafael Marvin](https://github.com/rafaelmarvin)
 
+Made by ©BNCChampion
+
